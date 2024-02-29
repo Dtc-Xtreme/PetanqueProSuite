@@ -1,0 +1,26 @@
+﻿@using PetanqueProSuite.AppLogic.Services
+@using PetanqueProSuite.Domain.Competition
+
+<h3>SessionManagerComponent</h3>
+
+<button class="btn btn-primary" @onclick="()=> Test()">Start session</button>
+
+@foreach(Competition session in SessionManager.Competitions)
+{
+    <div>@session</div>
+}
+
+@code {
+    [Inject]
+    private CompetitionSessionManager SessionManager { get; set; }
+
+    protected override void OnInitialized()
+    {
+    }
+
+    private async void Test()
+    {
+        SessionManager.AddSession();
+        StateHasChanged();
+    }
+}

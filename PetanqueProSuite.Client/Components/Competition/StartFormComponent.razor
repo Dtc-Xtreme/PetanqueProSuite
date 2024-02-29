@@ -1,0 +1,11 @@
+﻿@using PetanqueProSuite.Client.Models
+
+<h3>CompetitionStartForm</h3>
+
+<EditForm Model="@form">
+    <InputDate @bind-Value="form.StartedDateTime" readonly></InputDate>
+</EditForm>
+
+@code {
+    private CompititionStartForm form { get; set; } = new();
+}

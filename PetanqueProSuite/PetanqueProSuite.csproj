@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PetanqueProSuite.AppLogic\PetanqueProSuite.AppLogic.csproj" />
+    <ProjectReference Include="..\PetanqueProSuite.Client\PetanqueProSuite.Client.csproj" />
+    <ProjectReference Include="..\PetanqueProSuite.Components\PetanqueProSuite.Components.csproj" />
+    <ProjectReference Include="..\PetanqueProSuite.Domain\PetanqueProSuite.Domain.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.2" />
+  </ItemGroup>
+
+</Project>

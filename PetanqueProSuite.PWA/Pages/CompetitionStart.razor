@@ -1,0 +1,28 @@
+﻿@page "/competition/start"
+@using PetanqueProSuite.AppLogic.Services
+@using PetanqueProSuite.Components.Competition
+@using PetanqueProSuite.Domain
+@using PetanqueProSuite.Domain.Competition
+
+<PageTitle>Start Competition</PageTitle>
+
+<div class="container text-center">
+    <CompetitionFormComponent Categories="Categories" Leagues="Leagues" Divisions="Divisions" Teams="Teams" />
+</div>
+
+@code {
+    [Inject] private IApiService ApiService { get; set; }
+
+    private IList<Category>? Categories { get; set; }
+    private IList<League>? Leagues { get; set; }
+    private IList<Division>? Divisions { get; set; }
+    private IList<CompetitionTeam>? Teams { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        Categories = await ApiService.GetAllCategories();
+        Leagues = await ApiService.GetAllLeagues();
+        Divisions = await ApiService.GetAllDivisions();
+        Teams = await ApiService.GetAllCompetitionTeams();
+    }
+}

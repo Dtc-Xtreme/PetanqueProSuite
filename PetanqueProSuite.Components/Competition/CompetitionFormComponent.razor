@@ -1,0 +1,162 @@
+﻿<h3 class="mb-4">Start Competition</h3>
+
+<EditForm Model="CompetitionForm" OnValidSubmit="Submit">
+    <DataAnnotationsValidator/>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="start">Start</label>
+                <input type="datetime-local" class="form-control" @bind="CompetitionForm.Start" id="start" />
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="category">Category</label>
+                <InputSelect Value="@CompetitionForm.CategoryId" ValueExpression="@(() => CompetitionForm.CategoryId)" ValueChanged="@((int e) => HandleCategoryValueChanged(e))" class="form-select" id="category">
+                    <option value="0" selected>Choose...</option>
+                    @if (Categories != null)
+                    {
+                        foreach (Category cat in Categories)
+                        {
+                            <option value="@cat.Id">@cat.Name</option>
+                        }
+                    }
+                </InputSelect>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="league">League</label>
+                <InputSelect Value="@CompetitionForm.LeagueId" ValueExpression="@(() => CompetitionForm.LeagueId)" ValueChanged="@((int e) => HandleLeagueValueChanged(e))" class="form-select" id="league" disabled="@(CompetitionForm.CategoryId == 0)">
+                    <option value="0" selected>Choose...</option>
+                    @if (Leagues != null)
+                    {
+                        foreach (League lea in Leagues.Where(c => c.CategoryId == CompetitionForm.CategoryId))
+                        {
+                            <option value="@lea.Id">@lea.Name</option>
+                        }
+                    }
+                </InputSelect>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="division">Division</label>
+                <InputSelect Value="@CompetitionForm.DivisionId" ValueExpression="@(() => CompetitionForm.DivisionId)" ValueChanged="@((int e) => HandleDivisionValueChanged(e))" class="form-select" id="division" disabled="@(CompetitionForm.LeagueId == 0)">
+                    <option value="0" selected>Choose...</option>
+                    @if (Divisions != null)
+                    {
+                        foreach (Division div in Divisions.Where(c=>c.League.Id == CompetitionForm.LeagueId))
+                        {
+                            <option value="@div.Id">@div.Name</option>
+                        }
+                    }
+                </InputSelect>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="home">Home</label>
+                <InputSelect @bind-Value="CompetitionForm.HomeId" class="form-select" id="home" disabled="@(CompetitionForm.DivisionId == 0)">
+                    <option value="0" selected>Choose...</option>
+                    @if (Teams != null)
+                    {
+                        foreach (CompetitionTeam team in Teams.Where(c => c.DivisionId == CompetitionForm.DivisionId))
+                        {
+                            <option value="@team.Id">@team.ToString()</option>
+                        }
+                    }
+                </InputSelect>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="visitor">Visitor</label>
+                <InputSelect @bind-Value="CompetitionForm.VisitorId" class="form-select" id="visitor" disabled="@(CompetitionForm.DivisionId == 0 || CompetitionForm.LeagueId == 0)">
+                    <option value="0" selected>Choose...</option>
+                    @if (Teams != null)
+                    {
+                        foreach (CompetitionTeam team in Teams.Where(c => c.DivisionId == CompetitionForm.DivisionId))
+                        {
+                            <option value="@team.Id">@team.ToString()</option>
+                        }
+                    }
+                </InputSelect>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        <ValidationSummary />
+    </div>
+
+    <button class="btn btn-primary" type="submit">Start</button>
+</EditForm>
+
+
+@code {
+    [Inject] private ICompetitionSessionManager? SessionManager { get; set; }
+    [Inject] private NavigationManager? NavigationManager { get; set; }
+
+    [Parameter] public IList<Category>? Categories { get; set; }
+    [Parameter] public IList<League>? Leagues { get; set; }
+    [Parameter] public IList<Division>? Divisions { get; set; }
+    [Parameter] public IList<CompetitionTeam>? Teams { get; set; }
+
+    private CompetitionForm CompetitionForm { get; set; } = new();
+
+    private void Submit()
+    {
+        if (Categories != null && Leagues != null && Divisions != null && SessionManager != null && NavigationManager != null && Teams != null)
+        {
+            Competition session = new Competition
+                {
+                    Category = Categories.First(c => c.Id == CompetitionForm.CategoryId),
+                    League = Leagues.First(c => c.Id == CompetitionForm.LeagueId),
+                    Division = Divisions.First(c => c.Id == CompetitionForm.DivisionId),
+                    Home = Teams.First(c => c.Id == CompetitionForm.HomeId),
+                    Visitor = Teams.First(c => c.Id == CompetitionForm.VisitorId),
+                    Start = CompetitionForm.Start
+                };
+
+            SessionManager.AddSession(session);
+            NavigationManager.NavigateTo("/competition");
+        }
+    }
+
+    private void HandleCategoryValueChanged(int value)
+    {
+        CompetitionForm.CategoryId = value;
+        CompetitionForm.LeagueId = 0;
+        CompetitionForm.DivisionId = 0;
+        CompetitionForm.HomeId = 0;
+        CompetitionForm.VisitorId = 0;
+        StateHasChanged();
+
+    }
+    private void HandleLeagueValueChanged(int value)
+    {
+        CompetitionForm.LeagueId = value;
+        CompetitionForm.DivisionId = 0;
+        CompetitionForm.HomeId = 0;
+        CompetitionForm.VisitorId = 0;
+        StateHasChanged();
+    }
+    private void HandleDivisionValueChanged(int value)
+    {
+        CompetitionForm.DivisionId = value;
+        CompetitionForm.HomeId = 0;
+        CompetitionForm.VisitorId = 0;
+        StateHasChanged();
+    }
+
+}

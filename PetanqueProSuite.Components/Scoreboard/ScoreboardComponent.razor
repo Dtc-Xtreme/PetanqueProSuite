@@ -1,0 +1,38 @@
+﻿<h3 class="mb-4 text-center">Scoreboard</h3>
+
+<div class="row g-3 justify-content-center">
+    <div class="col-4 col-md-3 col-lg-2 ps-0">
+        <ScoreboardCardComponent TeamName="Home" @ref="teamHomeCard" OnScoreChanged="CheckScore" />
+    </div>
+
+    <div class="col-4 col-md-3 col-lg-2 pe-0">
+        <ScoreboardCardComponent TeamName="Visitor" @ref="teamVisitorCard" OnScoreChanged="CheckScore" />
+    </div>
+</div>
+<div class="mt-3 user-select-none">
+    <button class="btn btn-danger me-1" @onclick="ResetScore">Reset</button>
+    <button class="btn btn-warning" @onclick="SaveScore" disabled="@SaveDisabled">Save</button>
+</div>
+
+@Test
+
+@code {
+    private ScoreboardCardComponent? teamHomeCard;
+    private ScoreboardCardComponent? teamVisitorCard;
+    private bool SaveDisabled = true;
+    private string Test { get; set; } = "";
+
+    private void CheckScore()
+    {
+        SaveDisabled = !((teamHomeCard.Score == 13 && teamVisitorCard.Score < 13) || (teamHomeCard.Score < 13 && teamVisitorCard.Score == 13));
+    }
+    private void ResetScore()
+    {
+        teamHomeCard.Score = 0;
+        teamVisitorCard.Score = 0;
+    }
+    private void SaveScore()
+    {
+        Test = teamHomeCard?.Score + " - " + teamVisitorCard?.Score;
+    }
+}

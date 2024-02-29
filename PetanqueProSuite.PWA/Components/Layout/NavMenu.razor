@@ -1,0 +1,48 @@
+﻿<nav class="navbar navbar-expand-md bg-dark border-bottom border-body" data-bs-theme="dark">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+            <img class="me-1" src="/logo.png" alt="Petanque" height="70">
+            <span class="nav-logo-name">PRO SUITE</span>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-0">
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                        Home
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="scoreboard" Match="NavLinkMatch.All">
+                        Scoreboard
+                    </NavLink>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Competition
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="nav-item">
+                            <NavLink class="dropdown-item" href="competition" Match="NavLinkMatch.All">
+                                Sessions
+                            </NavLink>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="nav-item">
+                            <NavLink class="dropdown-item" href="ranking" Match="NavLinkMatch.All">
+                                Ranking
+                            </NavLink>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>

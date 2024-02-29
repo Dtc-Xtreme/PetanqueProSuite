@@ -1,0 +1,23 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main class="container-fluid">
+        <article class="m-5">
+            @Body
+        </article>
+    </main>
+
+    <footer class="bg-dark">
+        <div class="text-light fw-bold p-5 text-center">Copyright 2024 - DTC</div>
+    </footer>
+</div>
+
+<div class="container" id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>

@@ -1,0 +1,44 @@
+﻿<div class="card-group">
+    <div class="card text-center">
+        <div class="card-header">@TeamName</div>
+        <div class="card-body m-0">
+            <div class="row justify-content-center user-select-none">
+                <button class="btn btn-primary scoreboard-button" @onclick="PlusOneScore" disabled="@plusDisabled">+</button>
+            </div>
+            <div class="row justify-content-center">
+                <div class="fs-1">@Score</div>
+            </div>
+            <div class="row justify-content-center user-select-none">
+                <button class="btn btn-primary scoreboard-button" @onclick="MinusOneScore" disabled="@minusDisabled">-</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string TeamName { get; set; } = "";
+    [Parameter] public int Score { get; set; } = 0;
+    [Parameter] public EventCallback OnScoreChanged { get; set; }
+    [Parameter] public int MaxScore { get; set; } = 13;
+
+    private bool plusDisabled { get; set; } = false;
+    private bool minusDisabled { get; set; } = true;
+
+    private void PlusOneScore()
+    {
+        if (Score < MaxScore) Score++;
+        DisableButton();
+        OnScoreChanged.InvokeAsync();
+    }
+    private void MinusOneScore()
+    {
+        if (Score > 0) Score--;
+        DisableButton();
+        OnScoreChanged.InvokeAsync();
+    }
+    private void DisableButton()
+    {
+        plusDisabled = (Score == 13);
+        minusDisabled = (Score == 0);
+    }
+}
