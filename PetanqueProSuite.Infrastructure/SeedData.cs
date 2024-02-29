@@ -23,52 +23,61 @@ namespace PetanqueProSuite.Infrastructure
         {
             dbContext.Database.EnsureCreated();
 
-            Category vet = new Category { Name = "Veteran" };
             Category sen = new Category { Name = "Senior" };
             Category wom = new Category { Name = "Women" };
+            Category vet = new Category { Name = "Veteran" };
 
-            if (!dbContext.Categories.Any())
-            {
-                dbContext.Categories.AddRange(new List<Category>(){ vet,sen,wom });
-            }
+            League natSen = new League { Name = "National"};
 
+            League fedSen = new League { Name = "Federal"};
+            League fedWom = new League { Name = "Federal"};
 
-            League natSen = new League { Name = "National", Category = sen };
+            League provLimSen = new League { Name = "Provincial (Limburg)"};
+            League provAntSen = new League { Name = "Provincial (Antwerp)"};
 
-            League fedSen = new League { Name = "Federal", Category = sen };
-            League fedWom = new League { Name = "Federal", Category = wom };
+            League provLimVet = new League { Name = "Provincial (Limburg)"};
+            League provAntVet = new League { Name = "Provincial (Antwerp)"};
 
-            League provLimSen = new League { Name = "Provincial (Limburg)", Category = sen };
-            League provAntSen = new League { Name = "Provincial (Antwerp)", Category = sen };
+            sen.Leagues = new List<League>();
+            sen.Leagues.Add(natSen);
+            sen.Leagues.Add(fedSen);
+            sen.Leagues.Add(provLimSen);
+            sen.Leagues.Add(provAntSen);
+            wom.Leagues = new List<League>();
+            wom.Leagues.Add(fedWom);
+            vet.Leagues = new List<League>();
+            vet.Leagues.Add(provLimVet);
+            vet.Leagues.Add(provLimVet);
 
-            League provLimVet = new League { Name = "Provincial (Limburg)", Category = vet };
-            League provAntVet = new League { Name = "Provincial (Antwerp)", Category = vet };
+            Division nat1st = new Division { Name = "1st National"};
+            Division nat2nd = new Division { Name = "2nd National"};
 
-            if (!dbContext.Leagues.Any())
-            {
-                dbContext.Leagues.AddRange( new List<League>(){ natSen, fedSen, fedWom, provLimSen, provAntSen, provLimVet, provAntVet });
-            }
+            Division fed1stSen = new Division { Name = "1st Federal"};
+            Division fed2ndSen = new Division { Name = "2nd Federal"};
+            Division fed1stWom = new Division { Name = "1st Federal"};
 
+            Division provEreSen = new Division { Name = "Ere Division"};
+            Division prov1stSen = new Division { Name = "1st Division"};
 
-            Division nat1st = new Division { Name = "1st National", League = natSen };
-            Division nat2nd = new Division { Name = "2nd National", League = natSen };
+            Division provEreVet = new Division { Name = "Ere Division"};
+            Division prov1stVet = new Division { Name = "1st Division"};
+            Division prov2ndVet = new Division { Name = "2nd Division"};
 
-            Division fed1stSen = new Division { Name = "1st Federal", League = fedSen };
-            Division fed2ndSen = new Division { Name = "2nd Federal", League = fedSen };
-            Division fed1stWom = new Division { Name = "1st Federal", League = fedWom };
-
-            Division provEreSen = new Division { Name = "Ere Division", League = provLimSen };
-            Division prov1stSen = new Division { Name = "1st Division", League = provLimSen };
-
-            Division provEreVet = new Division { Name = "Ere Division", League = provLimVet };
-            Division prov1stVet = new Division { Name = "1st Division", League = provLimVet };
-            Division prov2ndVet = new Division { Name = "2nd Division", League = provLimVet };
-
-            if (!dbContext.Divisions.Any())
-            {
-                dbContext.Divisions.AddRange(new List<Division>() { nat1st, nat2nd, fed1stSen, fed2ndSen, fed1stWom, provEreSen, prov1stSen, provEreVet, prov1stVet, prov2ndVet });
-            }
-
+            natSen.Divisions = new List<Division>();
+            natSen.Divisions.Add(nat1st);
+            natSen.Divisions.Add(nat2nd);
+            fedSen.Divisions = new List<Division>();
+            fedSen.Divisions.Add(fed1stSen);
+            fedSen.Divisions.Add(fed2ndSen);
+            fedWom.Divisions = new List<Division>();
+            fedWom.Divisions.Add(fed1stWom);
+            provLimSen.Divisions = new List<Division>();
+            provLimSen.Divisions.Add(provEreSen);
+            provLimSen.Divisions.Add(prov1stSen);
+            provLimVet.Divisions = new List<Division>();
+            provLimVet.Divisions.Add(provEreVet);
+            provLimVet.Divisions.Add(prov1stVet);
+            provLimVet.Divisions.Add(prov2ndVet);
 
             // Limburg
             Club OLYMPIA = new Club { Name = "PC OLYMPIA", Number = 1, Address = "Veenderweg 48 - 3550 Heusden-Zolder", Phone = "011/45 36 13", ContactPerson = "Ferdy Geraerts, Ubbelstraat 9/1 - 3550 Heusden-Zolder" };
@@ -95,25 +104,33 @@ namespace PetanqueProSuite.Infrastructure
             Club FENIX = new Club { Name = "PC FENIX", Number = 32, Address = "Hasseltsesteenweg 103- 3800 Sint-Truiden", ContactPerson = "Lelievre Stefaan,Erberstraat 25-3800 Sint-Truiden, GSM: 0496/510584, Email: Petanqueclubfenix@gmail.com" };
             Club Yachting = new Club { Name = "PC Royal Hasselt Yachting Club", Number = 33, Address = "Hoogbrugkaai 91 - 3500 Hasselt", ContactPerson = "Danny Vanderstraeten - Luikersteenweg 248B 4/2 - 3500 Hasselt, Gsm: 0496/61 89 32, Tel: 011/21 25 70, Emailadres: info@rhyc.be" };
 
-            if (!dbContext.Clubs.Any())
+            CompetitionTeam boektNat = new CompetitionTeam { Club = BOEKT };
+            CompetitionTeam olyNat = new CompetitionTeam { Club = OLYMPIA };
+            CompetitionTeam boektFed = new CompetitionTeam { Club = BOEKT };
+            CompetitionTeam zigFed = new CompetitionTeam { Club = ZIG };
+            CompetitionTeam boektA = new CompetitionTeam { Identifyer = 'A', Club = BOEKT };
+            CompetitionTeam opecA = new CompetitionTeam { Identifyer = 'A', Club = OPEC };
+            CompetitionTeam boektB = new CompetitionTeam { Identifyer = 'B', Club = BOEKT };
+            CompetitionTeam oeterA = new CompetitionTeam { Identifyer = 'A', Club = OETERVALLEI};
+
+            nat1st.CompetitionTeams = new List<CompetitionTeam>();
+            nat1st.CompetitionTeams.Add(boektNat);
+            nat1st.CompetitionTeams.Add(olyNat);
+            fed1stSen.CompetitionTeams = new List<CompetitionTeam>();
+            fed1stSen.CompetitionTeams.Add(boektFed);
+            fed1stSen.CompetitionTeams.Add(zigFed);
+            provEreSen.CompetitionTeams = new List<CompetitionTeam>();
+            provEreSen.CompetitionTeams.Add(boektA);
+            provEreSen.CompetitionTeams.Add(opecA);
+            prov1stSen.CompetitionTeams = new List<CompetitionTeam>();
+            prov1stSen.CompetitionTeams.Add(boektB);
+            prov1stSen.CompetitionTeams.Add(oeterA);
+
+            if (!dbContext.Categories.Any())
             {
-                dbContext.Clubs.AddRange(new List<Club>() { OLYMPIA, SPARRENDAL, KELCHTEREN, HASSELT, OPEC, BOEKT, GENENBOS, BERK, ZIG, PELTER, HORIZON, GENK, TONGEREN, INTERLOMMEL, OETERVALLEI, MELDERT, SINT, MAASEIK, TERBIEST, VENNE, BOCHOLTER, FENIX, Yachting });
+                dbContext.Categories.AddRange(new List<Category>() { vet, sen, wom });
             }
 
-
-            CompetitionTeam boektA = new CompetitionTeam { Identifyer = 'A', Club = BOEKT, Division = provEreSen };
-            CompetitionTeam OpecA = new CompetitionTeam { Identifyer = 'A', Club = OPEC, Division = provEreSen };
-            CompetitionTeam boektB = new CompetitionTeam { Identifyer = 'B', Club = BOEKT, Division = prov1stSen };
-            CompetitionTeam oeterA = new CompetitionTeam { Identifyer = 'A', Club = OETERVALLEI, Division = prov1stSen };
-            CompetitionTeam boektFed = new CompetitionTeam { Club = BOEKT, Division = fed1stSen };
-            CompetitionTeam zigFed = new CompetitionTeam { Club = ZIG, Division = fed1stSen };
-            CompetitionTeam boektNat = new CompetitionTeam { Club = BOEKT, Division = nat1st };
-            CompetitionTeam olyNat = new CompetitionTeam { Club = OLYMPIA, Division = nat1st };
-
-            if (!dbContext.CompetitionTeams.Any())
-            {
-                dbContext.CompetitionTeams.AddRange(new List<CompetitionTeam>() { boektA, OpecA, boektB, oeterA, boektFed, zigFed, boektNat, olyNat });
-            }
             dbContext.SaveChanges();
         }
     }

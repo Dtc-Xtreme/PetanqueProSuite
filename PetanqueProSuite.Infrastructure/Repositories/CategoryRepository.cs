@@ -11,7 +11,7 @@ namespace PetanqueProSuite.Infrastructure.Repositories
 {
     public class CategoryRepository : GenericRepository, ICategoryRepository
     {
-        public IQueryable<Category> Categories => context.Categories.Include(c=>c.Leagues).OrderBy(c => c.Name);
+        public IQueryable<Category> Categories => context.Categories.Include(c=>c.Leagues).ThenInclude(c=>c.Divisions).ThenInclude(c=>c.CompetitionTeams).OrderBy(c => c.Name);
 
         public CategoryRepository(PetanqueProSuiteDbContext ctx) : base(ctx){}
     }

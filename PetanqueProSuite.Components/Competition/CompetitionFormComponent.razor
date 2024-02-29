@@ -35,7 +35,7 @@
                     <option value="0" selected>Choose...</option>
                     @if (Leagues != null)
                     {
-                        foreach (League lea in Leagues.Where(c => c.CategoryId == CompetitionForm.CategoryId))
+                        foreach (League lea in Categories.Where(c => c.Id == CompetitionForm.CategoryId).Select(c => c.Leagues).ToList())
                         {
                             <option value="@lea.Id">@lea.Name</option>
                         }
@@ -51,7 +51,7 @@
                     <option value="0" selected>Choose...</option>
                     @if (Divisions != null)
                     {
-                        foreach (Division div in Divisions.Where(c=>c.League.Id == CompetitionForm.LeagueId))
+                        foreach (Division div in Divisions.Where(c=>c.LeagueId == CompetitionForm.LeagueId))
                         {
                             <option value="@div.Id">@div.Name</option>
                         }
