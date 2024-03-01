@@ -35,7 +35,7 @@
                     <option value="0" selected>Choose...</option>
                     @if (Leagues != null)
                     {
-                        foreach (League lea in Categories.Where(c => c.Id == CompetitionForm.CategoryId).Select(c => c.Leagues).ToList())
+                        foreach (League lea in Leagues.Where(c => c.CategoryId == CompetitionForm.CategoryId))
                         {
                             <option value="@lea.Id">@lea.Name</option>
                         }

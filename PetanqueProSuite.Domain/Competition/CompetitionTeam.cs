@@ -19,8 +19,8 @@ namespace PetanqueProSuite.Domain.Competition
         public Club Club { get; set; }
         public int? ClubId { get; set; }
 
-        //[Required]
-        //public Division Division { get; set; }
+        [Required]
+        public Division Division { get; set; }
         public int? DivisionId { get; set; }
 
         public override string ToString()

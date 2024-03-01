@@ -14,16 +14,16 @@ namespace PetanqueProSuite.Domain.Competition
         [Key]
         public int Id { get; set; }
 
-        //[Required]
-        //[JsonIgnore]
-        //public Category Category { get; set; }
-
+        [Required]
+        public Category Category { get; set; }
         public int? CategoryId { get; set; }
 
         [Required]
         [StringLength(80)]
         public string Name { get; set; }
 
+
+        [JsonIgnore]
         public ICollection<Division> Divisions { get; set; }
     }
 }

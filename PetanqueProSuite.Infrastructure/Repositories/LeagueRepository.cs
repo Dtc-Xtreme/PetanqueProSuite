@@ -11,7 +11,7 @@ namespace PetanqueProSuite.Infrastructure.Repositories
 {
     public class LeagueRepository : GenericRepository, ILeagueRepository
     {
-        public IQueryable<League> Leagues => context.Leagues.OrderBy(c => c.Name);
+        public IQueryable<League> Leagues => context.Leagues.Where(c => c.Divisions.Any()).OrderBy(c => c.Name);
 
         public LeagueRepository(PetanqueProSuiteDbContext ctx) : base(ctx){}
     }
