@@ -22,6 +22,7 @@ builder.Services.AddScoped<ILeagueRepository, LeagueRepository>();
 builder.Services.AddScoped<IDivisionRepository, DivisionRepository>();
 builder.Services.AddScoped<IClubRepository, ClubRepository>();
 builder.Services.AddScoped<ICompetitionTeamRepository, CompetitionTeamRepository>();
+builder.Services.AddScoped<ILicenseRepository, LicenseRepository>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

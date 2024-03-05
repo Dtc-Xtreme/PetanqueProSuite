@@ -23,6 +23,8 @@ namespace PetanqueProSuite.Domain.Competition
         public Division Division { get; set; }
         public int? DivisionId { get; set; }
 
+        public ICollection<License> Licenses { get; set; }
+
         public override string ToString()
         {
             return Identifyer == null ? Club.Name : Club.Name + " " + Identifyer;

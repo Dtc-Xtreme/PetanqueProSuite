@@ -39,5 +39,6 @@ namespace PetanqueProSuite.Infrastructure
         public DbSet<Division> Divisions { get; set; }
         public DbSet<Club> Clubs { get; set; }
         public DbSet<CompetitionTeam> CompetitionTeams { get; set; }
+        public DbSet<License> Licenses { get; set; }
     }
 }

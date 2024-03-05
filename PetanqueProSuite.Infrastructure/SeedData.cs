@@ -100,8 +100,20 @@ namespace PetanqueProSuite.Infrastructure
                 dbContext.Clubs.AddRange(new List<Club>() { OLYMPIA, SPARRENDAL, KELCHTEREN, HASSELT, OPEC, BOEKT, GENENBOS, BERK, ZIG, PELTER, HORIZON, GENK, TONGEREN, INTERLOMMEL, OETERVALLEI, MELDERT, SINT, MAASEIK, TERBIEST, VENNE, BOCHOLTER, FENIX, Yachting });
             }
 
+            License p1BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Rony", LastName = "Bleux" };
+            License p2BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Frans", LastName = "Kazmierczak" };
+            License p3BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Jose", LastName = "x" };
+            License p4BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Serano", LastName = "x" };
+            License p5BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Toto", LastName = "x" };
+            License p6BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Eric", LastName = "x" };
+            License p7BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Steven", LastName = "Kazmierczak" };
+            License p8BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Tonny", LastName = "x" };
+            License p9BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Mario", LastName = "x" };
+            License p10BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Lina", LastName = "x" };
 
-            CompetitionTeam boektA = new CompetitionTeam { Identifyer = 'A', Club = BOEKT, Division = provEreSen };
+            List<License> teamBoek = new List<License> { p1BoektEre, p2BoektEre , p3BoektEre, p3BoektEre , p4BoektEre , p5BoektEre, p6BoektEre, p7BoektEre, p8BoektEre, p9BoektEre, p10BoektEre };
+
+            CompetitionTeam boektA = new CompetitionTeam { Identifyer = 'A', Club = BOEKT, Division = provEreSen, Licenses=teamBoek };
             CompetitionTeam OpecA = new CompetitionTeam { Identifyer = 'A', Club = OPEC, Division = provEreSen };
             CompetitionTeam boektB = new CompetitionTeam { Identifyer = 'B', Club = BOEKT, Division = prov1stSen };
             CompetitionTeam oeterA = new CompetitionTeam { Identifyer = 'A', Club = OETERVALLEI, Division = prov1stSen };
