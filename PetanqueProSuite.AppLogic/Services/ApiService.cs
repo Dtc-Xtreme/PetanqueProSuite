@@ -67,12 +67,23 @@ namespace PetanqueProSuite.AppLogic.Services
                 return null;
             }
         }
-
         public async Task<List<Club>?> GetAllClubs()
         {
             try
             {
                 return await client.GetFromJsonAsync<List<Club>>(url + "/Club");
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<License>?> GetAllLicenses()
+        {
+            try
+            {
+                return await client.GetFromJsonAsync<List<License>>(url + "/License");
 
             }
             catch (Exception ex)

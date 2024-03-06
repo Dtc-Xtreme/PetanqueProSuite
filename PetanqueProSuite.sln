@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetanqueProSuite.Infrastruc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetanqueProSuite.Components", "PetanqueProSuite.Components\PetanqueProSuite.Components.csproj", "{EDD13003-A2F0-4547-B865-F3ED8DDAE937}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetanqueProSuite.API", "PetanqueProSuite.API\PetanqueProSuite.API.csproj", "{8E868AF6-3499-44C9-8F9B-C98760034142}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PetanqueProSuite.API", "PetanqueProSuite.API\PetanqueProSuite.API.csproj", "{8E868AF6-3499-44C9-8F9B-C98760034142}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{CAB4D33C-63EE-4CD8-918E-439087C13C56}"
 EndProject

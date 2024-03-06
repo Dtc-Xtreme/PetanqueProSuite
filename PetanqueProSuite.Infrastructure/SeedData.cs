@@ -111,9 +111,12 @@ namespace PetanqueProSuite.Infrastructure
             License p9BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Mario", LastName = "x" };
             License p10BoektEre = new License { Club = BOEKT, Number = 1, FirstName = "Lina", LastName = "x" };
 
-            List<License> teamBoek = new List<License> { p1BoektEre, p2BoektEre , p3BoektEre, p3BoektEre , p4BoektEre , p5BoektEre, p6BoektEre, p7BoektEre, p8BoektEre, p9BoektEre, p10BoektEre };
+            if (!dbContext.Licenses.Any())
+            {
+                dbContext.Licenses.AddRange(new List<License>() { p1BoektEre, p2BoektEre, p3BoektEre, p4BoektEre, p5BoektEre, p6BoektEre, p7BoektEre, p8BoektEre, p9BoektEre, p10BoektEre });
+            }
 
-            CompetitionTeam boektA = new CompetitionTeam { Identifyer = 'A', Club = BOEKT, Division = provEreSen, Licenses=teamBoek };
+            CompetitionTeam boektA = new CompetitionTeam { Identifyer = 'A', Club = BOEKT, Division = provEreSen};
             CompetitionTeam OpecA = new CompetitionTeam { Identifyer = 'A', Club = OPEC, Division = provEreSen };
             CompetitionTeam boektB = new CompetitionTeam { Identifyer = 'B', Club = BOEKT, Division = prov1stSen };
             CompetitionTeam oeterA = new CompetitionTeam { Identifyer = 'A', Club = OETERVALLEI, Division = prov1stSen };

@@ -65,7 +65,7 @@
         <div class="col-12 col-lg-6">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="home">Home</label>
-                <InputSelect @bind-Value="CompetitionForm.HomeId" class="form-select" id="home" disabled="@(CompetitionForm.DivisionId == 0)">
+                <InputSelect Value="@CompetitionForm.HomeId" ValueExpression="@(() => CompetitionForm.HomeId)" ValueChanged="@((int e) => HandleHomeTeamValueChange(e))" class="form-select" id="home" disabled="@(CompetitionForm.DivisionId == 0)">
                     <option value="0" selected>Choose...</option>
                     @if (Teams != null)
                     {
@@ -81,7 +81,7 @@
         <div class="col-12 col-lg-6">
             <div class="input-group mb-3">
                 <label class="input-group-text" for="visitor">Visitor</label>
-                <InputSelect @bind-Value="CompetitionForm.VisitorId" class="form-select" id="visitor" disabled="@(CompetitionForm.DivisionId == 0 || CompetitionForm.LeagueId == 0)">
+                <InputSelect Value="@CompetitionForm.VisitorId" ValueExpression="@(() => CompetitionForm.VisitorId)" ValueChanged="@((int e) => HandleVisitorTeamValueChange(e))" class="form-select" id="home" disabled="@(CompetitionForm.DivisionId == 0)">
                     <option value="0" selected>Choose...</option>
                     @if (Teams != null)
                     {
@@ -158,5 +158,14 @@
         CompetitionForm.VisitorId = 0;
         StateHasChanged();
     }
-
+    private void HandleHomeTeamValueChange(int value)
+    {
+        CompetitionForm.HomeId = value;
+        StateHasChanged();
+    }
+    private void HandleVisitorTeamValueChange(int value)
+    {
+        CompetitionForm.VisitorId = value;
+        StateHasChanged();
+    }
 }

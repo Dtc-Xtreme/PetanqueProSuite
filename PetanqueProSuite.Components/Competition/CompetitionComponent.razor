@@ -1,28 +1,38 @@
-﻿<h3 class="mb-4 text-center">Competition Sessions</h3>
+﻿<h3>CompetitionComponent</h3>
 
-<ul class="nav nav-tabs">
-        <li class="nav-item">
-        <a class="btn btn-primary me-1 mb-1" href="/competition/start">+</a>
-    </li>
-    @foreach (Competition session in SessionManager.Competitions)
-    {
-        <li class="nav-item">
-            <a class="nav-link @CheckIfActive(session)" @onclick="() => NavClick(session)">@session.ToString()</a>
-        </li>
-    }
-</ul>
+<div class="row">
+    <div class="col-6">
+        @if (Competition != null && Licenses != null)
+        {
+            <ul>
+                @foreach (License lic in Licenses.Where(c => c.ClubId == Competition.Home.ClubId)){
+                    <li>@lic.FullName</li>
+                }
+            </ul>
+        }
+    </div>
+    <div class="col-6">
+        @if (Competition != null && Licenses != null)
+        {
+            <ul>
+                @foreach (License lic in Licenses.Where(c => c.ClubId == Competition.Visitor.ClubId))
+                {
+                    <li>@lic.FullName</li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
 
 @code {
-    [Inject] private ICompetitionSessionManager SessionManager { get; set; }
-    private Competition SelectedSession { get; set; }
+    [Inject] private IApiService ApiService { get; set; }
 
-    private string CheckIfActive(Competition session)
-    {
-        return SelectedSession == session ? "active" : "";
-    }
+    [Parameter] public Competition Competition { get; set; }
+    [Parameter] public List<License>? Licenses { get; set; }
 
-    private void NavClick(Competition session)
+    protected async override Task OnInitializedAsync()
     {
-        SelectedSession = session;
+        Licenses = await ApiService.GetAllLicenses();
     }
 }

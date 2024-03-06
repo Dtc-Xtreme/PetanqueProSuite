@@ -14,7 +14,7 @@ namespace PetanqueProSuite.AppLogic.Services
         public Task<List<League>?> GetAllLeagues();
         public Task<List<Division>?> GetAllDivisions();
         public Task<List<CompetitionTeam>?> GetAllCompetitionTeams();
-
         public Task<List<Club>?> GetAllClubs();
+        public Task<List<License>?> GetAllLicenses();
     }
 }

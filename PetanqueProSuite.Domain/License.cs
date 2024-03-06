@@ -24,6 +24,10 @@ namespace PetanqueProSuite.Domain
         [StringLength(50)]
         public string LastName { get; set; }
 
+        public string FullName { 
+            get { return FirstName + "" + LastName; } 
+        }
+
         [Required]
         public Club Club { get; set; }
         public int ClubId { get; set; }

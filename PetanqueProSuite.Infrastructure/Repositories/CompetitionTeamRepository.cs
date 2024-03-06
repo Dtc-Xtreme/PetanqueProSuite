@@ -12,7 +12,7 @@ namespace PetanqueProSuite.Infrastructure.Repositories
 {
     public class CompetitionTeamRepository : GenericRepository, ICompetitionTeamRepository
     {
-        public IQueryable<CompetitionTeam> CompetitionTeams => context.CompetitionTeams.Include(c=>c.Club).Include(c=>c.Licenses);
+        public IQueryable<CompetitionTeam> CompetitionTeams => context.CompetitionTeams.Include(c=>c.Club);
 
         public CompetitionTeamRepository(PetanqueProSuiteDbContext ctx) : base(ctx){}
     }
