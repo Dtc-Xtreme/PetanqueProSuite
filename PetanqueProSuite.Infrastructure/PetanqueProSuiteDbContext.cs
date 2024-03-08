@@ -32,6 +32,8 @@ namespace PetanqueProSuite.Infrastructure
             modelBuilder.Entity<Club>().HasIndex(p => p.Name).IsUnique();
             modelBuilder.Entity<Club>().HasIndex(p => p.Number).IsUnique();
             modelBuilder.Entity<CompetitionTeam>().HasIndex(p => new { p.Identifyer, p.ClubId }).HasFilter("[Identifyer] IS NOT NULL").IsUnique();
+            modelBuilder.HasSequence<int>("OPNR2023").StartsAt(00001).IncrementsBy(1);
+            modelBuilder.Entity<License>().Property(c=>c.Id).HasDefaultValueSql("NEXT VALUE FOR OPNR2023");
         }
 
         public DbSet<Category> Categories { get; set; }

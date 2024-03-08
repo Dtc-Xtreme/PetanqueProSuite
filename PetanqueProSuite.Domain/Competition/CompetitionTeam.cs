@@ -9,6 +9,15 @@ namespace PetanqueProSuite.Domain.Competition
 {
     public class CompetitionTeam : Team
     {
+        public CompetitionTeam()
+        {
+            Licenses = new List<License>();
+            for(int i = 0; i <= 9; i++)
+            {
+                Licenses.Add(new License());
+            }
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -22,6 +31,8 @@ namespace PetanqueProSuite.Domain.Competition
         [Required]
         public Division Division { get; set; }
         public int? DivisionId { get; set; }
+
+        public IList<License> Licenses { get; set; } 
 
         public override string ToString()
         {

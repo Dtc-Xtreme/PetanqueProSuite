@@ -10,7 +10,7 @@ namespace PetanqueProSuite.Infrastructure.Repositories
 {
     public class LicenseRepository : GenericRepository, ILicenseRepository
     {
-        public IQueryable<License> Licenses => context.Licenses.OrderBy(c => c.Number);
+        public IQueryable<License> Licenses => context.Licenses.OrderBy(c => c.Id);
 
         public LicenseRepository(PetanqueProSuiteDbContext ctx) : base(ctx){}
     }

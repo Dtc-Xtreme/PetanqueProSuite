@@ -13,10 +13,6 @@ namespace PetanqueProSuite.Domain
         public int Id { get; set; }
 
         [Required]
-        [Range(1, 9999)]
-        public int Number { get; set; }
-
-        [Required]
         [StringLength(50)]
         public string FirstName { get; set; }
 
@@ -25,7 +21,7 @@ namespace PetanqueProSuite.Domain
         public string LastName { get; set; }
 
         public string FullName { 
-            get { return FirstName + "" + LastName; } 
+            get { return FirstName + " " + LastName; } 
         }
 
         [Required]

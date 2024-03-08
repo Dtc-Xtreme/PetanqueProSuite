@@ -54,7 +54,7 @@ namespace PetanqueProSuite.API.Controllers
                 {
                     License newItem = new License
                     {
-                        Number = dto.Number,
+                        Id = dto.Number,
                         ClubId = dto.ClubId,
                         FirstName = dto.FirstName,
                         LastName = dto.LastName

@@ -7,16 +7,18 @@
     @foreach (Competition session in SessionManager.Competitions)
     {
         <li class="nav-item">
-            <a class="nav-link @CheckIfActive(session)" @onclick="() => NavClick(session)">@session.ToString()</a>
+            <a class="nav-link @CheckIfActive(session)" @onclick="() => NavClick(session)">@session.ToString() @* <button class="btn btn-danger" @onclick="() => DeleteSession(session)">X</button> *@</a>
         </li>
     }
 </ul>
-
-<CompetitionComponent Competition="SelectedSession"/>
+@if(SelectedSession != null)
+{
+    <CompetitionComponent Competition="SelectedSession" />
+}
 
 @code {
     [Inject] private ICompetitionSessionManager SessionManager { get; set; }
-    private Competition SelectedSession { get; set; }
+    private Competition? SelectedSession { get; set; }
 
     private string CheckIfActive(Competition session)
     {
@@ -27,4 +29,9 @@
     {
         SelectedSession = session;
     }
+
+    // private void DeleteSession(Competition session)
+    // {
+    //     SessionManager.RemoveSession(session);
+    // }
 }

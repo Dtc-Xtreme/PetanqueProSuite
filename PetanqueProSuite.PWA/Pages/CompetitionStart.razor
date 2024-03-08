@@ -12,6 +12,8 @@
 
 @code {
     [Inject] private IApiService ApiService { get; set; }
+    [Inject] private ICompetitionSessionManager CompetitionSessionManager { get; set; }
+
 
     private IList<Category>? Categories { get; set; }
     private IList<League>? Leagues { get; set; }
@@ -24,5 +26,14 @@
         Leagues = await ApiService.GetAllLeagues();
         Divisions = await ApiService.GetAllDivisions();
         Teams = await ApiService.GetAllCompetitionTeams();
+
+        CompetitionSessionManager.AddSession(new Domain.Competition.Competition
+            {
+                Category = Categories.First(c => c.Id == 2),
+                League = Leagues.First(c=>c.Id == 4),
+                Division = Divisions.First(c=>c.Id == 6),
+                Home = Teams.First(c => c.Id == 1),
+                Visitor = Teams.First(c => c.Id == 2)
+            });
     }
 }
