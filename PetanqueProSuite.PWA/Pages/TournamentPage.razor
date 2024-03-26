@@ -1,0 +1,17 @@
+﻿@page "/tournament"
+@using PetanqueProSuite.Domain.Sessions
+
+<PageTitle>Tournaments</PageTitle>
+
+<h3>TournamentPage</h3>
+
+<GameSessionManager Type="Type"/>
+
+@code {
+    private Type Type  { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Type = typeof(TournamentSession);
+    }
+}

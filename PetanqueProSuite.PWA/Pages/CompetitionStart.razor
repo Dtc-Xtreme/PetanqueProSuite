@@ -7,7 +7,7 @@
 <PageTitle>Start Competition</PageTitle>
 
 <div class="container text-center">
-    <CompetitionFormComponent Categories="Categories" Leagues="Leagues" Divisions="Divisions" Teams="Teams"/>
+    <CompetitionFormComponent Categories="Categories" Leagues="Leagues" Divisions="Divisions" Teams="Teams" Licenses="Licenses"/>
 </div>
 
 @code {
@@ -19,6 +19,7 @@
     private IList<League>? Leagues { get; set; }
     private IList<Division>? Divisions { get; set; }
     private IList<CompetitionTeam>? Teams { get; set; }
+    private IList<License>? Licenses { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -26,6 +27,7 @@
         Leagues = await ApiService.GetAllLeagues();
         Divisions = await ApiService.GetAllDivisions();
         Teams = await ApiService.GetAllCompetitionTeams();
+        Licenses = await ApiService.GetAllLicenses();
 
         CompetitionSessionManager.AddSession(new Domain.Competition.Competition
             {

@@ -1,107 +1,267 @@
 ﻿<h3 class="mb-4">Start Competition</h3>
+@if (Competition != null){
+    <EditForm Model="CompetitionForm" OnValidSubmit="Next">
+        <DataAnnotationsValidator/>
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="start">Start</label>
+                    <input type="datetime-local" class="form-control" @bind="CompetitionForm.Start" id="start" />
+                </div>
+            </div>
 
-<EditForm Model="CompetitionForm" OnValidSubmit="Submit">
-    <DataAnnotationsValidator/>
+            <div class="col-12 col-lg-6">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="category">Category</label>
+                    <InputSelect Value="@CompetitionForm.CategoryId" ValueExpression="@(() => CompetitionForm.CategoryId)" ValueChanged="@((int e) => HandleCategoryValueChanged(e))" class="form-select" id="category">
+                        <option value="0" selected>Choose...</option>
+                        @if (Categories != null)
+                        {
+                            foreach (Category cat in Categories)
+                            {
+                                <option value="@cat.Id">@cat.Name</option>
+                            }
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="league">League</label>
+                    <InputSelect Value="@CompetitionForm.LeagueId" ValueExpression="@(() => CompetitionForm.LeagueId)" ValueChanged="@((int e) => HandleLeagueValueChanged(e))" class="form-select" id="league" disabled="@(CompetitionForm.CategoryId == 0)">
+                        <option value="0" selected>Choose...</option>
+                        @if (Leagues != null)
+                        {
+                            foreach (League lea in Leagues.Where(c => c.CategoryId == CompetitionForm.CategoryId))
+                            {
+                                <option value="@lea.Id">@lea.Name</option>
+                            }
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="division">Division</label>
+                    <InputSelect Value="@CompetitionForm.DivisionId" ValueExpression="@(() => CompetitionForm.DivisionId)" ValueChanged="@((int e) => HandleDivisionValueChanged(e))" class="form-select" id="division" disabled="@(CompetitionForm.LeagueId == 0)">
+                        <option value="0" selected>Choose...</option>
+                        @if (Divisions != null)
+                        {
+                            foreach (Division div in Divisions.Where(c=>c.LeagueId == CompetitionForm.LeagueId))
+                            {
+                                <option value="@div.Id">@div.Name</option>
+                            }
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="home">Home</label>
+                    <InputSelect Value="@CompetitionForm.HomeId" ValueExpression="@(() => CompetitionForm.HomeId)" ValueChanged="@((int e) => HandleHomeTeamValueChange(e))" class="form-select" id="home" disabled="@(CompetitionForm.DivisionId == 0)">
+                        <option value="0" selected>Choose...</option>
+                        @if (Teams != null)
+                        {
+                            foreach (CompetitionTeam team in Teams.Where(c => c.DivisionId == CompetitionForm.DivisionId))
+                            {
+                                <option value="@team.Id">@team.ToString()</option>
+                            }
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="visitor">Visitor</label>
+                    <InputSelect Value="@CompetitionForm.VisitorId" ValueExpression="@(() => CompetitionForm.VisitorId)" ValueChanged="@((int e) => HandleVisitorTeamValueChange(e))" class="form-select" id="home" disabled="@(CompetitionForm.DivisionId == 0)">
+                        <option value="0" selected>Choose...</option>
+                        @if (Teams != null)
+                        {
+                            foreach (CompetitionTeam team in Teams.Where(c => c.DivisionId == CompetitionForm.DivisionId))
+                            {
+                                <option value="@team.Id">@team.ToString()</option>
+                            }
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+        </div>
+
+        <div class="">
+            <ValidationSummary />
+        </div>
+
+        <button class="btn btn-primary" type="submit">Next</button>
+    </EditForm>
+}
+else
+{
     <div class="row">
-        <div class="col-12 col-lg-6">
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="start">Start</label>
-                <input type="datetime-local" class="form-control" @bind="CompetitionForm.Start" id="start" />
+        <div class="col-6">
+            <h3 class="mt-3">@Competition.Home.ToString() (Home)</h3>
+            <h4 class="mt-3">A</h4>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Home.Licenses[0].Id" ValueExpression="@(() => Competition.Home.Licenses[0].Id)" ValueChanged="@((int e) => HandleSelect(e,0))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Home.Licenses[0].FullName</span>
             </div>
-        </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Home.Licenses[1].Id" ValueExpression="@(() => Competition.Home.Licenses[1].Id)" ValueChanged="@((int e) => HandleSelect(e,1))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Home.Licenses[1].FullName</span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Home.Licenses[2].Id" ValueExpression="@(() => Competition.Home.Licenses[2].Id)" ValueChanged="@((int e) => HandleSelect(e,2))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Home.Licenses[2].FullName</span>
+            </div>
 
-        <div class="col-12 col-lg-6">
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="category">Category</label>
-                <InputSelect Value="@CompetitionForm.CategoryId" ValueExpression="@(() => CompetitionForm.CategoryId)" ValueChanged="@((int e) => HandleCategoryValueChanged(e))" class="form-select" id="category">
-                    <option value="0" selected>Choose...</option>
-                    @if (Categories != null)
-                    {
-                        foreach (Category cat in Categories)
-                        {
-                            <option value="@cat.Id">@cat.Name</option>
-                        }
-                    }
-                </InputSelect>
+            <h4 class="mt-3">B</h4>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Home.Licenses[3].Id" ValueExpression="@(() => Competition.Home.Licenses[3].Id)" ValueChanged="@((int e) => HandleSelect(e,3))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Home.Licenses[3].FullName</span>
             </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Home.Licenses[4].Id" ValueExpression="@(() => Competition.Home.Licenses[4].Id)" ValueChanged="@((int e) => HandleSelect(e,4))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Home.Licenses[4].FullName</span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Home.Licenses[5].Id" ValueExpression="@(() => Competition.Home.Licenses[5].Id)" ValueChanged="@((int e) => HandleSelect(e,5))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Home.Licenses[5].FullName</span>
+            </div>
+
+            <h4 class="mt-3">C</h4>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Home.Licenses[6].Id" ValueExpression="@(() => Competition.Home.Licenses[6].Id)" ValueChanged="@((int e) => HandleSelect(e,6))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Home.Licenses[6].FullName</span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Home.Licenses[7].Id" ValueExpression="@(() => Competition.Home.Licenses[7].Id)" ValueChanged="@((int e) => HandleSelect(e,7))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Home.Licenses[7].FullName</span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Home.Licenses[8].Id" ValueExpression="@(() => Competition.Home.Licenses[8].Id)" ValueChanged="@((int e) => HandleSelect(e,8))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Home.Licenses[8].FullName</span>
+            </div>
+
+            <datalist id="suggestions">
+
+                @if (Licenses != null)
+                {
+                    foreach (License lic in Licenses.Where(c => c.ClubId == Competition.Home.ClubId))
+                    {
+                        <option value="@lic.Id" />
+                        @*                         <option value="@lic.Id.ToString("D5")" />
+                *@  }
+                }
+            </datalist>
+        </div>
+        <div class="col-6">
+            <h3 class="mt-3">@Competition.Visitor.ToString() (Visitor)</h3>
+            <h4 class="mt-3">D</h4>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Visitor.Licenses[0].Id" ValueExpression="@(() => Competition.Visitor.Licenses[0].Id)" ValueChanged="@((int e) => HandleSelect(e,0,true))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Visitor.Licenses[0].FullName</span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Visitor.Licenses[1].Id" ValueExpression="@(() => Competition.Visitor.Licenses[1].Id)" ValueChanged="@((int e) => HandleSelect(e,1,true))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Visitor.Licenses[1].FullName</span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Visitor.Licenses[2].Id" ValueExpression="@(() => Competition.Visitor.Licenses[2].Id)" ValueChanged="@((int e) => HandleSelect(e,2,true))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Visitor.Licenses[2].FullName</span>
+            </div>
+
+            <h4 class="mt-3">E</h4>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Visitor.Licenses[3].Id" ValueExpression="@(() => Competition.Visitor.Licenses[3].Id)" ValueChanged="@((int e) => HandleSelect(e,3,true))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Visitor.Licenses[3].FullName</span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Visitor.Licenses[4].Id" ValueExpression="@(() => Competition.Visitor.Licenses[4].Id)" ValueChanged="@((int e) => HandleSelect(e,4,true))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Visitor.Licenses[4].FullName</span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Visitor.Licenses[5].Id" ValueExpression="@(() => Competition.Visitor.Licenses[5].Id)" ValueChanged="@((int e) => HandleSelect(e,5,true))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Visitor.Licenses[5].FullName</span>
+            </div>
+
+            <h4 class="mt-3">F</h4>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Visitor.Licenses[6].Id" ValueExpression="@(() => Competition.Visitor.Licenses[6].Id)" ValueChanged="@((int e) => HandleSelect(e,6,true))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Visitor.Licenses[6].FullName</span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Visitor.Licenses[7].Id" ValueExpression="@(() => Competition.Visitor.Licenses[7].Id)" ValueChanged="@((int e) => HandleSelect(e,7,true))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Visitor.Licenses[7].FullName</span>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">License</span>
+                <InputNumber class="form-control" Value="Competition.Visitor.Licenses[8].Id" ValueExpression="@(() => Competition.Visitor.Licenses[8].Id)" ValueChanged="@((int e) => HandleSelect(e,8,true))" placeholder="License" list="suggestions" />
+                <span class="input-group-text">Name</span>
+                <span class="form-control text-start">@Competition.Visitor.Licenses[8].FullName</span>
+            </div>
+
+            <datalist id="suggestions">
+
+                @if (Licenses != null)
+                {
+                    foreach (License lic in Licenses.Where(c => c.ClubId == Competition.Home.ClubId))
+                    {
+                        <option value="@lic.Id" />
+                        @*                         <option value="@lic.Id.ToString("D5")" />
+                *@  }
+                }
+            </datalist>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary" @onclick="Done">Start</button>
         </div>
     </div>
+}
 
-    <div class="row">
-        <div class="col-12 col-lg-6">
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="league">League</label>
-                <InputSelect Value="@CompetitionForm.LeagueId" ValueExpression="@(() => CompetitionForm.LeagueId)" ValueChanged="@((int e) => HandleLeagueValueChanged(e))" class="form-select" id="league" disabled="@(CompetitionForm.CategoryId == 0)">
-                    <option value="0" selected>Choose...</option>
-                    @if (Leagues != null)
-                    {
-                        foreach (League lea in Leagues.Where(c => c.CategoryId == CompetitionForm.CategoryId))
-                        {
-                            <option value="@lea.Id">@lea.Name</option>
-                        }
-                    }
-                </InputSelect>
-            </div>
-        </div>
-
-        <div class="col-12 col-lg-6">
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="division">Division</label>
-                <InputSelect Value="@CompetitionForm.DivisionId" ValueExpression="@(() => CompetitionForm.DivisionId)" ValueChanged="@((int e) => HandleDivisionValueChanged(e))" class="form-select" id="division" disabled="@(CompetitionForm.LeagueId == 0)">
-                    <option value="0" selected>Choose...</option>
-                    @if (Divisions != null)
-                    {
-                        foreach (Division div in Divisions.Where(c=>c.LeagueId == CompetitionForm.LeagueId))
-                        {
-                            <option value="@div.Id">@div.Name</option>
-                        }
-                    }
-                </InputSelect>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12 col-lg-6">
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="home">Home</label>
-                <InputSelect Value="@CompetitionForm.HomeId" ValueExpression="@(() => CompetitionForm.HomeId)" ValueChanged="@((int e) => HandleHomeTeamValueChange(e))" class="form-select" id="home" disabled="@(CompetitionForm.DivisionId == 0)">
-                    <option value="0" selected>Choose...</option>
-                    @if (Teams != null)
-                    {
-                        foreach (CompetitionTeam team in Teams.Where(c => c.DivisionId == CompetitionForm.DivisionId))
-                        {
-                            <option value="@team.Id">@team.ToString()</option>
-                        }
-                    }
-                </InputSelect>
-            </div>
-        </div>
-
-        <div class="col-12 col-lg-6">
-            <div class="input-group mb-3">
-                <label class="input-group-text" for="visitor">Visitor</label>
-                <InputSelect Value="@CompetitionForm.VisitorId" ValueExpression="@(() => CompetitionForm.VisitorId)" ValueChanged="@((int e) => HandleVisitorTeamValueChange(e))" class="form-select" id="home" disabled="@(CompetitionForm.DivisionId == 0)">
-                    <option value="0" selected>Choose...</option>
-                    @if (Teams != null)
-                    {
-                        foreach (CompetitionTeam team in Teams.Where(c => c.DivisionId == CompetitionForm.DivisionId))
-                        {
-                            <option value="@team.Id">@team.ToString()</option>
-                        }
-                    }
-                </InputSelect>
-            </div>
-        </div>
-    </div>
-
-    <div class="">
-        <ValidationSummary />
-    </div>
-
-    <button class="btn btn-primary" type="submit">Start</button>
-</EditForm>
-
+<div class="progress" role="progressbar" aria-label="Example with label" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar" style="width: 25%">25%</div>
+</div>
 
 @code {
     [Inject] private ICompetitionSessionManager? SessionManager { get; set; }
@@ -111,14 +271,17 @@
     [Parameter] public IList<League>? Leagues { get; set; }
     [Parameter] public IList<Division>? Divisions { get; set; }
     [Parameter] public IList<CompetitionTeam>? Teams { get; set; }
+    [Parameter] public IList<License>? Licenses { get; set; }
 
+    private Competition? Competition { get; set; }
     private CompetitionForm CompetitionForm { get; set; } = new();
+    private int PageNumber { get; set; } = 1;
 
-    private void Submit()
+    private void Next()
     {
         if (Categories != null && Leagues != null && Divisions != null && SessionManager != null && NavigationManager != null && Teams != null)
         {
-            Competition session = new Competition
+            Competition = new Competition
                 {
                     Category = Categories.First(c => c.Id == CompetitionForm.CategoryId),
                     League = Leagues.First(c => c.Id == CompetitionForm.LeagueId),
@@ -127,10 +290,13 @@
                     Visitor = Teams.First(c => c.Id == CompetitionForm.VisitorId),
                     Start = CompetitionForm.Start
                 };
-
-            SessionManager.AddSession(session);
-            NavigationManager.NavigateTo("/competition");
         }
+    }
+
+    private void Done()
+    {
+        SessionManager.AddSession(Competition);
+        NavigationManager.NavigateTo("/competition");
     }
 
     private void HandleCategoryValueChanged(int value)
@@ -167,5 +333,18 @@
     {
         CompetitionForm.VisitorId = value;
         StateHasChanged();
+    }
+
+    private void HandleSelect(int id, int pos, bool visitor = false)
+    {
+
+        if (visitor == false)
+        {
+            Competition.Home.Licenses[pos] = Licenses.FirstOrDefault(c => c.Id == id);
+        }
+        else
+        {
+            Competition.Visitor.Licenses[pos] = Licenses.FirstOrDefault(c => c.Id == id);
+        }
     }
 }
