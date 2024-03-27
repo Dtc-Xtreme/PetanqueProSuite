@@ -10,7 +10,10 @@ namespace PetanqueProSuite.AppLogic.Services
 {
     public class GameSessionManager : IGameSessionManager
     {
-        public IList<IGameSession> Sessions { get; set; }
+        private IGameSession? selectedSession;
+        public IGameSession? SelectedSession { get { return selectedSession; } }
+
+        public IList<IGameSession> Sessions { get; }
 
         public GameSessionManager()
         {
@@ -21,10 +24,14 @@ namespace PetanqueProSuite.AppLogic.Services
         {
             Sessions.Add(session);
         }
-
         public void RemoveSession(IGameSession session)
         {
+            if(selectedSession == session) selectedSession = null;
             Sessions.Remove(session);
+        }
+        public void SelectSession(IGameSession session)
+        {
+            selectedSession = session;
         }
     }
 }

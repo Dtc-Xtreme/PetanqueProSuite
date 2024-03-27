@@ -1,5 +1,6 @@
-﻿@using PetanqueProSuite.Components.Competition
+﻿@using PetanqueProSuite.Components.Tournament
 @using PetanqueProSuite.Domain.Sessions
+
 <ul class="nav nav-tabs">
     <li class="nav-item">
         <a class="btn btn-primary me-1 mb-1" @onclick="AddSession">+</a>
@@ -12,13 +13,13 @@
     }
 </ul>
 
-@if(SelectedSession != null)
+@if(SessionManager.SelectedSession != null)
 {
     if(Type == typeof(CompetitionSession)){
         @*         <CompetitionComponent Competition="SelectedSession" />  *@
     }else if(Type == typeof(TournamentSession))
     {
-        
+        <TournamentComponent Session="(TournamentSession)SessionManager.SelectedSession" />
     }
 }
 
@@ -26,24 +27,21 @@
     [Parameter] public Type Type { get; set; }
     [Inject] private IGameSessionManager SessionManager { get; set; }
 
-    private IGameSession? SelectedSession { get; set; }
-
     private string CheckIfActive(IGameSession session)
     {
-        return SelectedSession == session ? "active" : "";
+        return SessionManager.SelectedSession == session ? "active" : "";
     }
-
     private void NavClick(IGameSession session)
     {
-        SelectedSession = session;
+        SessionManager.SelectSession(session);
     }
-
     private void AddSession()
     {
-        Object? newSession = Activator.CreateInstance(Type);
-        if (newSession != null) SessionManager.AddSession((IGameSession)newSession);
+        Object? instance = Activator.CreateInstance(Type);
+        IGameSession? newSession = (IGameSession)instance;
+        newSession.Name = "Hello";
+        if (newSession != null) SessionManager.AddSession(newSession);
     }
-
     private void DeleteSession(IGameSession session)
     {
         SessionManager.RemoveSession(session);

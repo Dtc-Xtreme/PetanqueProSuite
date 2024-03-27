@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PetanqueProSuite.Domain.Sessions
 {
-    public class CompetitionSession : GameSession, IGameSession
+    public abstract class GameSession
     {
+        public string Name { get; set; }
     }
 }

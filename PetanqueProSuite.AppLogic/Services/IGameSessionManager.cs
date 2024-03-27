@@ -10,9 +10,11 @@ namespace PetanqueProSuite.AppLogic.Services
 {
     public interface IGameSessionManager
     {
-        public IList<IGameSession> Sessions { get; set; }
+        public IGameSession SelectedSession { get; }
+        public IList<IGameSession> Sessions { get; }
 
         public void AddSession(IGameSession session);
         public void RemoveSession(IGameSession session);
+        public void SelectSession(IGameSession session);
     }
 }

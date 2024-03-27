@@ -8,5 +8,6 @@ namespace PetanqueProSuite.Domain.Sessions
 {
     public interface IGameSession
     {
+        public string Name { get; set; }
     }
 }

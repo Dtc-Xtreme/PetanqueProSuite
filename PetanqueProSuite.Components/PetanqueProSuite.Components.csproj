@@ -20,4 +20,8 @@
     <ProjectReference Include="..\PetanqueProSuite.Domain\PetanqueProSuite.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Tournament\TournamentComponent.razor" />
+  </ItemGroup>
+
 </Project>
