@@ -1,14 +1,14 @@
 ﻿@using PetanqueProSuite.Components.Tournament
 @using PetanqueProSuite.Domain.Sessions
 
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="btn btn-primary me-1 mb-1" @onclick="AddSession">+</a>
+<ul class="nav nav-tabs my-3">
+    <li class="nav-item d-flex align-items-center me-2 my-2">
+        <a class="btn btn-primary" @onclick="AddSession">+</a>
     </li>
     @foreach (IGameSession session in SessionManager.Sessions.Where(c=>c.GetType() == Type))
     {
-        <li class="nav-item">
-            <a class="nav-link @CheckIfActive(session)" @onclick="() => NavClick(session)">@session.ToString() <button class="btn btn-danger" @onclick="() => DeleteSession(session)">X</button></a>
+        <li class="nav-item d-flex align-items-center">
+            <a class="nav-link @CheckIfActive(session)" @onclick="() => NavClick(session)">@session.ToString() <button class="btn btn-danger ms-1" @onclick="() => DeleteSession(session)">X</button></a>
         </li>
     }
 </ul>
@@ -26,6 +26,7 @@
 @code {
     [Parameter] public Type Type { get; set; }
     [Inject] private IGameSessionManager SessionManager { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
 
     private string CheckIfActive(IGameSession session)
     {
@@ -37,10 +38,12 @@
     }
     private void AddSession()
     {
-        Object? instance = Activator.CreateInstance(Type);
-        IGameSession? newSession = (IGameSession)instance;
-        newSession.Name = "Hello";
-        if (newSession != null) SessionManager.AddSession(newSession);
+        switch(Type)
+        {
+            case Type competitionType when competitionType == typeof(TournamentSession):
+                NavigationManager.NavigateTo("/tournament/start");
+                break;
+        }
     }
     private void DeleteSession(IGameSession session)
     {
