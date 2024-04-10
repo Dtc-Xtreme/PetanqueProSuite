@@ -1,0 +1,61 @@
+﻿@using Microsoft.JSInterop
+@using PetanqueProSuite.Domain.Tournament
+
+<div class="modal fade" id="addTeamModal" tabindex="-1" aria-labelledby="addTeamModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <EditForm EditContext="Form" OnValidSubmit="SaveChangesAsync">
+                <ObjectGraphDataAnnotationsValidator  />
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addTeamModalLabel">Add Player</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @for(int i = 0; i < PlayerCount; i++)
+                    {
+                        <AddPlayerComponent Player="Team.Players[i]" />
+                    }
+
+                    <ValidationSummary />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" disabled="@Disabled">Save changes</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Inject] public IJSRuntime JSRuntime { get; set; }
+    [Parameter] public int PlayerCount { get; set; } = 1;
+    private TournamentTeam Team { get; set; }
+    private EditContext Form { get; set; }
+    private bool Disabled { get; set; } = true;
+
+    protected override void OnInitialized()
+    {
+        Team = new TournamentTeam();
+        Form = new EditContext(Team);
+        Form.OnFieldChanged += HandleFieldChanged;
+
+        for (int i = 0; i < PlayerCount; i++)
+        {
+            Team.Players.Add(new Player());
+        }
+    }
+
+    private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
+    {
+        if (Form is not null)
+        {
+            Disabled = !Form.Validate();
+            StateHasChanged();
+        }
+    }
+
+    private async Task SaveChangesAsync()
+    {
+    }
+}
