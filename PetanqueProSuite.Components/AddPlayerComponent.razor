@@ -1,18 +1,21 @@
-﻿    <div class="input-group mb-3">
-        <span class="input-group-text">Firstname</span>
-        <InputText class="form-control" @bind-Value=Player.FirstName/>
-    </div>
+﻿<h5>Player @(Number+1)</h5>
 
-    <div class="input-group mb-3">
-        <span class="input-group-text">Lastname</span>
-        <InputText class="form-control" @bind-Value=Player.LastName/>
-    </div>
+<div class="input-group mb-3">
+    <span class="input-group-text">Firstname</span>
+    <InputText class="form-control" @bind-Value=Player.FirstName/>
+</div>
 
-    <div class="input-group mb-3">
-        <span class="input-group-text">License</span>
-        <InputNumber class="form-control" @bind-Value=Player.LicenseNumber />
-    </div>
+<div class="input-group mb-3">
+    <span class="input-group-text">Lastname</span>
+    <InputText class="form-control" @bind-Value=Player.LastName/>
+</div>
+
+<div class="input-group mb-3">
+    <span class="input-group-text">License</span>
+    <InputNumber class="form-control" @bind-Value=Player.LicenseNumber />
+</div>
 
 @code {
     [Parameter] public Player Player { get; set; }
+    [Parameter] public int Number { get; set; }
 }

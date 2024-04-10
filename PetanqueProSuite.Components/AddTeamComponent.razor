@@ -4,7 +4,7 @@
 <div class="modal fade" id="addTeamModal" tabindex="-1" aria-labelledby="addTeamModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <EditForm EditContext="Form" OnValidSubmit="SaveChangesAsync">
+            <EditForm EditContext="Form" OnValidSubmit="Submit">
                 <ObjectGraphDataAnnotationsValidator  />
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="addTeamModalLabel">Add Player</h1>
@@ -13,7 +13,7 @@
                 <div class="modal-body">
                     @for(int i = 0; i < PlayerCount; i++)
                     {
-                        <AddPlayerComponent Player="Team.Players[i]" />
+                        <AddPlayerComponent Player="Team.Players[i]" Number="i"/>
                     }
 
                     <ValidationSummary />
@@ -28,13 +28,24 @@
 </div>
 
 @code {
-    [Inject] public IJSRuntime JSRuntime { get; set; }
-    [Parameter] public int PlayerCount { get; set; } = 1;
+    [Parameter] public int PlayerCount { get; set; }
+    [Parameter] public EventCallback<TournamentTeam> SaveChanges { get; set; }
+
+
     private TournamentTeam Team { get; set; }
     private EditContext Form { get; set; }
     private bool Disabled { get; set; } = true;
 
+    protected override void OnParametersSet()
+    {
+        Update();
+    }
     protected override void OnInitialized()
+    {
+        Update();
+    }
+
+    private void Update()
     {
         Team = new TournamentTeam();
         Form = new EditContext(Team);
@@ -45,7 +56,6 @@
             Team.Players.Add(new Player());
         }
     }
-
     private void HandleFieldChanged(object? sender, FieldChangedEventArgs e)
     {
         if (Form is not null)
@@ -54,8 +64,8 @@
             StateHasChanged();
         }
     }
-
-    private async Task SaveChangesAsync()
+    private async Task Submit()
     {
+        await SaveChanges.InvokeAsync(Team);
     }
 }

@@ -1,12 +1,46 @@
 ﻿@using Microsoft.JSInterop
 @using PetanqueProSuite.Domain.Sessions
+@using PetanqueProSuite.Domain.Tournament
 
 <h3>@Session?.Name</h3>
 
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTeamModal">Add Team</button>
 
-<AddTeamComponent PlayerCount="2"/>
+<AddTeamComponent SaveChanges="AddTeam" PlayerCount="@PlayerCount" />
+
+@Session?.Teams.Count()
 
 @code {
     [Parameter] public TournamentSession? Session { get; set; }
+    private int PlayerCount { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        SetCount();
+    }
+    protected override void OnInitialized()
+    {
+        SetCount();
+    }
+
+    private void SetCount()
+    {
+        switch (Session?.TeamSize)
+        {
+            case TeamSize.Individual:
+                PlayerCount = 1;
+                break;
+            case TeamSize.Doublet:
+                PlayerCount = 2;
+                break;
+            case TeamSize.Triplet:
+                PlayerCount = 3;
+                break;
+        }
+        StateHasChanged();
+    }
+    private void AddTeam(TournamentTeam team)
+    {
+        Session?.Teams.Add(team);
+    }
 }

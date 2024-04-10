@@ -35,6 +35,7 @@
     private void NavClick(IGameSession session)
     {
         SessionManager.SelectSession(session);
+        StateHasChanged();
     }
     private void AddSession()
     {
