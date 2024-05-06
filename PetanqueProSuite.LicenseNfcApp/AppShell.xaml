@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="PetanqueProSuite.LicenseNfcApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:PetanqueProSuite.LicenseNfcApp"
+    xmlns:views="clr-namespace:PetanqueProSuite.LicenseNfcApp.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="License NFC App">
+
+    <TabBar>
+        <Tab
+            Title="Read License"
+            Icon="cat.png">
+            <ShellContent ContentTemplate="{DataTemplate views:ReadLicensePage}" />
+        </Tab>
+        <Tab
+            Title="Create License"
+            Icon="dog.png">
+            <ShellContent ContentTemplate="{DataTemplate views:CreateLicensePage}" />
+        </Tab>
+    </TabBar>
+
+</Shell>

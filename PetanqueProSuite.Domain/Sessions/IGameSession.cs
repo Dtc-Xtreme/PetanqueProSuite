@@ -11,5 +11,6 @@ namespace PetanqueProSuite.Domain.Sessions
         public string Name { get; set; }
         public DateTime Start { get; set; }
         public TeamSize TeamSize { get; set; }
+        public void StartSession();
     }
 }

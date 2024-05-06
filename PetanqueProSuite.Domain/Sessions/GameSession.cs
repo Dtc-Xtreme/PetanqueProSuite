@@ -11,7 +11,13 @@ namespace PetanqueProSuite.Domain.Sessions
         public string Name { get; set; }
         public DateTime Start { get; set; }
         public TeamSize TeamSize { get; set; }
+        public bool Started { get; set; } = false;
 
+        public virtual void StartSession()
+        {
+            Started = true;
+        }
+        public abstract void NextRound();
         public override string ToString()
         {
             return Name + " (" + TeamSize + ")";

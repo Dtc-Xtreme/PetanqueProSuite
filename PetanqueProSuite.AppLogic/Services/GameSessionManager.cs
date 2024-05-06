@@ -23,6 +23,7 @@ namespace PetanqueProSuite.AppLogic.Services
         public void AddSession(IGameSession session)
         {
             Sessions.Add(session);
+            selectedSession = session;
         }
         public void RemoveSession(IGameSession session)
         {

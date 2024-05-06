@@ -2,13 +2,57 @@
 @using PetanqueProSuite.Domain.Sessions
 @using PetanqueProSuite.Domain.Tournament
 
-<h3>@Session?.Name</h3>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTeamModal">Add Team</button>
+<div class="row mt-4">
+    <div class="col-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="fw-bold text-center mt-2">Teams (@Session?.Teams.Count())</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                @foreach (TournamentTeam team in Session.Teams)
+                {
+                    <li class="list-group-item">@team.ToString()</li>
+                }
+            </ul>
+        </div>
+    </div>
 
-<AddTeamComponent SaveChanges="AddTeam" PlayerCount="@PlayerCount" />
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="">@Session?.Name</h3>
+                    </div>
+                    @if (Session?.Started == false)
+                    {
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTeamModal">Add Team</button>
+                            <button class="btn btn-warning" @onclick="StartSession" disabled="@(Session?.Teams.Count() < 4)">Start Session</button>
+                        </div>
+                        <AddTeamComponent SaveChanges="AddTeam" PlayerCount="@PlayerCount" />
+                    }
+                    else
+                    {
+                        <div class="col-auto">
+                            <button class="btn btn-primary" @onclick="NextRound">Next Round</button>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="card-body">
+                @if (Session.Started)
+                {
+                    <div class="col text-center">
+                        <h3>Round 1</h3>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
 
-@Session?.Teams.Count()
 
 @code {
     [Parameter] public TournamentSession? Session { get; set; }
@@ -41,6 +85,14 @@
     }
     private void AddTeam(TournamentTeam team)
     {
-        Session?.Teams.Add(team);
+        Session?.AddTeam(team);
+    }
+    private void StartSession()
+    {
+        Session?.StartSession();
+    }
+    private void NextRound()
+    {
+        Session?.NextRound();
     }
 }

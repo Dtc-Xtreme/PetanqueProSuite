@@ -8,5 +8,14 @@ namespace PetanqueProSuite.Domain.Sessions
 {
     public class CompetitionSession : GameSession, IGameSession
     {
+        public override void NextRound()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void StartSession()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

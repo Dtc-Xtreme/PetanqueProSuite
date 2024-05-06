@@ -22,5 +22,10 @@ namespace PetanqueProSuite.Domain
 
         [Required]
         public int LicenseNumber { get; set; }
+
+        public override string ToString()
+        {
+            return FirstName + " " + LastName;
+        }
     }
 }
