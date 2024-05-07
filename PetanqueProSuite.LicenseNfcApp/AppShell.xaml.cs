@@ -5,11 +5,8 @@ namespace PetanqueProSuite.LicenseNfcApp
 {
     public partial class AppShell : Shell
     {
-        private IServiceProvider serviceProvider;
-
-        public AppShell(IServiceProvider services)
+        public AppShell()
         {
-            this.serviceProvider = services;
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(ReadLicensePage), typeof(ReadLicensePage));

@@ -1,14 +1,23 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using PetanqueProSuite.LicenseNfcApp.Services;
+using Plugin.LocalNotification;
+using Plugin.NFC;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {
     public partial class ReadLicenseViewModel : BaseViewModel
     {
+        private readonly NfcService nfcService;
+
         [ObservableProperty]
         private string firstName;
         [ObservableProperty]
@@ -34,9 +43,11 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [ObservableProperty]
         private string validDate;
 
-
-        public ReadLicenseViewModel()
+        public ReadLicenseViewModel(NfcService nfc)
         {
+            nfcService = nfc;
+            nfc.OnAppearing();
+
             FirstName = "Steven Albert Marius";
             LastName = "Kazmierczak";
             DayOfBirth = "08/03/1989";
@@ -49,6 +60,18 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             Category = "Sen H";
 
             ValidDate = "01/05/2024 - " + DateTime.Now.ToString("dd, MM, yyyy");
+        }
+
+        [RelayCommand]
+        private async Task Nfc()
+        {
+            await nfcService.StartListeningIfNotiOS();
+        }
+
+        [RelayCommand]
+        private async Task Qr()
+        {
+
         }
     }
 }

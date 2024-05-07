@@ -3,6 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PetanqueProSuite.LicenseNfcApp.Views.ReadLicensePage"
              Title="Read License">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add item" IconImageSource="qr1.png" Command="{Binding QrCommand}" />
+        <ToolbarItem Text="Add item" IconImageSource="nfc.png" Command="{Binding NfcCommand}" />
+    </ContentPage.ToolbarItems>
+    
     <ScrollView Padding="20,0">
         <Grid ColumnSpacing="10" RowSpacing="10">
             <Grid.RowDefinitions>
@@ -21,60 +27,57 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <ImageButton Grid.Row="0" Grid.Column="0" Source="qr1.png"></ImageButton>
-            <ImageButton Grid.Row="0" Grid.Column="1" Source="nfc.png"></ImageButton>
-
-            <Border Grid.Row="1" Grid.ColumnSpan="2" StrokeShape="RoundRectangle 100" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center">
+            <Border Grid.Row="2" Grid.ColumnSpan="2" StrokeShape="RoundRectangle 100" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center">
                 <Image Source="photo.jpg" Margin="0,20" WidthRequest="210" HeightRequest="210" />
             </Border>
 
-            <HorizontalStackLayout Margin="0,20,0,0" BackgroundColor="#a3b7ca" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
+            <HorizontalStackLayout Margin="0,20,0,0" BackgroundColor="#a3b7ca" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="First name: "/>
                 <Label Text="{Binding FirstName}" />
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
+            <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="Last name: "/>
                 <Label Text="{Binding LastName}" />
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="4" Grid.Column="0" Padding="5">
+            <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="3" Grid.Column="0" Padding="5">
                 <Label FontAttributes="Bold" Text="Day of birth: "/>
                 <Label Text="{Binding DayOfBirth}" />
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="4" Grid.Column="1" Padding="5">
+            <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="3" Grid.Column="1" Padding="5">
                 <Label FontAttributes="Bold" Text="Category: "/>
                 <Label Text="{Binding Category}" />
             </HorizontalStackLayout>
 
             
-            <HorizontalStackLayout Margin="0,20,0,0" BackgroundColor="#7593af" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
+            <HorizontalStackLayout Margin="0,20,0,0" BackgroundColor="#7593af" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="Federation: "/>
                 <Label Text="{Binding Federation}" />
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="6" Grid.Column="0" Padding="5">
+            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="5" Grid.Column="0" Padding="5">
                 <Label FontAttributes="Bold" Text="Club: "/>
                 <Label Text="{Binding ClubName}" />
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="6" Grid.Column="1" Padding="5">
+            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="5" Grid.Column="1" Padding="5">
                 <Label FontAttributes="Bold" Text="Country: "/>
                 <Label Text="{Binding Country}" />
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
+            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="License number: "/>
                 <Label Text="{Binding LicenseNumber, StringFormat='{0:00000}'}" />
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
+            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="Type: "/>
                 <Label Text="{Binding Type}" />
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
+            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="Valid: "/>
                 <Label Text="{Binding ValidDate}" />
             </HorizontalStackLayout>

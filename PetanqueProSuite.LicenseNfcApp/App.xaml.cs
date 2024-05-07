@@ -2,13 +2,11 @@
 {
     public partial class App : Application
     {
-        private IServiceProvider serviceProvider;
-        public App(IServiceProvider services)
+        public App()
         {
-            this.serviceProvider = services;
             InitializeComponent();
 
-            MainPage = serviceProvider.GetRequiredService<AppShell>();
+            MainPage = new AppShell();
         }
     }
 }
