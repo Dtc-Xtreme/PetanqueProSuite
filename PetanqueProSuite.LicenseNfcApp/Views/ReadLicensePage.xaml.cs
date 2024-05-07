@@ -1,5 +1,4 @@
 using PetanqueProSuite.LicenseNfcApp.ViewModels;
-using Plugin.NFC;
 
 namespace PetanqueProSuite.LicenseNfcApp.Views;
 
@@ -10,9 +9,4 @@ public partial class ReadLicensePage : ContentPage
         BindingContext = vm;
         InitializeComponent();
 	}
-
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-    }
 }

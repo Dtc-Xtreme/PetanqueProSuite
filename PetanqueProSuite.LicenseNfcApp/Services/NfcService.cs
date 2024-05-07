@@ -306,20 +306,6 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         }
 
         /// <summary>
-        /// Start listening for NFC Tags when "READ TAG" button is clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        async void Button_Clicked_StartListening(object sender, System.EventArgs e) => await BeginListening();
-
-        /// <summary>
-        /// Stop listening for NFC tags
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        async void Button_Clicked_StopListening(object sender, System.EventArgs e) => await StopListening();
-
-        /// <summary>
         /// Start publish operation to write the tag (TEXT) when <see cref="Current_OnTagDiscovered(ITagInfo, bool)"/> event will be raised
         /// </summary>
         /// <param name="sender"></param>
@@ -433,7 +419,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// Task to safely start listening for NFC Tags
         /// </summary>
         /// <returns>The task to be performed</returns>
-        private async Task BeginListening()
+        public async Task BeginListening()
         {
             try
             {
