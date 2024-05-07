@@ -107,14 +107,8 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
                 //	}
                 //});
 
-                await AutoStartAsync().ConfigureAwait(false);
+                //await AutoStartAsync().ConfigureAwait(false);
             }
-        }
-
-        public bool OnBackButtonPressed()
-        {
-            Task.Run(() => StopListening());
-            return true;
         }
 
         /// <summary>

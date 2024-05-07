@@ -46,7 +46,6 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         public ReadLicenseViewModel(NfcService nfc)
         {
             nfcService = nfc;
-            nfc.OnAppearing();
 
             FirstName = "Steven Albert Marius";
             LastName = "Kazmierczak";

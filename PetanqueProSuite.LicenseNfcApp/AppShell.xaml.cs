@@ -1,7 +1,4 @@
-﻿using Android.OS;
-using Microsoft.Extensions.DependencyInjection;
-using PetanqueProSuite.LicenseNfcApp.Views;
-using Plugin.NFC;
+﻿using PetanqueProSuite.LicenseNfcApp.Views;
 
 namespace PetanqueProSuite.LicenseNfcApp
 {
