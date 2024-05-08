@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             xmlns:icon="clr-namespace:PetanqueProSuite.LicenseNfcApp.Models"
+             x:Class="PetanqueProSuite.LicenseNfcApp.Views.ScanQRPage"
+             Title="Scan QR">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Torch" Clicked="ToolbarItem_Clicked_1">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="GoogleMaterialFont"
+                    Glyph="{x:Static icon:IconFont.Cameraswitch}"
+                    Color="{x:StaticResource SecondaryDarkText}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem Text="Torch" Clicked="ToolbarItem_Clicked_2">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="GoogleMaterialFont"
+                    Glyph="{x:Static icon:IconFont.Light_mode}"
+                    Color="{x:StaticResource SecondaryDarkText}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    
+    <VerticalStackLayout VerticalOptions="Center" Padding="40">
+        <zxing:CameraBarcodeReaderView x:Name="cameraBarcodeReaderView" BarcodesDetected="BarcodesDetected" />
+
+        <!--<zxing:BarcodeGeneratorView Grid.Row="10"
+              HeightRequest="100"
+              WidthRequest="100"
+              ForegroundColor="DarkBlue"
+              Value="https://dotnet.microsoft.com"
+              Format="QrCode"
+              Margin="3" />-->
+    </VerticalStackLayout>
+</ContentPage>

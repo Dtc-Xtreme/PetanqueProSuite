@@ -13,8 +13,9 @@ namespace PetanqueProSuite.LicenseNfcApp
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            CrossNFC.Init(this);
             base.OnCreate(savedInstanceState);
+            CrossNFC.Init(this);
+            RequestedOrientation = ScreenOrientation.Portrait;
         }
 
         protected override void OnResume()

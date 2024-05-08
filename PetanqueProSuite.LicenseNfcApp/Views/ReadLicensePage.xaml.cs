@@ -1,5 +1,6 @@
 using PetanqueProSuite.LicenseNfcApp.Services;
 using PetanqueProSuite.LicenseNfcApp.ViewModels;
+using ZXing.Net.Maui;
 
 namespace PetanqueProSuite.LicenseNfcApp.Views;
 
@@ -12,7 +13,7 @@ public partial class ReadLicensePage : ContentPage
         nfcService = nfc;
         BindingContext = vm;
         InitializeComponent();
-	}
+    }
 
     protected override void OnAppearing()
     {

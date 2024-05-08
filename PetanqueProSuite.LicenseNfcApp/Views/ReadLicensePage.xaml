@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             xmlns:icon="clr-namespace:PetanqueProSuite.LicenseNfcApp.Models"
              x:Class="PetanqueProSuite.LicenseNfcApp.Views.ReadLicensePage"
              Title="Read License">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add item" IconImageSource="qr1.png" Command="{Binding QrCommand}" />
-        <ToolbarItem Text="Add item" IconImageSource="nfc.png" Command="{Binding NfcCommand}" />
+        <ToolbarItem Text="Torch" Command="{Binding QrCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="GoogleMaterialFont"
+                     Glyph="{x:Static icon:IconFont.Qr_code_scanner}"
+                     Color="{x:StaticResource SecondaryDarkText}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+
+        <ToolbarItem Text="Torch" Command="{Binding NfcCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="GoogleMaterialFont"
+                     Glyph="{x:Static icon:IconFont.Nfc}"
+                     Color="{x:StaticResource SecondaryDarkText}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
     
-    <ScrollView Padding="20,0">
+    <ScrollView Padding="40,0" IsVisible="{Binding IsVisible}" VerticalOptions="Center">
         <Grid ColumnSpacing="10" RowSpacing="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="200"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -27,11 +44,11 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Row="2" Grid.ColumnSpan="2" StrokeShape="RoundRectangle 100" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center">
-                <Image Source="photo.jpg" Margin="0,20" WidthRequest="210" HeightRequest="210" />
+            <Border Grid.Row="0" Grid.ColumnSpan="2" StrokeShape="RoundRectangle 100" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center">
+                <Image Source="no_image.png" WidthRequest="210" HeightRequest="210" />
             </Border>
 
-            <HorizontalStackLayout Margin="0,20,0,0" BackgroundColor="#a3b7ca" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
+            <HorizontalStackLayout Margin="0,30,0,0" BackgroundColor="#a3b7ca" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="First name: "/>
                 <Label Text="{Binding FirstName}" />
             </HorizontalStackLayout>
@@ -81,6 +98,8 @@
                 <Label FontAttributes="Bold" Text="Valid: "/>
                 <Label Text="{Binding ValidDate}" />
             </HorizontalStackLayout>
+
+
         </Grid>
     </ScrollView>
 </ContentPage>

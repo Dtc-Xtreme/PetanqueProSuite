@@ -1,8 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PetanqueProSuite.LicenseNfcApp.Services;
-using Plugin.LocalNotification;
-using Plugin.NFC;
+using PetanqueProSuite.LicenseNfcApp.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,9 +42,13 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [ObservableProperty]
         private string validDate;
 
+        [ObservableProperty]
+        private bool isVisible;
+
         public ReadLicenseViewModel(NfcService nfc)
         {
             nfcService = nfc;
+            IsVisible = false;
 
             FirstName = "Steven Albert Marius";
             LastName = "Kazmierczak";
@@ -64,13 +67,14 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [RelayCommand]
         private async Task Nfc()
         {
+            IsVisible = true;
             await nfcService.StartListeningIfNotiOS();
         }
 
         [RelayCommand]
         private async Task Qr()
         {
-
+            await Shell.Current.GoToAsync(nameof(ScanQRPage));
         }
     }
 }
