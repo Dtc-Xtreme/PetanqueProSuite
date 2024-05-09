@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using PetanqueProSuite.LicenseNfcApp.Messages;
 using PetanqueProSuite.LicenseNfcApp.Services;
 using PetanqueProSuite.LicenseNfcApp.Views;
 using System;
@@ -13,7 +15,8 @@ using System.Windows.Input;
 
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {
-    public partial class ReadLicenseViewModel : BaseViewModel
+    //[QueryProperty(nameof(Link), "Link")]
+    public partial class ReadLicenseViewModel : BaseViewModel, IRecipient<QrCodeScannedMessage>
     {
         private readonly NfcService nfcService;
 
@@ -45,6 +48,9 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [ObservableProperty]
         private bool isVisible;
 
+        [ObservableProperty]
+        private string result;
+
         public ReadLicenseViewModel(NfcService nfc)
         {
             nfcService = nfc;
@@ -62,6 +68,23 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             Category = "Sen H";
 
             ValidDate = "01/05/2024 - " + DateTime.Now.ToString("dd, MM, yyyy");
+
+            WeakReferenceMessenger.Default.Register<QrCodeScannedMessage>(this);
+        }
+
+        public void Receive(QrCodeScannedMessage message)
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                IsVisible = true;
+                Result = message.Value;
+                NavigateBackToThisPage();
+            });
+        }
+
+        private async void NavigateBackToThisPage()
+        {
+            await Shell.Current.GoToAsync("..");
         }
 
         [RelayCommand]
@@ -74,7 +97,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [RelayCommand]
         private async Task Qr()
         {
-            await Shell.Current.GoToAsync(nameof(ScanQRPage));
+            await Shell.Current.GoToAsync(nameof(ScanQrPage));
         }
     }
 }

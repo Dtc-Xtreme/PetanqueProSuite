@@ -38,6 +38,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -99,7 +100,7 @@
                 <Label Text="{Binding ValidDate}" />
             </HorizontalStackLayout>
 
-
+            <Label Grid.Row="9" Text="{Binding Result}"/>
         </Grid>
     </ScrollView>
 </ContentPage>

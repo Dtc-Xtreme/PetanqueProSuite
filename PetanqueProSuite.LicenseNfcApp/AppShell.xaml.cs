@@ -10,7 +10,7 @@ namespace PetanqueProSuite.LicenseNfcApp
 
             Routing.RegisterRoute(nameof(ReadLicensePage), typeof(ReadLicensePage));
             Routing.RegisterRoute(nameof(CreateLicensePage), typeof(CreateLicensePage));
-            Routing.RegisterRoute(nameof(ScanQRPage), typeof(ScanQRPage));
+            Routing.RegisterRoute(nameof(ScanQrPage), typeof(ScanQrPage));
         }
     }
 }

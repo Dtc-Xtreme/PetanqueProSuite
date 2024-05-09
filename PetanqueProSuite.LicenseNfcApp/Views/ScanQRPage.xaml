@@ -2,19 +2,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:icon="clr-namespace:PetanqueProSuite.LicenseNfcApp.Models"
-             x:Class="PetanqueProSuite.LicenseNfcApp.Views.ScanQRPage"
+             x:Class="PetanqueProSuite.LicenseNfcApp.Views.ScanQrPage"
              Title="Scan QR">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Torch" Clicked="ToolbarItem_Clicked_1">
+        <ToolbarItem Text="Torch" Command="{Binding SwitchCameraCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource FontFamily="GoogleMaterialFont"
                     Glyph="{x:Static icon:IconFont.Cameraswitch}"
                     Color="{x:StaticResource SecondaryDarkText}"/>
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
-        <ToolbarItem Text="Torch" Clicked="ToolbarItem_Clicked_2">
+        <ToolbarItem Text="Torch" Command="{Binding ToggleTorchCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource FontFamily="GoogleMaterialFont"
                     Glyph="{x:Static icon:IconFont.Light_mode}"
@@ -24,7 +25,11 @@
     </ContentPage.ToolbarItems>
     
     <VerticalStackLayout VerticalOptions="Center" Padding="40">
-        <zxing:CameraBarcodeReaderView x:Name="cameraBarcodeReaderView" BarcodesDetected="BarcodesDetected" />
+        <zxing:CameraBarcodeReaderView
+            x:Name="cameraBarcodeReaderView"
+            CameraLocation="{Binding CameraLocation}"
+            IsTorchOn="{Binding IsTorchOn}"
+            BarcodesDetected="BarcodesDetected"/>
 
         <!--<zxing:BarcodeGeneratorView Grid.Row="10"
               HeightRequest="100"
@@ -33,5 +38,7 @@
               Value="https://dotnet.microsoft.com"
               Format="QrCode"
               Margin="3" />-->
+
+        <Label Text="{Binding Result}"/>
     </VerticalStackLayout>
 </ContentPage>
