@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Animations;
@@ -27,7 +28,13 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [RelayCommand]
         private async Task Alert()
         {
-            await _notificationService.ShowAlertOkAsync("Title", "lalal!");
+            await _notificationService.ShowAlertOkAsync("Title", Test);
+        }
+
+        [RelayCommand]
+        public void TextChanged()
+        {
+
         }
 
     }
