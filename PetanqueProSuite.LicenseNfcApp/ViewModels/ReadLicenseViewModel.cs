@@ -19,7 +19,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
     //[QueryProperty(nameof(Link), "Link")]
     public partial class ReadLicenseViewModel : BaseViewModel, IRecipient<QrCodeScannedMessage>, IContentPageEvents
     {
-        private readonly NfcService nfcService;
+        private readonly INfcService _nfcService;
 
         [ObservableProperty]
         private string firstName;
@@ -52,9 +52,9 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [ObservableProperty]
         private string result;
 
-        public ReadLicenseViewModel(NfcService nfc)
+        public ReadLicenseViewModel(INfcService nfc)
         {
-            nfcService = nfc;
+            _nfcService = nfc;
             IsVisible = false;
 
             FirstName = "Steven Albert Marius";
@@ -75,7 +75,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 
         public async Task OnDisappearing()
         {
-            await nfcService.StopListening();
+            await _nfcService.StopListening();
         }
 
         public Task OnOnAppearing()
@@ -102,8 +102,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         private async Task Nfc()
         {
             IsVisible = true;
-            nfcService.OnAppearing();
-            await nfcService.StartListeningIfNotiOS();
+            _nfcService.OnAppearing();
         }
 
         [RelayCommand]

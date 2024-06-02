@@ -6,10 +6,6 @@
              xmlns:Converters="clr-namespace:PetanqueProSuite.LicenseNfcApp.Converters"
              Title="Create License">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add item" IconImageSource="nfc.png" Command="{Binding EnableNfcCommand}"/>
-    </ContentPage.ToolbarItems>
-
     <ContentPage.Resources>
         <ResourceDictionary>
             <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />

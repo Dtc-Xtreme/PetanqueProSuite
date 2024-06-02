@@ -19,6 +19,11 @@
             Icon="dog.png">
             <ShellContent ContentTemplate="{DataTemplate views:CreateLicensePage}" />
         </Tab>
+        <Tab
+            Title="Write License"
+            Icon="cat.png">
+            <ShellContent ContentTemplate="{DataTemplate views:WriteLicensePage}" />
+        </Tab>
     </TabBar>
 
 </Shell>

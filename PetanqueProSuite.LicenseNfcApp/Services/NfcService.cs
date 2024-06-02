@@ -68,6 +68,8 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
 
         public bool NfcIsDisabled => !NfcIsEnabled;
 
+        public bool NfcIsAvailable => CrossNFC.Current.IsAvailable;
+
         public async void OnAppearing()
         {
             // In order to support Mifare Classic 1K tags (read/write), you must set legacy mode to true.
@@ -110,7 +112,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
                 //	}
                 //});
 
-                //await AutoStartAsync().ConfigureAwait(false);
+                await AutoStartAsync().ConfigureAwait(false);
             }
         }
 
@@ -416,7 +418,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// Task to start listening for NFC tags if the user's device platform is not iOS
         /// </summary>
         /// <returns>The task to be performed</returns>
-        public async Task StartListeningIfNotiOS()
+        async Task StartListeningIfNotiOS()
         {
             if (_isDeviceiOS)
             {
@@ -430,7 +432,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// Task to safely start listening for NFC Tags
         /// </summary>
         /// <returns>The task to be performed</returns>
-        public async Task BeginListening()
+        async Task BeginListening()
         {
             try
             {
