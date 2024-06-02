@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using PetanqueProSuite.AppLogic.Services;
 using PetanqueProSuite.LicenseNfcApp.Services;
 using PetanqueProSuite.LicenseNfcApp.ViewModels;
 using PetanqueProSuite.LicenseNfcApp.Views;
@@ -38,6 +39,7 @@ namespace PetanqueProSuite.LicenseNfcApp
             builder.Services.AddTransient<ScanQrViewModel>();
 
             builder.Services.AddSingleton<INotificationService, NotificationService>();
+            builder.Services.AddSingleton<IApiService, ApiService>();
             builder.Services.AddSingleton<NfcService>();
             return builder.Build();
         }

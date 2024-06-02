@@ -20,6 +20,9 @@ namespace PetanqueProSuite.Domain
         [StringLength(50)]
         public string LastName { get; set; }
 
+        [Required]
+        public DateTime DayOfBirth { get; set; }
+
         public string FullName { 
             get { return FirstName + " " + LastName; } 
         }

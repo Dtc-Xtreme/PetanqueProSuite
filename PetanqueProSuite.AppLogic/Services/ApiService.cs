@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PetanqueProSuite.Domain.Competition;
+using PetanqueProSuite.AppLogic.Models;
 
 namespace PetanqueProSuite.AppLogic.Services
 {
     public class ApiService : IApiService
     {
-        private string url = "https://localhost:44362";
+        private string url = "https://api.dtc-xtreme.net";
         private HttpClient client = new HttpClient();
 
         public ApiService()
@@ -90,6 +91,37 @@ namespace PetanqueProSuite.AppLogic.Services
             {
                 return null;
             }
+        }
+
+        public async Task<License?> CreateLicense(string firstName, string lastName, DateTime dateOfBirth, int clubId)
+        {
+            try
+            {
+                LicenseDTO licenseDTO = new LicenseDTO
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    DayOfBirth = dateOfBirth,
+                    ClubId = clubId
+                };
+
+                HttpResponseMessage response = await client.PostAsJsonAsync(url + "/License", licenseDTO);
+
+                if (response != null && response.IsSuccessStatusCode)
+                {
+                    // Read and deserialize the response content to a License object
+                    License? result = await response.Content.ReadFromJsonAsync<License>();
+
+                    // Return the License object
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
         }
 
     }

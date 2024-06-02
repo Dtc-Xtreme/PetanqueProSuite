@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using PetanqueProSuite.LicenseNfcApp.Interfaces;
 using PetanqueProSuite.LicenseNfcApp.Messages;
 using PetanqueProSuite.LicenseNfcApp.Services;
 using PetanqueProSuite.LicenseNfcApp.Views;
@@ -16,7 +17,7 @@ using System.Windows.Input;
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {
     //[QueryProperty(nameof(Link), "Link")]
-    public partial class ReadLicenseViewModel : BaseViewModel, IRecipient<QrCodeScannedMessage>
+    public partial class ReadLicenseViewModel : BaseViewModel, IRecipient<QrCodeScannedMessage>, IContentPageEvents
     {
         private readonly NfcService nfcService;
 
@@ -72,6 +73,16 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             WeakReferenceMessenger.Default.Register<QrCodeScannedMessage>(this);
         }
 
+        public async Task OnDisappearing()
+        {
+            await nfcService.StopListening();
+        }
+
+        public Task OnOnAppearing()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Receive(QrCodeScannedMessage message)
         {
             MainThread.BeginInvokeOnMainThread(() =>
@@ -91,6 +102,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         private async Task Nfc()
         {
             IsVisible = true;
+            nfcService.OnAppearing();
             await nfcService.StartListeningIfNotiOS();
         }
 

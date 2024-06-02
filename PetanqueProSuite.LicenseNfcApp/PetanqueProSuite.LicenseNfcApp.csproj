@@ -77,6 +77,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\PetanqueProSuite.AppLogic\PetanqueProSuite.AppLogic.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Update="Views\ScanQRPage.xaml.cs">
 	    <DependentUpon>ScanQrPage.xaml</DependentUpon>
 	  </Compile>

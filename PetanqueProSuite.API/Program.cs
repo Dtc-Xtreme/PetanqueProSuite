@@ -1,9 +1,23 @@
 using PetanqueProSuite.Infrastructure;
 using PetanqueProSuite.Infrastructure.Interfaces;
 using PetanqueProSuite.Infrastructure.Repositories;
+using Serilog;
+
+Log.Logger = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Month).CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Host.UseSerilog();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+}
+else
+{
+    builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+}
 
 builder.Services.AddCors(options =>
 {
@@ -29,21 +43,22 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Seeding
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var seedData = services.GetRequiredService<SeedData>();
-
-    seedData.Initialize();
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    // Seeding
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var seedData = services.GetRequiredService<SeedData>();
+
+        seedData.Initialize();
+    }
 }
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

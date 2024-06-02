@@ -1,6 +1,0 @@
-@PetanqueProSuite.API_HostAddress = http://localhost:5259
-
-GET {{PetanqueProSuite.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

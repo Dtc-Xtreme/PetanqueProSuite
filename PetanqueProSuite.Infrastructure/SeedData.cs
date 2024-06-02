@@ -100,21 +100,21 @@ namespace PetanqueProSuite.Infrastructure
                 dbContext.Clubs.AddRange(new List<Club>() { OLYMPIA, SPARRENDAL, KELCHTEREN, HASSELT, OPEC, BOEKT, GENENBOS, BERK, ZIG, PELTER, HORIZON, GENK, TONGEREN, INTERLOMMEL, OETERVALLEI, MELDERT, SINT, MAASEIK, TERBIEST, VENNE, BOCHOLTER, FENIX, Yachting });
             }
 
-            License p1BoektEre = new License { Club = BOEKT, FirstName = "Rony", LastName = "Bleux" };
-            License p2BoektEre = new License { Club = BOEKT, FirstName = "Frans", LastName = "Kazmierczak" };
-            License p3BoektEre = new License { Club = BOEKT, FirstName = "Jose", LastName = "x" };
-            License p4BoektEre = new License { Club = BOEKT, FirstName = "Serano", LastName = "x" };
-            License p5BoektEre = new License { Club = BOEKT, FirstName = "Toto", LastName = "x" };
-            License p6BoektEre = new License { Club = BOEKT, FirstName = "Eric", LastName = "x" };
-            License p7BoektEre = new License { Club = BOEKT, FirstName = "Steven", LastName = "Kazmierczak" };
-            License p8BoektEre = new License { Club = BOEKT, FirstName = "Tonny", LastName = "x" };
-            License p9BoektEre = new License { Club = BOEKT, FirstName = "Mario", LastName = "x" };
-            License p10BoektEre = new License { Club = BOEKT, FirstName = "Lina", LastName = "x" };
+            //License p1BoektEre = new License { Club = BOEKT, FirstName = "Rony", LastName = "Bleux" };
+            //License p2BoektEre = new License { Club = BOEKT, FirstName = "Frans", LastName = "Kazmierczak" };
+            //License p3BoektEre = new License { Club = BOEKT, FirstName = "Jose", LastName = "xqwer" };
+            //License p4BoektEre = new License { Club = BOEKT, FirstName = "Serano", LastName = "xqty" };
+            //License p5BoektEre = new License { Club = BOEKT, FirstName = "Toto", LastName = "dfghx" };
+            //License p6BoektEre = new License { Club = BOEKT, FirstName = "Eric", LastName = "xop" };
+            //License p7BoektEre = new License { Club = BOEKT, FirstName = "Steven", LastName = "Kazmierczak" };
+            //License p8BoektEre = new License { Club = BOEKT, FirstName = "Tonny", LastName = "lkl" };
+            //License p9BoektEre = new License { Club = BOEKT, FirstName = "Mario", LastName = "vcx" };
+            //License p10BoektEre = new License { Club = BOEKT, FirstName = "Lina", LastName = "qqwx" };
 
-            if (!dbContext.Licenses.Any())
-            {
-                dbContext.Licenses.AddRange(new List<License>() { p1BoektEre, p2BoektEre, p3BoektEre, p4BoektEre, p5BoektEre, p6BoektEre, p7BoektEre, p8BoektEre, p9BoektEre, p10BoektEre });
-            }
+            //if (!dbContext.Licenses.Any())
+            //{
+            //    dbContext.Licenses.AddRange(new List<License>() { p1BoektEre, p2BoektEre, p3BoektEre, p4BoektEre, p5BoektEre, p6BoektEre, p7BoektEre, p8BoektEre, p9BoektEre, p10BoektEre });
+            //}
 
             CompetitionTeam boektA = new CompetitionTeam { Identifyer = 'A', Club = BOEKT, Division = provEreSen};
             CompetitionTeam OpecA = new CompetitionTeam { Identifyer = 'A', Club = OPEC, Division = provEreSen };

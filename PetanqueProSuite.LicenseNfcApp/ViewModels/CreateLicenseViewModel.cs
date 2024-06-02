@@ -1,34 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Animations;
+using PetanqueProSuite.AppLogic.Models;
+using PetanqueProSuite.AppLogic.Services;
+using PetanqueProSuite.Domain;
+using PetanqueProSuite.LicenseNfcApp.Interfaces;
+using PetanqueProSuite.LicenseNfcApp.Models;
 using PetanqueProSuite.LicenseNfcApp.Services;
-using PetanqueProSuite.LicenseNfcApp.Views;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {
-    public partial class CreateLicenseViewModel : BaseViewModel
+    public partial class CreateLicenseViewModel : BaseViewModel, IContentPageEvents
     {
+        private readonly NfcService _nfcService;
         private readonly INotificationService _notificationService;
+        private readonly IApiService _apiService;
 
         [ObservableProperty]
-        private string test;
+        LicenseForm form;
 
-        public CreateLicenseViewModel(INotificationService notificationService)
+        [ObservableProperty]
+        private List<Club>? clubs;
+
+        public CreateLicenseViewModel(NfcService nfc, INotificationService notificationService, IApiService api)
         {
+            _nfcService = nfc;
             _notificationService = notificationService;
+            _apiService = api;
+            form = new LicenseForm();
+        }
+
+        public async Task OnOnAppearing()
+        {
+            Clubs = await _apiService.GetAllClubs();
+        }
+
+        public async Task OnDisappearing()
+        {
+            await _nfcService.StopListening();
         }
 
         [RelayCommand]
-        private async Task Alert()
+        private async Task CreateLicense()
         {
-            await _notificationService.ShowAlertOkAsync("Title", Test);
+            //validationErrors = new();
+            //ValidationContext validationContext = new ValidationContext(Form);
+            //IsValid = Validator.TryValidateObject(Form, validationContext, validationErrors, true);
+            //Errors = String.Join(Environment.NewLine, validationErrors);
+            // await _apiService.CreateLicense(Form.FirstName, Form.LastName, Form.DayOfBirth, Form.SelectedClub.Id);
+        }
+
+        [RelayCommand]
+        private async Task EnableNfc()
+        {
+            _nfcService.OnAppearing();
         }
 
         [RelayCommand]

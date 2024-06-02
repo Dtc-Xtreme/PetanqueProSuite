@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PetanqueProSuite.API.Models;
+using PetanqueProSuite.AppLogic.Models;
 using PetanqueProSuite.Domain;
 using PetanqueProSuite.Infrastructure.Interfaces;
 
@@ -46,21 +46,21 @@ namespace PetanqueProSuite.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(LicenseDTO dto)
+        public async Task<IActionResult> CreateAsync(LicenseDTO licenseDTO)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    License newItem = new License
+                    License newLicense = new License
                     {
-                        Id = dto.Number,
-                        ClubId = dto.ClubId,
-                        FirstName = dto.FirstName,
-                        LastName = dto.LastName
+                        ClubId = licenseDTO.ClubId,
+                        FirstName = licenseDTO.FirstName,
+                        LastName = licenseDTO.LastName,
+                        DayOfBirth = licenseDTO.DayOfBirth
                     };
 
-                    return Ok(await licenseRepository.CreateAsync(newItem) == false ? BadRequest() : newItem);
+                    return Ok(await licenseRepository.CreateAsync(newLicense) == false ? BadRequest() : newLicense);
                 }
                 return BadRequest("Model is not valid!");
             }

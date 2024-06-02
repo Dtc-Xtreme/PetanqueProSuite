@@ -3,7 +3,10 @@ using Plugin.NFC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace PetanqueProSuite.LicenseNfcApp.Services
@@ -304,54 +307,68 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        async void Button_Clicked_StartWriting(object sender, System.EventArgs e) => await Publish(NFCNdefTypeFormat.WellKnown);
+        //async void Button_Clicked_StartWriting(object sender, System.EventArgs e) => await Publish(NFCNdefTypeFormat.WellKnown);
 
         /// <summary>
         /// Start publish operation to write the tag (URI) when <see cref="Current_OnTagDiscovered(ITagInfo, bool)"/> event will be raised
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        async void Button_Clicked_StartWriting_Uri(object sender, System.EventArgs e) => await Publish(NFCNdefTypeFormat.Uri);
+        //async void Button_Clicked_StartWriting_Uri(object sender, System.EventArgs e) => await Publish(NFCNdefTypeFormat.Uri);
 
         /// <summary>
         /// Start publish operation to write the tag (CUSTOM) when <see cref="Current_OnTagDiscovered(ITagInfo, bool)"/> event will be raised
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        async void Button_Clicked_StartWriting_Custom(object sender, System.EventArgs e) => await Publish(NFCNdefTypeFormat.Mime);
+        //public async void Button_Clicked_StartWriting_Custom(object sender, System.EventArgs e) => await Publish(NFCNdefTypeFormat.Mime);
 
         /// <summary>
         /// Start publish operation to format the tag when <see cref="Current_OnTagDiscovered(ITagInfo, bool)"/> event will be raised
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        async void Button_Clicked_FormatTag(object sender, System.EventArgs e) => await Publish();
+        //async void Button_Clicked_FormatTag(object sender, System.EventArgs e) => await Publish();
 
         /// <summary>
         /// Task to publish data to the tag
         /// </summary>
         /// <param name="type"><see cref="NFCNdefTypeFormat"/></param>
         /// <returns>The task to be performed</returns>
-        async Task Publish(NFCNdefTypeFormat? type = null)
+        public async Task Publish(object payload, NFCNdefTypeFormat? type = null)
         {
             await StartListeningIfNotiOS();
             try
             {
-                _type = NFCNdefTypeFormat.Empty;
-                if (ChkReadOnly)
-                {
-                    if (!await _notificationService.ShowAlertNoYesAsync("Warning", "Make a Tag read-only operation is permanent and can't be undone. Are you sure you wish to continue?"))
-                    {
-                        ChkReadOnly = false;
-                        return;
-                    }
-                    _makeReadOnly = true;
-                }
-                else
-                    _makeReadOnly = false;
+                _type = NFCNdefTypeFormat.Mime;
 
-                if (type.HasValue) _type = type.Value;
-                CrossNFC.Current.StartPublishing(!type.HasValue);
+                NFCNdefRecord record = new NFCNdefRecord
+                {
+                    TypeFormat = NFCNdefTypeFormat.Mime,
+                    MimeType = MIME_TYPE, // Specify the MIME type if necessary
+                    Payload = NFCUtils.EncodeToByteArray(JsonSerializer.Serialize(payload)) // Encode your custom data
+                };
+
+                ITagInfo tagInfo = new TagInfo
+                {
+                    Records = new[] { record }
+                };
+
+                CrossNFC.Current.PublishMessage(tagInfo);
+                CrossNFC.Current.StopPublishing();
+                //if (ChkReadOnly)
+                //{
+                //    if (!await _notificationService.ShowAlertNoYesAsync("Warning", "Make a Tag read-only operation is permanent and can't be undone. Are you sure you wish to continue?"))
+                //    {
+                //        ChkReadOnly = false;
+                //        return;
+                //    }
+                //    _makeReadOnly = true;
+                //}
+                //else
+                //    _makeReadOnly = false;
+                //if (type.HasValue) _type = type.Value;
+                //CrossNFC.Current.StartPublishing(!type.HasValue);
             }
             catch (Exception ex)
             {
