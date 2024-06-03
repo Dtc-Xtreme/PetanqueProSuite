@@ -15,7 +15,13 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
 
-        <ToolbarItem Text="Torch" IconImageSource="nfc.png" Command="{Binding NfcCommand}"/>
+        <ToolbarItem Text="Torch" Command="{Binding NfcCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="GoogleMaterialFont"
+                     Glyph="{x:Static icon:IconFont.Nfc}"
+                     Color="{x:StaticResource SecondaryDarkText}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
     </ContentPage.ToolbarItems>
     
     <ScrollView Padding="40,0" IsVisible="{Binding IsVisible}" VerticalOptions="Center">

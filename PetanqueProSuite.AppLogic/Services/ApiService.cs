@@ -80,6 +80,18 @@ namespace PetanqueProSuite.AppLogic.Services
                 return null;
             }
         }
+        public async Task<License?> GetLicenseWithId(int id)
+        {
+            try
+            {
+                return await client.GetFromJsonAsync<License>(url + "/License/" + id);
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
         public async Task<List<License>?> GetAllLicenses()
         {
             try

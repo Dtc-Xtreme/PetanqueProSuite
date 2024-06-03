@@ -1,25 +1,34 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
+using PetanqueProSuite.AppLogic.Services;
+using PetanqueProSuite.Domain;
 using PetanqueProSuite.LicenseNfcApp.Interfaces;
 using PetanqueProSuite.LicenseNfcApp.Messages;
 using PetanqueProSuite.LicenseNfcApp.Services;
 using PetanqueProSuite.LicenseNfcApp.Views;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {
-    //[QueryProperty(nameof(Link), "Link")]
-    public partial class ReadLicenseViewModel : BaseViewModel, IRecipient<QrCodeScannedMessage>, IContentPageEvents
+    [QueryProperty(nameof(Link), "Link")]
+    public partial class ReadLicenseViewModel : BaseViewModel /*, IRecipient<QrCodeScannedMessage>*/
     {
-        private readonly INfcService _nfcService;
+        private readonly IApiService _apiService;
+
+        private int link;
+        public int Link
+        {
+            get
+            {
+                return link;
+            }
+            set
+            {
+                if (SetProperty(ref link, value))
+                {
+                    OnParameterChanged();
+                }
+            }
+        }
 
         [ObservableProperty]
         private string firstName;
@@ -42,19 +51,17 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         private string type;
         [ObservableProperty]
         private string category;
-
         [ObservableProperty]
         private string validDate;
 
         [ObservableProperty]
         private bool isVisible;
 
-        [ObservableProperty]
-        private string result;
 
-        public ReadLicenseViewModel(INfcService nfc)
+        public ReadLicenseViewModel(IApiService api)
         {
-            _nfcService = nfc;
+            _apiService = api;
+
             IsVisible = false;
 
             FirstName = "Steven Albert Marius";
@@ -70,39 +77,28 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 
             ValidDate = "01/05/2024 - " + DateTime.Now.ToString("dd, MM, yyyy");
 
-            WeakReferenceMessenger.Default.Register<QrCodeScannedMessage>(this);
+            //WeakReferenceMessenger.Default.Register<QrCodeScannedMessage>(this);
         }
 
-        public async Task OnDisappearing()
+        private async Task OnParameterChanged()
         {
-            await _nfcService.StopListening();
+            License? license = await _apiService.GetLicenseWithId(Link);
         }
 
-        public Task OnOnAppearing()
-        {
-            throw new NotImplementedException();
-        }
+        //public void Receive(QrCodeScannedMessage message)
+        //{
+        //    MainThread.BeginInvokeOnMainThread(() =>
+        //    {
+        //        IsVisible = true;
+        //        string param = message.Value.Substring(message.Value.Length - 4, 4);
 
-        public void Receive(QrCodeScannedMessage message)
-        {
-            MainThread.BeginInvokeOnMainThread(() =>
-            {
-                IsVisible = true;
-                Result = message.Value;
-                NavigateBackToThisPage();
-            });
-        }
-
-        private async void NavigateBackToThisPage()
-        {
-            await Shell.Current.GoToAsync("..");
-        }
+        //    });
+        //}
 
         [RelayCommand]
         private async Task Nfc()
         {
-            IsVisible = true;
-            _nfcService.OnAppearing();
+            await Shell.Current.GoToAsync(nameof(ScanNfcPage));
         }
 
         [RelayCommand]

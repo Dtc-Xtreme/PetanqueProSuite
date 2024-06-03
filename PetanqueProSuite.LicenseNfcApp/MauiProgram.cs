@@ -34,11 +34,13 @@ namespace PetanqueProSuite.LicenseNfcApp
             builder.Services.AddTransient<CreateLicensePage>();
             builder.Services.AddTransient<WriteLicensePage>();
             builder.Services.AddTransient<ScanQrPage>();
+            builder.Services.AddTransient<ScanNfcPage>();
 
             builder.Services.AddTransient<ReadLicenseViewModel>();
             builder.Services.AddTransient<CreateLicenseViewModel>();
             builder.Services.AddTransient<WriteLicenseViewModel>();
             builder.Services.AddTransient<ScanQrViewModel>();
+            builder.Services.AddTransient<ScanNfcViewModel>();
 
             builder.Services.AddSingleton<INotificationService, NotificationService>();
             builder.Services.AddSingleton<IApiService, ApiService>();

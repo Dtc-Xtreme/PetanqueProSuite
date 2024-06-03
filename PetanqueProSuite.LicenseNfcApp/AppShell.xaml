@@ -5,23 +5,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PetanqueProSuite.LicenseNfcApp"
     xmlns:views="clr-namespace:PetanqueProSuite.LicenseNfcApp.Views"
+    xmlns:icon="clr-namespace:PetanqueProSuite.LicenseNfcApp.Models"
     Shell.FlyoutBehavior="Disabled"
     Title="License NFC App">
 
     <TabBar>
         <Tab
-            Title="Read License"
-            Icon="cat.png">
+            Title="Read License">
+            <Tab.Icon>
+                <FontImageSource FontFamily="GoogleMaterialFont" Glyph="{x:Static icon:IconFont.Document_scanner}" Color="{StaticResource SecondaryDarkText}" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:ReadLicensePage}" />
         </Tab>
         <Tab
-            Title="Create License"
-            Icon="dog.png">
+            Title="Create License">
+            <Tab.Icon>
+                <FontImageSource FontFamily="GoogleMaterialFont" Glyph="{x:Static icon:IconFont.Edit_document}" Color="{StaticResource SecondaryDarkText}" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:CreateLicensePage}" />
         </Tab>
         <Tab
-            Title="Write License"
-            Icon="cat.png">
+            Title="Write License">
+            <Tab.Icon>
+                <FontImageSource FontFamily="GoogleMaterialFont" Glyph="{x:Static icon:IconFont.Nfc}" Color="{StaticResource SecondaryDarkText}" />
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:WriteLicensePage}" />
         </Tab>
     </TabBar>

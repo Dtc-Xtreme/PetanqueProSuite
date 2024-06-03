@@ -4,7 +4,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Views;
 
 public partial class ReadLicensePage : ContentPage
 {
-	public ReadLicensePage(ReadLicenseViewModel vm)
+    public ReadLicensePage(ReadLicenseViewModel vm)
 	{
         BindingContext = vm;
         InitializeComponent();

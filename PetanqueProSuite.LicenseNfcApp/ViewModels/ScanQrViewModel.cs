@@ -10,7 +10,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {
     public partial class ScanQrViewModel : BaseViewModel
     {
-        private readonly INotificationService notificationService;
+        private readonly INotificationService _notificationService;
         
         [ObservableProperty]
         private CameraLocation cameraLocation;
@@ -20,14 +20,14 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 
         public ScanQrViewModel(INotificationService notification)
         {
-            notificationService = notification;
+            _notificationService = notification;
             
         }
 
         [RelayCommand]
         private async Task SwitchCamera()
         {
-            if (await notificationService.ShowAlertNoYesAsync("Camera", "Would you like to switch cameras?"))   
+            if (await _notificationService.ShowAlertNoYesAsync("Camera", "Would you like to switch cameras?"))   
             {
                 CameraLocation = CameraLocation == CameraLocation.Rear ? CameraLocation.Front : CameraLocation.Rear;
             }
@@ -36,7 +36,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [RelayCommand]
         private async Task ToggleTorch()
         {
-            if (await notificationService.ShowAlertNoYesAsync("Torch", "Would you like to toggle the torch?"))
+            if (await _notificationService.ShowAlertNoYesAsync("Torch", "Would you like to toggle the torch?"))
             {
                 IsTorchOn = !IsTorchOn;
             }
@@ -45,7 +45,10 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [RelayCommand]
         private void OnBarcodesDetected(BarcodeDetectionEventArgs e)
         {
-            WeakReferenceMessenger.Default.Send(new QrCodeScannedMessage(e.Results[0].Value));
+            string result = e.Results[0].Value.Substring(e.Results[0].Value.Length - 4, 4);
+            //WeakReferenceMessenger.Default.Send(new QrCodeScannedMessage(result));
+            Shell.Current.GoToAsync($"..?Link={result}");
+
         }
     }
 }

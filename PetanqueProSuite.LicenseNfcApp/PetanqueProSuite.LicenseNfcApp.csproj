@@ -93,6 +93,9 @@
 	  <MauiXaml Update="Views\ReadLicensePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\ScanNfcPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ScanQrPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

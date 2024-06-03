@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PetanqueProSuite.Domain;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -30,5 +31,13 @@ namespace PetanqueProSuite.Domain
         [Required]
         public Club Club { get; set; }
         public int ClubId { get; set; }
+    }
+}
+
+public static class LicenseExtensions
+{
+    public static string ShowCategory(this License license)
+    {
+        return "Vet. H";
     }
 }
