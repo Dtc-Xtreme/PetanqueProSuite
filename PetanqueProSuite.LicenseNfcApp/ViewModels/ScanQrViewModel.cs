@@ -46,9 +46,8 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         private void OnBarcodesDetected(BarcodeDetectionEventArgs e)
         {
             string result = e.Results[0].Value.Substring(e.Results[0].Value.Length - 4, 4);
-            //WeakReferenceMessenger.Default.Send(new QrCodeScannedMessage(result));
+            WeakReferenceMessenger.Default.Send(new QrCodeScannedMessage(result));
             Shell.Current.GoToAsync($"..?Link={result}");
-
         }
     }
 }

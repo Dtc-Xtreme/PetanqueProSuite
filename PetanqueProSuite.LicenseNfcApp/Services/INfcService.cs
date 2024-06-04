@@ -11,7 +11,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
     {
         public bool NfcIsAvailable { get; }
 
-        void OnAppearing();
+        Task<bool> OnAppearing();
         Task Publish(object payload, NFCNdefTypeFormat? type = null);
         Task StopListening();
     }

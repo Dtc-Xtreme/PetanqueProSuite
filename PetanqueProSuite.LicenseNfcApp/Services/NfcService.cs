@@ -1,13 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using PetanqueProSuite.LicenseNfcApp.Messages;
 using Plugin.NFC;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace PetanqueProSuite.LicenseNfcApp.Services
 {
@@ -16,7 +12,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         private readonly INotificationService _notificationService;
 
         public const string ALERT_TITLE = "NFC";
-        public const string MIME_TYPE = "application/com.companyname.nfcsample";
+        public const string MIME_TYPE = "application/net.dtc-xtreme.LicenseNfcApp";
 
         NFCNdefTypeFormat _type;
         bool _makeReadOnly = false;
@@ -70,7 +66,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
 
         public bool NfcIsAvailable => CrossNFC.Current.IsAvailable;
 
-        public async void OnAppearing()
+        public async Task<bool> OnAppearing()
         {
             // In order to support Mifare Classic 1K tags (read/write), you must set legacy mode to true.
             CrossNFC.Legacy = false;
@@ -78,11 +74,19 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
             if (CrossNFC.IsSupported)
             {
                 if (!CrossNFC.Current.IsAvailable)
+                {
                     await ShowAlert("NFC is not available");
-
-                NfcIsEnabled = CrossNFC.Current.IsEnabled;
-                if (!NfcIsEnabled)
-                    await ShowAlert("NFC is disabled");
+                    return false;
+                }
+                else
+                {
+                    NfcIsEnabled = CrossNFC.Current.IsEnabled;
+                    if (!NfcIsEnabled)
+                    {
+                        await ShowAlert("NFC is disabled");
+                        return false;
+                    }
+                }
 
                 if (DeviceInfo.Platform == DevicePlatform.iOS)
                     _isDeviceiOS = true;
@@ -90,37 +94,38 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
                 //// Custom NFC configuration (ex. UI messages in French)
                 //CrossNFC.Current.SetConfiguration(new NfcConfiguration
                 //{
-                //	DefaultLanguageCode = "fr",
-                //	Messages = new UserDefinedMessages
-                //	{
-                //		NFCSessionInvalidated = "Session invalidée",
-                //		NFCSessionInvalidatedButton = "OK",
-                //		NFCWritingNotSupported = "L'écriture des TAGs NFC n'est pas supporté sur cet appareil",
-                //		NFCDialogAlertMessage = "Approchez votre appareil du tag NFC",
-                //		NFCErrorRead = "Erreur de lecture. Veuillez rééssayer",
-                //		NFCErrorEmptyTag = "Ce tag est vide",
-                //		NFCErrorReadOnlyTag = "Ce tag n'est pas accessible en écriture",
-                //		NFCErrorCapacityTag = "La capacité de ce TAG est trop basse",
-                //		NFCErrorMissingTag = "Aucun tag trouvé",
-                //		NFCErrorMissingTagInfo = "Aucune information à écrire sur le tag",
-                //		NFCErrorNotSupportedTag = "Ce tag n'est pas supporté",
-                //		NFCErrorNotCompliantTag = "Ce tag n'est pas compatible NDEF",
-                //		NFCErrorWrite = "Aucune information à écrire sur le tag",
-                //		NFCSuccessRead = "Lecture réussie",
-                //		NFCSuccessWrite = "Ecriture réussie",
-                //		NFCSuccessClear = "Effaçage réussi"
-                //	}
+                //    DefaultLanguageCode = "en",
+                //    Messages = new UserDefinedMessages
+                //    {
+                //        NFCSessionInvalidated = "Session invalid",
+                //        NFCSessionInvalidatedButton = "OK",
+                //        NFCWritingNotSupported = "L'écriture des TAGs NFC n'est pas supporté sur cet appareil",
+                //        NFCDialogAlertMessage = "Approchez votre appareil du tag NFC",
+                //        NFCErrorRead = "Erreur de lecture. Veuillez rééssayer",
+                //        NFCErrorEmptyTag = "Ce tag est vide",
+                //        NFCErrorReadOnlyTag = "Ce tag n'est pas accessible en écriture",
+                //        NFCErrorCapacityTag = "La capacité de ce TAG est trop basse",
+                //        NFCErrorMissingTag = "Aucun tag trouvé",
+                //        NFCErrorMissingTagInfo = "Aucune information à écrire sur le tag",
+                //        NFCErrorNotSupportedTag = "Ce tag n'est pas supporté",
+                //        NFCErrorNotCompliantTag = "Ce tag n'est pas compatible NDEF",
+                //        NFCErrorWrite = "Aucune information à écrire sur le tag",
+                //        NFCSuccessRead = "Lecture réussie",
+                //        NFCSuccessWrite = "Ecriture réussie",
+                //        NFCSuccessClear = "Effaçage réussi"
+                //    }
                 //});
 
                 await AutoStartAsync().ConfigureAwait(false);
             }
+            return true;
         }
 
         /// <summary>
         /// Auto Start Listening
         /// </summary>
         /// <returns></returns>
-        async Task AutoStartAsync()
+        private async Task AutoStartAsync()
         {
             // Some delay to prevent Java.Lang.IllegalStateException "Foreground dispatch can only be enabled when your activity is resumed" on Android
             await Task.Delay(500);
@@ -130,7 +135,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// <summary>
         /// Subscribe to the NFC events
         /// </summary>
-        void SubscribeEvents()
+        private void SubscribeEvents()
         {
             if (_eventsAlreadySubscribed)
                 UnsubscribeEvents();
@@ -150,7 +155,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// <summary>
         /// Unsubscribe from the NFC events
         /// </summary>
-        void UnsubscribeEvents()
+        private void UnsubscribeEvents()
         {
             CrossNFC.Current.OnMessageReceived -= Current_OnMessageReceived;
             CrossNFC.Current.OnMessagePublished -= Current_OnMessagePublished;
@@ -168,13 +173,13 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// Event raised when Listener Status has changed
         /// </summary>
         /// <param name="isListening"></param>
-        void Current_OnTagListeningStatusChanged(bool isListening) => DeviceIsListening = isListening;
+        private void Current_OnTagListeningStatusChanged(bool isListening) => DeviceIsListening = isListening;
 
         /// <summary>
         /// Event raised when NFC Status has changed
         /// </summary>
         /// <param name="isEnabled">NFC status</param>
-        async void Current_OnNfcStatusChanged(bool isEnabled)
+        private async void Current_OnNfcStatusChanged(bool isEnabled)
         {
             NfcIsEnabled = isEnabled;
             await ShowAlert($"NFC has been {(isEnabled ? "enabled" : "disabled")}");
@@ -184,7 +189,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// Event raised when a NDEF message is received
         /// </summary>
         /// <param name="tagInfo">Received <see cref="ITagInfo"/></param>
-        async void Current_OnMessageReceived(ITagInfo tagInfo)
+        private async void Current_OnMessageReceived(ITagInfo tagInfo)
         {
             if (tagInfo == null)
             {
@@ -207,8 +212,9 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
             }
             else
             {
-                var first = tagInfo.Records[0];
-                await ShowAlert(GetMessage(first), title);
+                NFCNdefRecord first = tagInfo.Records[0];
+                WeakReferenceMessenger.Default.Send<NfcTagReadMessage>(new NfcTagReadMessage(first));
+                await Shell.Current.GoToAsync("..");
             }
         }
 
@@ -217,13 +223,13 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void Current_OniOSReadingSessionCancelled(object sender, EventArgs e) => Debug("iOS NFC Session has been cancelled");
+        private void Current_OniOSReadingSessionCancelled(object sender, EventArgs e) => Debug("iOS NFC Session has been cancelled");
 
         /// <summary>
         /// Event raised when data has been published on the tag
         /// </summary>
         /// <param name="tagInfo">Published <see cref="ITagInfo"/></param>
-        async void Current_OnMessagePublished(ITagInfo tagInfo)
+        private async void Current_OnMessagePublished(ITagInfo tagInfo)
         {
             try
             {
@@ -245,7 +251,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// </summary>
         /// <param name="tagInfo"><see cref="ITagInfo"/> to be published</param>
         /// <param name="format">Format the tag</param>
-        async void Current_OnTagDiscovered(ITagInfo tagInfo, bool format)
+        private async void Current_OnTagDiscovered(ITagInfo tagInfo, bool format)
         {
             if (!CrossNFC.Current.IsWritingTagSupported)
             {
@@ -383,7 +389,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// </summary>
         /// <param name="record"><see cref="NFCNdefRecord"/></param>
         /// <returns>The tag information</returns>
-        string GetMessage(NFCNdefRecord record)
+        private string GetMessage(NFCNdefRecord record)
         {
             var message = $"Message: {record.Message}";
             message += Environment.NewLine;
@@ -404,7 +410,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// Write a debug message in the debug console
         /// </summary>
         /// <param name="message">The message to be displayed</param>
-        void Debug(string message) => System.Diagnostics.Debug.WriteLine(message);
+        private void Debug(string message) => System.Diagnostics.Debug.WriteLine(message);
 
         /// <summary>
         /// Display an alert
@@ -412,13 +418,13 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// <param name="message">Message to be displayed</param>
         /// <param name="title">Alert title</param>
         /// <returns>The task to be performed</returns>
-        Task ShowAlert(string message, string title = null) => _notificationService.ShowAlertOkAsync(string.IsNullOrWhiteSpace(title) ? ALERT_TITLE : title, message);
+        private Task ShowAlert(string message, string title = null) => _notificationService.ShowAlertOkAsync(string.IsNullOrWhiteSpace(title) ? ALERT_TITLE : title, message);
 
         /// <summary>
         /// Task to start listening for NFC tags if the user's device platform is not iOS
         /// </summary>
         /// <returns>The task to be performed</returns>
-        async Task StartListeningIfNotiOS()
+        private async Task StartListeningIfNotiOS()
         {
             if (_isDeviceiOS)
             {
@@ -432,7 +438,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         /// Task to safely start listening for NFC Tags
         /// </summary>
         /// <returns>The task to be performed</returns>
-        async Task BeginListening()
+        private async Task BeginListening()
         {
             try
             {

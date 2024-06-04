@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using PetanqueProSuite.AppLogic.Services;
 using PetanqueProSuite.Domain;
 using PetanqueProSuite.LicenseNfcApp.Interfaces;
@@ -10,7 +12,7 @@ using PetanqueProSuite.LicenseNfcApp.Views;
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {
     [QueryProperty(nameof(Link), "Link")]
-    public partial class ReadLicenseViewModel : BaseViewModel /*, IRecipient<QrCodeScannedMessage>*/
+    public partial class ReadLicenseViewModel : BaseViewModel
     {
         private readonly IApiService _apiService;
 
@@ -57,6 +59,8 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [ObservableProperty]
         private bool isVisible;
 
+        [ObservableProperty]
+        NfcTagReadMessage message;
 
         public ReadLicenseViewModel(IApiService api)
         {
@@ -77,7 +81,8 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 
             ValidDate = "01/05/2024 - " + DateTime.Now.ToString("dd, MM, yyyy");
 
-            //WeakReferenceMessenger.Default.Register<QrCodeScannedMessage>(this);
+            WeakReferenceMessenger.Default.Register<ReadLicenseViewModel, NfcTagReadMessage>(this, (r, m) => r.ReceiveNfcTag(m));
+            WeakReferenceMessenger.Default.Register<ReadLicenseViewModel, QrCodeScannedMessage>(this, (r, m) => r.ReceiveQrCode(m));
         }
 
         private async Task OnParameterChanged()
@@ -105,6 +110,16 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         private async Task Qr()
         {
             await Shell.Current.GoToAsync(nameof(ScanQrPage));
+        }
+
+        private void ReceiveQrCode(QrCodeScannedMessage m)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void ReceiveNfcTag(NfcTagReadMessage m)
+        {
+            //throw new NotImplementedException();
         }
     }
 }

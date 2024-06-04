@@ -1,4 +1,5 @@
-﻿using PetanqueProSuite.LicenseNfcApp.Interfaces;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using PetanqueProSuite.LicenseNfcApp.Interfaces;
 using PetanqueProSuite.LicenseNfcApp.Services;
 
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
@@ -20,7 +21,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         }
         public async Task OnOnAppearing()
         {
-            _nfcService.OnAppearing();
+            if (await _nfcService.OnAppearing() == false) await Shell.Current.GoToAsync("..");
         }
     }
 }
