@@ -23,8 +23,9 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
-    
+
     <ScrollView Padding="40,0" IsVisible="{Binding IsVisible}" VerticalOptions="Center">
+        
         <Grid ColumnSpacing="10" RowSpacing="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="200"/>

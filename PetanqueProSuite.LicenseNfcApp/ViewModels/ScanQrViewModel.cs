@@ -2,7 +2,6 @@
 using PetanqueProSuite.LicenseNfcApp.Services;
 using ZXing.Net.Maui;
 using CommunityToolkit.Mvvm.ComponentModel;
-using PetanqueProSuite.LicenseNfcApp.Views;
 using CommunityToolkit.Mvvm.Messaging;
 using PetanqueProSuite.LicenseNfcApp.Messages;
 
@@ -45,9 +44,11 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [RelayCommand]
         private void OnBarcodesDetected(BarcodeDetectionEventArgs e)
         {
-            string result = e.Results[0].Value.Substring(e.Results[0].Value.Length - 4, 4);
-            WeakReferenceMessenger.Default.Send(new QrCodeScannedMessage(result));
-            Shell.Current.GoToAsync($"..?Link={result}");
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                WeakReferenceMessenger.Default.Send(new QrCodeScannedMessage(e.Results[0].Value));
+                await Shell.Current.GoToAsync("..");
+            });
         }
     }
 }

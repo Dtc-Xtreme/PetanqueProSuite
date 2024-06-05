@@ -1,12 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using PetanqueProSuite.AppLogic.Services;
 using PetanqueProSuite.Domain;
-using PetanqueProSuite.LicenseNfcApp.Interfaces;
 using PetanqueProSuite.LicenseNfcApp.Messages;
-using PetanqueProSuite.LicenseNfcApp.Services;
 using PetanqueProSuite.LicenseNfcApp.Views;
 
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
@@ -59,8 +56,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [ObservableProperty]
         private bool isVisible;
 
-        [ObservableProperty]
-        NfcTagReadMessage message;
+        private bool browserOpenend = false;
 
         public ReadLicenseViewModel(IApiService api)
         {
@@ -81,8 +77,12 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 
             ValidDate = "01/05/2024 - " + DateTime.Now.ToString("dd, MM, yyyy");
 
-            WeakReferenceMessenger.Default.Register<ReadLicenseViewModel, NfcTagReadMessage>(this, (r, m) => r.ReceiveNfcTag(m));
-            WeakReferenceMessenger.Default.Register<ReadLicenseViewModel, QrCodeScannedMessage>(this, (r, m) => r.ReceiveQrCode(m));
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                await Task.Yield();
+                WeakReferenceMessenger.Default.Register<ReadLicenseViewModel, NfcTagReadMessage>(this, (r, m) => r.ReceiveNfcTag(m));
+                WeakReferenceMessenger.Default.Register<ReadLicenseViewModel, QrCodeScannedMessage>(this, async (r, m) => await r.ReceiveQrCode(m));
+            });
         }
 
         private async Task OnParameterChanged()
@@ -112,9 +112,17 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             await Shell.Current.GoToAsync(nameof(ScanQrPage));
         }
 
-        private void ReceiveQrCode(QrCodeScannedMessage m)
+        private async Task ReceiveQrCode(QrCodeScannedMessage m)
         {
-            //throw new NotImplementedException();
+            try
+            {
+                Uri uri = new Uri(m.Value);
+                await Launcher.Default.OpenAsync(uri);
+            }
+            catch (Exception ex)
+            {
+                // An unexpected error occurred. No browser may be installed on the device.
+            }
         }
 
         private void ReceiveNfcTag(NfcTagReadMessage m)

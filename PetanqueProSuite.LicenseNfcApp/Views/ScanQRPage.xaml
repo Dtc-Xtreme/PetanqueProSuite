@@ -4,8 +4,15 @@
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:icon="clr-namespace:PetanqueProSuite.LicenseNfcApp.Models"
+             xmlns:converters="clr-namespace:PetanqueProSuite.LicenseNfcApp.Converters"
              x:Class="PetanqueProSuite.LicenseNfcApp.Views.ScanQrPage"
              Title="Scan QR">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BarcodesDetectedEventArgsConverter x:Key="BarcodesDetectedEventArgsConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Torch" Command="{Binding SwitchCameraCommand}">
@@ -28,8 +35,13 @@
         <zxing:CameraBarcodeReaderView
             x:Name="cameraBarcodeReaderView"
             CameraLocation="{Binding CameraLocation}"
-            IsTorchOn="{Binding IsTorchOn}"
-            BarcodesDetected="BarcodesDetected"/>
+            IsTorchOn="{Binding IsTorchOn}">
+            <!--<zxing:CameraBarcodeReaderView.Behaviors>
+                <toolkit:EventToCommandBehavior EventName="BarcodesDetected"
+                                                Command="{Binding OnBarcodesDetectedCommand}"
+                                                EventArgsConverter="{StaticResource BarcodesDetectedEventArgsConverter}" />
+            </zxing:CameraBarcodeReaderView.Behaviors>-->
+        </zxing:CameraBarcodeReaderView>
 
         <!--<zxing:BarcodeGeneratorView Grid.Row="10"
               HeightRequest="100"

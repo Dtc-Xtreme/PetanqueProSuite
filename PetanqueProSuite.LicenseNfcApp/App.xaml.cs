@@ -7,7 +7,6 @@ namespace PetanqueProSuite.LicenseNfcApp
         public App()
         {
             InitializeComponent();
-
             MainPage = new AppShell();
         }
     }
