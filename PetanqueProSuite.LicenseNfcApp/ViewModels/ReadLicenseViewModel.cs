@@ -4,25 +4,29 @@ using CommunityToolkit.Mvvm.Messaging;
 using PetanqueProSuite.AppLogic.Services;
 using PetanqueProSuite.Domain;
 using PetanqueProSuite.LicenseNfcApp.Messages;
+using PetanqueProSuite.LicenseNfcApp.Services;
 using PetanqueProSuite.LicenseNfcApp.Views;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {
-    [QueryProperty(nameof(Link), "Link")]
+    [QueryProperty(nameof(Number), "Link")]
     public partial class ReadLicenseViewModel : BaseViewModel
     {
+        private readonly INotificationService _notificationService;
         private readonly IApiService _apiService;
 
-        private int link;
-        public int Link
+        private int number;
+        public int Number
         {
             get
             {
-                return link;
+                return number;
             }
             set
             {
-                if (SetProperty(ref link, value))
+                if (SetProperty(ref number, value))
                 {
                     OnParameterChanged();
                 }
@@ -30,54 +34,33 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         }
 
         [ObservableProperty]
-        private string firstName;
-        [ObservableProperty]
-        private string lastName;
-        [ObservableProperty]
-        private string dayOfBirth;
-        [ObservableProperty]
-        private byte[] photo;
-
-        [ObservableProperty]
-        private string country;
-        [ObservableProperty]
-        private string federation;
-        [ObservableProperty]
-        private string clubName;
-        [ObservableProperty]
-        private int licenseNumber;
-        [ObservableProperty]
-        private string type;
-        [ObservableProperty]
-        private string category;
-        [ObservableProperty]
-        private string validDate;
-
-        [ObservableProperty]
         private bool isVisible;
 
-        private bool browserOpenend = false;
+        [ObservableProperty]
+        private string firstName;
 
-        public ReadLicenseViewModel(IApiService api)
+        [ObservableProperty]
+        private string lastName;
+
+        [ObservableProperty]
+        private DateTime dayOfBirth;
+
+        [ObservableProperty]
+        private string clubName;
+
+        [ObservableProperty]
+        private DateTime validDate;
+
+        [ObservableProperty]
+        private License? selectedLicense;
+
+        public ReadLicenseViewModel(INotificationService notificationService, IApiService api)
         {
+            _notificationService = notificationService;
             _apiService = api;
-
             IsVisible = false;
 
-            FirstName = "Steven Albert Marius";
-            LastName = "Kazmierczak";
-            DayOfBirth = "08/03/1989";
-
-            Country = "BE";
-            Federation = "Petanque Federatie Vlaanderen (PFV)";
-            ClubName = "PC Boekt";
-            LicenseNumber = 4077;
-            Type = "Competief lid";
-            Category = "Sen H";
-
-            ValidDate = "01/05/2024 - " + DateTime.Now.ToString("dd, MM, yyyy");
-
-            Device.BeginInvokeOnMainThread(async () =>
+            MainThread.BeginInvokeOnMainThread(async () =>
             {
                 await Task.Yield();
                 WeakReferenceMessenger.Default.Register<ReadLicenseViewModel, NfcTagReadMessage>(this, (r, m) => r.ReceiveNfcTag(m));
@@ -87,33 +70,32 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 
         private async Task OnParameterChanged()
         {
-            License? license = await _apiService.GetLicenseWithId(Link);
+            SelectedLicense = await _apiService.GetLicenseWithId(Number);
         }
 
-        //public void Receive(QrCodeScannedMessage message)
-        //{
-        //    MainThread.BeginInvokeOnMainThread(() =>
-        //    {
-        //        IsVisible = true;
-        //        string param = message.Value.Substring(message.Value.Length - 4, 4);
-
-        //    });
-        //}
+        [RelayCommand]
+        private async Task FindByLicenseNumber()
+        {
+            int result = await _notificationService.DisplayPromptNumericAsync("Search license.", "Please input the license number?", 5);
+            SelectedLicense = await _apiService.GetLicenseWithId(result);
+            FillFields(SelectedLicense);
+        }
 
         [RelayCommand]
-        private async Task Nfc()
+        private async Task FindByNfc()
         {
             await Shell.Current.GoToAsync(nameof(ScanNfcPage));
         }
 
         [RelayCommand]
-        private async Task Qr()
+        private async Task FindByQr()
         {
             await Shell.Current.GoToAsync(nameof(ScanQrPage));
         }
 
         private async Task ReceiveQrCode(QrCodeScannedMessage m)
         {
+            IsVisible = false;
             try
             {
                 Uri uri = new Uri(m.Value);
@@ -124,10 +106,31 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
                 // An unexpected error occurred. No browser may be installed on the device.
             }
         }
-
         private void ReceiveNfcTag(NfcTagReadMessage m)
         {
-            //throw new NotImplementedException();
+            IsVisible = false;
+            try
+            {
+                // Check if internet then api call otherwhise use serialization.
+                SelectedLicense = JsonSerializer.Deserialize<License>(m.Value.Message);
+                FillFields(SelectedLicense);
+            }
+            catch (Exception ex)
+            {
+                // An unexpected error occurred. No browser may be installed on the device.
+            }
+        }
+        private void FillFields(License? license)
+        {
+            if (SelectedLicense != null && SelectedLicense.Id != 0)
+            {
+                IsVisible = true;
+                FirstName = SelectedLicense.FirstName;
+                LastName = SelectedLicense.LastName;
+                DayOfBirth = SelectedLicense.DayOfBirth;
+                //ClubName = SelectedLicense.Club.Name;
+                //ValidDate = SelectedLicense.ValidDate;
+            }
         }
     }
 }

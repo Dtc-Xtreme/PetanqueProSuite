@@ -6,7 +6,7 @@ public partial class ReadLicensePage : ContentPage
 {
     public ReadLicensePage(ReadLicenseViewModel vm)
 	{
-        InitializeComponent();
         BindingContext = vm;
+        InitializeComponent();
     }
 }

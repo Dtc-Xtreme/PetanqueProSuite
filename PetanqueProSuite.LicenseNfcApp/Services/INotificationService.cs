@@ -11,5 +11,6 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         public Task ShowAlertOkAsync(string title, string message);
         public Task<bool> ShowAlertNoYesAsync(string title, string message);
         public Task<string> DisplayPromptAsync(string title, string question);
+        public Task<int> DisplayPromptNumericAsync(string title, string question, int maxLength);
     }
 }

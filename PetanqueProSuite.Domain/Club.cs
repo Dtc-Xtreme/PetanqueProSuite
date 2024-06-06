@@ -17,7 +17,7 @@ namespace PetanqueProSuite.Domain
         public string Name { get; set; }
 
         [Required]
-        [Range(1,999)]
+        [Range(1,9999)]
         public int Number {  get; set; }
 
         [StringLength(250)]

@@ -23,5 +23,11 @@ namespace PetanqueProSuite.LicenseNfcApp.Services
         {
             return await Application.Current.MainPage.DisplayPromptAsync(title, question);
         }
+
+        public async Task<int> DisplayPromptNumericAsync(string title, string question, int maxLength)
+        {
+            string result = await Application.Current.MainPage.DisplayPromptAsync(title, question, maxLength: maxLength, keyboard: Keyboard.Numeric);
+            return int.Parse(result);
+        }
     }
 }

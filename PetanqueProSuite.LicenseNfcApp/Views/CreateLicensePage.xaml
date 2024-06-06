@@ -27,7 +27,7 @@
         
         <VerticalStackLayout Margin="0,10">
             <Label>Date of birth:</Label>
-            <DatePicker Date="{Binding Form.DateOfBirth}"/>
+            <DatePicker Date="{Binding Form.DayOfBirth}"/>
         </VerticalStackLayout>
         
         <VerticalStackLayout Margin="0,10">

@@ -5,6 +5,7 @@ using PetanqueProSuite.Domain;
 using PetanqueProSuite.LicenseNfcApp.Interfaces;
 using PetanqueProSuite.LicenseNfcApp.Models;
 using PetanqueProSuite.LicenseNfcApp.Services;
+using PetanqueProSuite.LicenseNfcApp.Views;
 
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {
@@ -42,7 +43,10 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             License? result = await _apiService.CreateLicense(Form.FirstName, Form.LastName, Form.DayOfBirth, Form.SelectedClub.Id);
             if (result != null)
             {
-                await _notificationService.ShowAlertOkAsync("License added.", "Succesfully added!");
+                if(await _notificationService.ShowAlertNoYesAsync("License added.", "Succesfully added! Do you want to write it to a NFC tag?"))
+                {
+                    await Shell.Current.GoToAsync($"{nameof(WriteLicensePage)}?Number={result.Id}");
+                }
                 Form = new LicenseForm();
                 
             }

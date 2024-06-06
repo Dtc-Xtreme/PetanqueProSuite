@@ -7,7 +7,14 @@
              Title="Read License">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Torch" Command="{Binding QrCommand}">
+        <ToolbarItem Text="Torch" Command="{Binding FindByLicenseNumberCommand}">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource FontFamily="GoogleMaterialFont"
+                     Glyph="{x:Static icon:IconFont.Numbers}"
+                     Color="{x:StaticResource SecondaryDarkText}"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+        <ToolbarItem Text="Torch" Command="{Binding FindByQrCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource FontFamily="GoogleMaterialFont"
                      Glyph="{x:Static icon:IconFont.Qr_code_scanner}"
@@ -15,7 +22,7 @@
             </ToolbarItem.IconImageSource>
         </ToolbarItem>
 
-        <ToolbarItem Text="Torch" Command="{Binding NfcCommand}">
+        <ToolbarItem Text="Torch" Command="{Binding FindByNfcCommand}">
             <ToolbarItem.IconImageSource>
                 <FontImageSource FontFamily="GoogleMaterialFont"
                      Glyph="{x:Static icon:IconFont.Nfc}"
@@ -62,7 +69,7 @@
 
             <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="3" Grid.Column="0" Padding="5">
                 <Label FontAttributes="Bold" Text="Day of birth: "/>
-                <Label Text="{Binding DayOfBirth}" />
+                <Label Text="{Binding DayOfBirth, StringFormat='{0:dd/MM/yyyy}'}" />
             </HorizontalStackLayout>
 
             <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="3" Grid.Column="1" Padding="5">
@@ -70,7 +77,6 @@
                 <Label Text="{Binding Category}" />
             </HorizontalStackLayout>
 
-            
             <HorizontalStackLayout Margin="0,20,0,0" BackgroundColor="#7593af" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="Federation: "/>
                 <Label Text="{Binding Federation}" />
@@ -88,7 +94,7 @@
 
             <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="License number: "/>
-                <Label Text="{Binding LicenseNumber, StringFormat='{0:00000}'}" />
+                <Label Text="{Binding Id, StringFormat='{0:00000}'}" />
             </HorizontalStackLayout>
 
             <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">

@@ -44,7 +44,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [RelayCommand]
         private void OnBarcodesDetected(BarcodeDetectionEventArgs e)
         {
-            Device.BeginInvokeOnMainThread(async () =>
+            MainThread.BeginInvokeOnMainThread(async () =>
             {
                 WeakReferenceMessenger.Default.Send(new QrCodeScannedMessage(e.Results[0].Value));
                 await Shell.Current.GoToAsync("..");

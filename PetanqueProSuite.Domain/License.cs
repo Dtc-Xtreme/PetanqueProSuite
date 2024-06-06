@@ -31,8 +31,12 @@ namespace PetanqueProSuite.Domain
         [Required]
         public Club Club { get; set; }
         public int ClubId { get; set; }
+
+        [Required]
+        public DateTime ValidDate { get; set; } 
     }
 }
+
 
 public static class LicenseExtensions
 {

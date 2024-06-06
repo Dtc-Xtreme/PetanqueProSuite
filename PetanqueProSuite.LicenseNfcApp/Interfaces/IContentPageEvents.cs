@@ -9,7 +9,6 @@ namespace PetanqueProSuite.LicenseNfcApp.Interfaces
     public interface IContentPageEvents
     {
         public Task OnOnAppearing();
-
         public Task OnDisappearing();
     }
 }
