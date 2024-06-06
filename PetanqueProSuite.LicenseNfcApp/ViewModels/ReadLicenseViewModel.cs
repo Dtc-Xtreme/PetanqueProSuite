@@ -34,9 +34,6 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         }
 
         [ObservableProperty]
-        private bool isVisible;
-
-        [ObservableProperty]
         private string firstName;
 
         [ObservableProperty]
@@ -58,7 +55,6 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         {
             _notificationService = notificationService;
             _apiService = api;
-            IsVisible = false;
 
             MainThread.BeginInvokeOnMainThread(async () =>
             {
@@ -95,7 +91,6 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 
         private async Task ReceiveQrCode(QrCodeScannedMessage m)
         {
-            IsVisible = false;
             try
             {
                 Uri uri = new Uri(m.Value);
@@ -108,7 +103,6 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         }
         private void ReceiveNfcTag(NfcTagReadMessage m)
         {
-            IsVisible = false;
             try
             {
                 // Check if internet then api call otherwhise use serialization.
@@ -124,7 +118,6 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         {
             if (SelectedLicense != null && SelectedLicense.Id != 0)
             {
-                IsVisible = true;
                 FirstName = SelectedLicense.FirstName;
                 LastName = SelectedLicense.LastName;
                 DayOfBirth = SelectedLicense.DayOfBirth;

@@ -3,8 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
              xmlns:icon="clr-namespace:PetanqueProSuite.LicenseNfcApp.Models"
+             xmlns:Converters="clr-namespace:PetanqueProSuite.LicenseNfcApp.Converters"
              x:Class="PetanqueProSuite.LicenseNfcApp.Views.ReadLicensePage"
              Title="Read License">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Torch" Command="{Binding FindByLicenseNumberCommand}">
@@ -31,11 +38,10 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <ScrollView Padding="40,0" IsVisible="{Binding IsVisible}" VerticalOptions="Center">
-        
+    <ScrollView Padding="20,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
         <Grid ColumnSpacing="10" RowSpacing="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -53,58 +59,58 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Row="0" Grid.ColumnSpan="2" StrokeShape="RoundRectangle 100" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center">
+            <Border Margin="0,30" Grid.Row="0" Grid.ColumnSpan="2" StrokeShape="RoundRectangle 100" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center">
                 <Image Source="no_image.png" WidthRequest="210" HeightRequest="210" />
             </Border>
 
-            <HorizontalStackLayout Margin="0,30,0,0" BackgroundColor="#a3b7ca" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
+            <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="First name: "/>
-                <Label Text="{Binding FirstName}" />
+                <Label Text="{Binding FirstName}"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="Last name: "/>
-                <Label Text="{Binding LastName}" />
+                <Label Text="{Binding LastName}"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="3" Grid.Column="0" Padding="5">
                 <Label FontAttributes="Bold" Text="Day of birth: "/>
-                <Label Text="{Binding DayOfBirth, StringFormat='{0:dd/MM/yyyy}'}" />
+                <Label Text="{Binding DayOfBirth, StringFormat='{0:dd/MM/yyyy}'}"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="3" Grid.Column="1" Padding="5">
                 <Label FontAttributes="Bold" Text="Category: "/>
-                <Label Text="{Binding Category}" />
+                <Label Text="{Binding Category}"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout Margin="0,20,0,0" BackgroundColor="#7593af" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="Federation: "/>
-                <Label Text="{Binding Federation}" />
+                <Label Text="{Binding Federation}"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="5" Grid.Column="0" Padding="5">
                 <Label FontAttributes="Bold" Text="Club: "/>
-                <Label Text="{Binding ClubName}" />
+                <Label Text="{Binding ClubName}"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="5" Grid.Column="1" Padding="5">
                 <Label FontAttributes="Bold" Text="Country: "/>
-                <Label Text="{Binding Country}" />
+                <Label Text="{Binding Country}"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="License number: "/>
-                <Label Text="{Binding Id, StringFormat='{0:00000}'}" />
+                <Label Text="{Binding Id, StringFormat='{0:00000}'}"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="Type: "/>
-                <Label Text="{Binding Type}" />
+                <Label Text="{Binding Type}"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
                 <Label FontAttributes="Bold" Text="Valid: "/>
-                <Label Text="{Binding ValidDate}" />
+                <Label Text="{Binding ValidDate}"/>
             </HorizontalStackLayout>
 
             <Label Grid.Row="9" Grid.ColumnSpan="2" Text="{Binding Result}"/>
