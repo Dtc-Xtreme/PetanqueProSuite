@@ -362,5 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /PetanqueProSuite.Infrastructure/Migrations
-/PetanqueProSuite.API/log.txt
-/PetanqueProSuite.API/log202405.txt
+/PetanqueProSuite.API/logs/
