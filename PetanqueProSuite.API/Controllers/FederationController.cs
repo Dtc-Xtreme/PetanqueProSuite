@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PetanqueProSuite.API.Models;
 using PetanqueProSuite.Domain;
 using PetanqueProSuite.Infrastructure.Interfaces;
+using Serilog;
 
 namespace PetanqueProSuite.API.Controllers
 {
@@ -36,6 +37,7 @@ namespace PetanqueProSuite.API.Controllers
         {
             try
             {
+                Log.Information("Hello, file logger!");
                 IEnumerable<Federation>? items = await federationRepository.Federations.ToListAsync();
                 return Ok(items == null ? NotFound() : items);
             }

@@ -1,14 +1,11 @@
+using Microsoft.Extensions.Configuration;
 using PetanqueProSuite.Infrastructure;
 using PetanqueProSuite.Infrastructure.Interfaces;
 using PetanqueProSuite.Infrastructure.Repositories;
 using Serilog;
 
-Log.Logger = new LoggerConfiguration().MinimumLevel.Debug().WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Month).CreateLogger();
-
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
-builder.Host.UseSerilog();
 
 if (builder.Environment.IsDevelopment())
 {
@@ -19,6 +16,14 @@ else
     builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 }
 
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+// Configure Cors / Origins
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins,
@@ -27,6 +32,8 @@ builder.Services.AddCors(options =>
                           policy.WithOrigins("https://localhost:44345", "http://localhost:5173");
                       });
 });
+
+
 
 // Add services to the container.
 builder.Services.AddDbContext<PetanqueProSuiteDbContext>();
@@ -62,6 +69,8 @@ if (app.Environment.IsDevelopment())
     }
 }
 
+Log.Information("Application starting up!");
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -74,3 +83,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+Log.CloseAndFlush();
