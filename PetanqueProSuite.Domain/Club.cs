@@ -28,5 +28,9 @@ namespace PetanqueProSuite.Domain
 
         [StringLength(150)]
         public string? ContactPerson { get; set; }
+
+        [Required]
+        public Province Province { get; set; }
+        public int ProvinceId { get; set; }
     }
 }

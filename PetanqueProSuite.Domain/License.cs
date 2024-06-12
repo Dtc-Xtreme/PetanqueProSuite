@@ -14,6 +14,10 @@ namespace PetanqueProSuite.Domain
         public int Id { get; set; }
 
         [Required]
+        [Range(1,99999)]
+        public int Number { get; set; }
+
+        [Required]
         [StringLength(50)]
         public string FirstName { get; set; }
 

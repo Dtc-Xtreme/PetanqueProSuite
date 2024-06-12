@@ -11,7 +11,7 @@ using System.Text.Json.Serialization;
 
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {
-    [QueryProperty(nameof(Number), "Link")]
+    //[QueryProperty(nameof(Number), "Link")]
     public partial class ReadLicenseViewModel : BaseViewModel
     {
         private readonly INotificationService _notificationService;
@@ -34,19 +34,22 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         }
 
         [ObservableProperty]
-        private string firstName;
+        private bool isVisible = false;
 
-        [ObservableProperty]
-        private string lastName;
+        //[ObservableProperty]
+        //private string firstName;
 
-        [ObservableProperty]
-        private DateTime dayOfBirth;
+        //[ObservableProperty]
+        //private string lastName;
 
-        [ObservableProperty]
-        private string clubName;
+        //[ObservableProperty]
+        //private DateTime dayOfBirth;
 
-        [ObservableProperty]
-        private DateTime validDate;
+        //[ObservableProperty]
+        //private string clubName;
+
+        //[ObservableProperty]
+        //private DateTime validDate;
 
         [ObservableProperty]
         private License? selectedLicense;
@@ -62,6 +65,8 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
                 WeakReferenceMessenger.Default.Register<ReadLicenseViewModel, NfcTagReadMessage>(this, (r, m) => r.ReceiveNfcTag(m));
                 WeakReferenceMessenger.Default.Register<ReadLicenseViewModel, QrCodeScannedMessage>(this, async (r, m) => await r.ReceiveQrCode(m));
             });
+
+            IsVisible = false; 
         }
 
         private async Task OnParameterChanged()
@@ -74,7 +79,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         {
             int result = await _notificationService.DisplayPromptNumericAsync("Search license.", "Please input the license number?", 5);
             SelectedLicense = await _apiService.GetLicenseWithId(result);
-            FillFields(SelectedLicense);
+            IsVisible = true;
         }
 
         [RelayCommand]
@@ -107,22 +112,11 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             {
                 // Check if internet then api call otherwhise use serialization.
                 SelectedLicense = JsonSerializer.Deserialize<License>(m.Value.Message);
-                FillFields(SelectedLicense);
+                IsVisible = true;
             }
             catch (Exception ex)
             {
                 // An unexpected error occurred. No browser may be installed on the device.
-            }
-        }
-        private void FillFields(License? license)
-        {
-            if (SelectedLicense != null && SelectedLicense.Id != 0)
-            {
-                FirstName = SelectedLicense.FirstName;
-                LastName = SelectedLicense.LastName;
-                DayOfBirth = SelectedLicense.DayOfBirth;
-                //ClubName = SelectedLicense.Club.Name;
-                //ValidDate = SelectedLicense.ValidDate;
             }
         }
     }

@@ -31,12 +31,17 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 builder.Services.AddDbContext<PetanqueProSuiteDbContext>();
 builder.Services.AddScoped<SeedData>();
+
+builder.Services.AddScoped<IFederationRepository, FederationRepository>();
+builder.Services.AddScoped<IProvinceRepository, ProvinceRepository>();
+builder.Services.AddScoped<IClubRepository, ClubRepository>();
+builder.Services.AddScoped<ILicenseRepository, LicenseRepository>();
+
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ILeagueRepository, LeagueRepository>();
 builder.Services.AddScoped<IDivisionRepository, DivisionRepository>();
-builder.Services.AddScoped<IClubRepository, ClubRepository>();
 builder.Services.AddScoped<ICompetitionTeamRepository, CompetitionTeamRepository>();
-builder.Services.AddScoped<ILicenseRepository, LicenseRepository>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

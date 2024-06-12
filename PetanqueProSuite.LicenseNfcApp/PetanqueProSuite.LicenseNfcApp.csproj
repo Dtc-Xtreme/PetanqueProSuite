@@ -58,8 +58,10 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+	  <None Remove="Resources\Images\club.png" />
 	  <None Remove="Resources\Images\nfc.png" />
 	  <None Remove="Resources\Images\no_image.png" />
+	  <None Remove="Resources\Images\pfv.png" />
 	  <None Remove="Resources\Images\photo.jpg" />
 	  <None Remove="Resources\Images\qr.png" />
 	  <None Remove="Resources\Images\qr1.png" />
@@ -97,6 +99,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ScanQrPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Templates\LicenseView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\WriteLicensePage.xaml">

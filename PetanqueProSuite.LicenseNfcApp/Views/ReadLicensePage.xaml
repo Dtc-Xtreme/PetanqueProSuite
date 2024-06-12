@@ -4,6 +4,7 @@
              xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
              xmlns:icon="clr-namespace:PetanqueProSuite.LicenseNfcApp.Models"
              xmlns:Converters="clr-namespace:PetanqueProSuite.LicenseNfcApp.Converters"
+             xmlns:Templates="clr-namespace:PetanqueProSuite.LicenseNfcApp.Views.Templates"
              x:Class="PetanqueProSuite.LicenseNfcApp.Views.ReadLicensePage"
              Title="Read License">
 
@@ -38,82 +39,115 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <ScrollView Padding="20,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-        <Grid ColumnSpacing="10" RowSpacing="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Margin="20" IsVisible="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-            <Border Margin="0,30" Grid.Row="0" Grid.ColumnSpan="2" StrokeShape="RoundRectangle 100" WidthRequest="200" HeightRequest="200" HorizontalOptions="Center">
-                <Image Source="no_image.png" WidthRequest="210" HeightRequest="210" />
-            </Border>
+                    <Frame Grid.Column="0" HeightRequest="50" WidthRequest="50" CornerRadius="10" BorderColor="Transparent" Margin="10">
+                        <Image Source="pfv.png" HeightRequest="50" WidthRequest="50"/>
+                    </Frame>
 
-            <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
-                <Label FontAttributes="Bold" Text="First name: "/>
-                <Label Text="{Binding FirstName}"/>
-            </HorizontalStackLayout>
+                    <Label Grid.Column="1" Text="Petanque Federatie Vlaanderen" FontAttributes="Italic" VerticalOptions="CenterAndExpand" TextColor="Black"/>
+                </Grid>
+            </Frame>
 
-            <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
-                <Label FontAttributes="Bold" Text="Last name: "/>
-                <Label Text="{Binding LastName}"/>
-            </HorizontalStackLayout>
+            <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
+                <Grid VerticalOptions="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-            <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="3" Grid.Column="0" Padding="5">
-                <Label FontAttributes="Bold" Text="Day of birth: "/>
-                <Label Text="{Binding DayOfBirth, StringFormat='{0:dd/MM/yyyy}'}"/>
-            </HorizontalStackLayout>
+                    <Frame Grid.Column="0" Grid.RowSpan="3" HeightRequest="125" WidthRequest="125" CornerRadius="100" BorderColor="Transparent" Margin="10">
+                        <Image Source="club.png" HeightRequest="125" WidthRequest="125" Aspect="AspectFill"/>
+                    </Frame>
 
-            <HorizontalStackLayout BackgroundColor="#a3b7ca" Grid.Row="3" Grid.Column="1" Padding="5">
-                <Label FontAttributes="Bold" Text="Category: "/>
-                <Label Text="{Binding Category}"/>
-            </HorizontalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="5" VerticalOptions="CenterAndExpand" Margin="10">
+                        <VerticalStackLayout>
+                            <Label Text="CLUB" FontAttributes="Bold" TextColor="Black"/>
+                            <Label Text="{Binding SelectedLicense.Club.Name, FallbackValue='001 - PC Boekt'}" FontAttributes="Italic" TextColor="Black"/>
+                        </VerticalStackLayout>
 
-            <HorizontalStackLayout Margin="0,20,0,0" BackgroundColor="#7593af" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
-                <Label FontAttributes="Bold" Text="Federation: "/>
-                <Label Text="{Binding Federation}"/>
-            </HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Label Text="LICENSE NUMBER" FontAttributes="Bold" TextColor="Black"/>
+                            <Label Text="{Binding SelectedLicense.Club.Number, FallbackValue='05687'}" FontAttributes="Italic"  TextColor="Black"/>
+                        </VerticalStackLayout>
 
-            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="5" Grid.Column="0" Padding="5">
-                <Label FontAttributes="Bold" Text="Club: "/>
-                <Label Text="{Binding ClubName}"/>
-            </HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Label Text="TYPE" FontAttributes="Bold" TextColor="Black"/>
+                            <Label Text="{Binding SelectedLicense.Club.Number, FallbackValue='COMPITITIE / RECREANT'}" FontAttributes="Italic"  TextColor="Black"/>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Grid>
+            </Frame>
 
-            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="5" Grid.Column="1" Padding="5">
-                <Label FontAttributes="Bold" Text="Country: "/>
-                <Label Text="{Binding Country}"/>
-            </HorizontalStackLayout>
+            <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
+                <Grid VerticalOptions="CenterAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
 
-            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
-                <Label FontAttributes="Bold" Text="License number: "/>
-                <Label Text="{Binding Id, StringFormat='{0:00000}'}"/>
-            </HorizontalStackLayout>
+                    <Frame Grid.Column="0" Grid.RowSpan="3" HeightRequest="125" WidthRequest="125" CornerRadius="100" BorderColor="Transparent" Margin="10">
+                        <Image Source="photo.jpg" HeightRequest="125" WidthRequest="125"/>
+                    </Frame>
 
-            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
-                <Label FontAttributes="Bold" Text="Type: "/>
-                <Label Text="{Binding Type}"/>
-            </HorizontalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="5" VerticalOptions="CenterAndExpand" Margin="10">
+                        <VerticalStackLayout>
+                            <Label Text="NAME" FontAttributes="Bold" TextColor="Black"/>
+                            <Label Text="{Binding SelectedLicense.FullName}" FontAttributes="Italic" TextColor="Black"/>
+                        </VerticalStackLayout>
 
-            <HorizontalStackLayout BackgroundColor="#7593af" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Padding="5">
-                <Label FontAttributes="Bold" Text="Valid: "/>
-                <Label Text="{Binding ValidDate}"/>
-            </HorizontalStackLayout>
+                        <VerticalStackLayout>
+                            <Label Text="DAY OF BIRTH" FontAttributes="Bold" TextColor="Black"/>
+                            <Label Text="{Binding SelectedLicense.DayOfBirth, StringFormat='{0:dd/MM/yyyy}', FallbackValue=''}" FontAttributes="Italic"  TextColor="Black"/>
+                        </VerticalStackLayout>
 
-            <Label Grid.Row="9" Grid.ColumnSpan="2" Text="{Binding Result}"/>
-        </Grid>
+                        <VerticalStackLayout>
+                            <Label Text="SEX" FontAttributes="Bold" TextColor="Black"/>
+                            <Label Text="Male" FontAttributes="Italic" TextColor="Black"/>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Grid>
+            </Frame>
+
+            <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Frame Grid.Column="0" HeightRequest="50" WidthRequest="50" CornerRadius="10" BorderColor="Transparent" Margin="10">
+                        <Image HeightRequest="50" WidthRequest="50">
+                            <Image.Source>
+                                <FontImageSource FontFamily="GoogleMaterialFont"
+                                 Glyph="{x:Static icon:IconFont.Check_circle}"
+                                 Color="Green"/>
+                            </Image.Source>
+                        </Image>
+                    </Frame>
+
+                    <Label Grid.Column="1" Text="License is valid" FontAttributes="Italic" VerticalOptions="CenterAndExpand" TextColor="Black"/>
+                </Grid>
+            </Frame>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
