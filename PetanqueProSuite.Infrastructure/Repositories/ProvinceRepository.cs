@@ -12,7 +12,7 @@ namespace PetanqueProSuite.Infrastructure.Repositories
 {
     public class ProvinceRepository : GenericRepository, IProvinceRepository
     {
-        public IQueryable<Province> Provinces => context.Provinces.OrderBy(c => c.Name);
+        public IQueryable<Province> Provinces => context.Provinces.Include(c => c.Federation).OrderBy(c => c.Name);
 
         public ProvinceRepository(PetanqueProSuiteDbContext ctx) : base(ctx){}
     }

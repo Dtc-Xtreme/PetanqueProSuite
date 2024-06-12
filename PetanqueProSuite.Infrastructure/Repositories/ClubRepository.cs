@@ -1,4 +1,5 @@
-﻿using PetanqueProSuite.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using PetanqueProSuite.Domain;
 using PetanqueProSuite.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace PetanqueProSuite.Infrastructure.Repositories
 {
     public class ClubRepository : GenericRepository, IClubRepository
     {
-        public IQueryable<Club> Clubs => context.Clubs.OrderBy(c => c.Number);
+        public IQueryable<Club> Clubs => context.Clubs.Include(c => c.Province).ThenInclude(c => c.Federation).OrderBy(c => c.Number);
 
         public ClubRepository(PetanqueProSuiteDbContext ctx) : base(ctx){}
     }

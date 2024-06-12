@@ -18,5 +18,6 @@ namespace PetanqueProSuite.Domain
 
         [Required]
         public Federation Federation { get; set; }
+        public int FederationId { get; set; }
     }
 }
