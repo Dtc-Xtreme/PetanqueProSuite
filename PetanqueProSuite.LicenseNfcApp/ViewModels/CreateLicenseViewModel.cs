@@ -6,6 +6,7 @@ using PetanqueProSuite.LicenseNfcApp.Interfaces;
 using PetanqueProSuite.LicenseNfcApp.Models;
 using PetanqueProSuite.LicenseNfcApp.Services;
 using PetanqueProSuite.LicenseNfcApp.Views;
+using System.Collections.ObjectModel;
 
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {
@@ -18,16 +19,78 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         LicenseForm form;
 
         [ObservableProperty]
-        private List<Federation>? federations;
+        private bool provinceIsEnabled = false;
 
         [ObservableProperty]
-        private List<Province>? provinces;
+        private bool clubIsEnabled = false;
 
-        [ObservableProperty]
-        private List<Club>? clubs;
+        private IList<Federation>? federations;
+        public IList<Federation>? Federations
+        {
+            get { return federations; } 
+            set { 
+                SetProperty(ref federations, value);
+            }
+        }
 
-        [ObservableProperty]
+        private Federation? selectedFederation;
+        public Federation? SelectedFederation
+        {
+            get
+            {
+                return selectedFederation;
+            }
+            set
+            {
+                if (SetProperty(ref selectedFederation, value))
+                {
+                    OnPropertyChanged("Provinces");
+                    ProvinceIsEnabled = selectedFederation != null;
+                }
+            }
+        }
+
+        private IList<Province>? provinces;
+        public IList<Province>? Provinces
+        {
+            get
+            {
+                return provinces?.Where(c => c.FederationId == SelectedFederation?.Id).ToList();
+            }
+            set
+            {
+                SetProperty(ref provinces, value);
+            }
+        }
+
         private Province? selectedProvince;
+        public Province? SelectedProvince
+        {
+            get
+            {
+                return selectedProvince;
+            }
+            set
+            {
+                if(SetProperty(ref selectedProvince, value))
+                {
+                    OnPropertyChanged("Clubs");
+                    ClubIsEnabled = selectedProvince != null && Clubs?.Count < 0;
+                }
+            }
+        }
+
+        private IList<Club>? clubs;
+        public IList<Club>? Clubs
+        {
+            get {
+                return clubs?.Where(c => c.ProvinceId == SelectedProvince?.Id).ToList();
+            }
+            set
+            {
+                SetProperty(ref clubs, value);
+            }
+        }
 
         public CreateLicenseViewModel(INotificationService notificationService, IApiService api)
         {
@@ -38,9 +101,18 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 
         public async Task OnOnAppearing()
         {
-            if(Federations is null)  Federations = await _apiService.GetAllFederation();
-            if(Provinces is null)  Provinces = await _apiService.GetAllProvinces();
-            if(Clubs is null)  Clubs = await _apiService.GetAllClubs();
+            if (Federations is null)
+            {
+                Federations = await _apiService.GetAllFederation();
+            }
+            if (Provinces is null)
+            {
+                Provinces = await _apiService.GetAllProvinces();
+            }
+            if (Clubs is null)
+            {
+                Clubs = await _apiService.GetAllClubs();
+            }
         }
 
         public async Task OnDisappearing()
@@ -51,7 +123,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [RelayCommand]
         private async Task CreateLicense()
         {
-            License? result = await _apiService.CreateLicense(Form.FirstName, Form.LastName, Form.DayOfBirth, Form.SelectedClub.Id);
+            License? result = await _apiService.CreateLicense(Form.FirstName, Form.LastName, Form.DayOfBirth, Form.Club.Id);
             if (result != null)
             {
                 if(await _notificationService.ShowAlertNoYesAsync("License added.", "Succesfully added! Do you want to write it to a NFC tag?"))
@@ -59,7 +131,8 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
                     await Shell.Current.GoToAsync($"{nameof(WriteLicensePage)}?Number={result.Id}");
                 }
                 Form = new LicenseForm();
-                
+                SelectedFederation = null;
+                SelectedProvince = null;
             }
             else
             {

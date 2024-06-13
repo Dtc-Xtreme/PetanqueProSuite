@@ -13,44 +13,47 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <VerticalStackLayout Padding="20">
-        <VerticalStackLayout Margin="0,10">
-            <Label>First name:</Label>
-            <Entry Placeholder="" Text="{Binding Form.FirstName}"/>
-        </VerticalStackLayout>
-        
-        <VerticalStackLayout Margin="0,10">
-            <Label>Last name:</Label>
-            <Entry Placeholder="" Text="{Binding Form.LastName}">
-            </Entry>
-        </VerticalStackLayout>
-        
-        <VerticalStackLayout Margin="0,10">
-            <Label>Date of birth:</Label>
-            <DatePicker Date="{Binding Form.DayOfBirth}"/>
-        </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <VerticalStackLayout Margin="0,10">
+                <Label>First name:</Label>
+                <Entry Placeholder="" Text="{Binding Form.FirstName}"/>
+            </VerticalStackLayout>
 
-        <VerticalStackLayout Margin="0,10">
-            <Label>Federation:</Label>
-            <Picker ItemsSource="{Binding Federations}" SelectedItem="" ItemDisplayBinding="{Binding Name}"/>
-        </VerticalStackLayout>
+            <VerticalStackLayout Margin="0,10">
+                <Label>Last name:</Label>
+                <Entry Placeholder="" Text="{Binding Form.LastName}">
+                </Entry>
+            </VerticalStackLayout>
 
-        <VerticalStackLayout Margin="0,10">
-            <Label>Province:</Label>
-            <Picker ItemsSource="{Binding Provinces}" SelectedItem="{Binding SelectedProvince}" ItemDisplayBinding="{Binding Name}"/>
-        </VerticalStackLayout>
+            <VerticalStackLayout Margin="0,10">
+                <Label>Date of birth:</Label>
+                <DatePicker Date="{Binding Form.DayOfBirth}"/>
+            </VerticalStackLayout>
 
-        <VerticalStackLayout Margin="0,10">
-            <Label>Club:</Label>
-            <Picker ItemsSource="{Binding Clubs}" SelectedItem="{Binding Form.SelectedClub}" ItemDisplayBinding="{Binding Name}"/>
+            <VerticalStackLayout Margin="0,10">
+                <Label>Federation:</Label>
+                <Picker ItemsSource="{Binding Federations}" SelectedItem="{Binding SelectedFederation, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Margin="0,10">
+                <Label>Province:</Label>
+                <Picker ItemsSource="{Binding Provinces}" SelectedItem="{Binding SelectedProvince, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" IsEnabled="{Binding ProvinceIsEnabled, Mode=TwoWay}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Margin="0,10">
+                <Label>Club:</Label>
+                <Picker ItemsSource="{Binding Clubs}" SelectedItem="{Binding Form.Club}" ItemDisplayBinding="{Binding Name}" IsEnabled="{Binding ClubIsEnabled, Mode=TwoWay}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Margin="0,10" IsVisible="{Binding Form.HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Label Text="{Binding Form.GetAllErrors}" TextColor="Red"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Margin="0,10">
+                <Button Text="Click" Command="{Binding CreateLicenseCommand}" IsEnabled="{Binding Form.HasErrors, Converter={StaticResource BooleanSwitchConverter}}"/>
+            </VerticalStackLayout>
         </VerticalStackLayout>
-        
-        <VerticalStackLayout Margin="0,10" IsVisible="{Binding Form.HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Label Text="{Binding Form.GetAllErrors}" TextColor="Red"/>
-        </VerticalStackLayout>
-        
-        <VerticalStackLayout Margin="0,10">
-            <Button Text="Click" Command="{Binding CreateLicenseCommand}" IsEnabled="{Binding Form.HasErrors, Converter={StaticResource BooleanSwitchConverter}}"/>
-        </VerticalStackLayout>
-    </VerticalStackLayout>
+    </ScrollView>
+    
 </ContentPage>

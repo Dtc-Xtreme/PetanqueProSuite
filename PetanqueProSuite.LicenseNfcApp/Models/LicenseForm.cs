@@ -35,7 +35,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Models
         [NotifyPropertyChangedFor(nameof(HasErrors))]
         [NotifyPropertyChangedFor(nameof(GetAllErrors))]
         [NotifyDataErrorInfo]
-        private Club? selectedClub;
+        private Club? club;
 
         [Required(ErrorMessage = "Day of birth is required")]
         [ObservableProperty]
