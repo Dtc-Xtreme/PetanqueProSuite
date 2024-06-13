@@ -1,4 +1,5 @@
-﻿using PetanqueProSuite.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using PetanqueProSuite.Domain;
 using PetanqueProSuite.Infrastructure.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace PetanqueProSuite.Infrastructure.Repositories
 {
     public class LicenseRepository : GenericRepository, ILicenseRepository
     {
-        public IQueryable<License> Licenses => context.Licenses.OrderBy(c => c.Id);
+        public IQueryable<License> Licenses => context.Licenses.Include(c => c.Club).ThenInclude(c =>c.Province).ThenInclude(c => c.Federation).OrderBy(c => c.Id);
 
         public LicenseRepository(PetanqueProSuiteDbContext ctx) : base(ctx){}
     }
