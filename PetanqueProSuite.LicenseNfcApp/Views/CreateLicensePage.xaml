@@ -10,6 +10,7 @@
         <ResourceDictionary>
             <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <Converters:BooleanSwitchConverter x:Key="BooleanSwitchConverter" />
+            <Converters:ClubsFilterConverter x:Key="ClubsFilterConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -29,7 +30,17 @@
             <Label>Date of birth:</Label>
             <DatePicker Date="{Binding Form.DayOfBirth}"/>
         </VerticalStackLayout>
-        
+
+        <VerticalStackLayout Margin="0,10">
+            <Label>Federation:</Label>
+            <Picker ItemsSource="{Binding Federations}" SelectedItem="" ItemDisplayBinding="{Binding Name}"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Margin="0,10">
+            <Label>Province:</Label>
+            <Picker ItemsSource="{Binding Provinces}" SelectedItem="{Binding SelectedProvince}" ItemDisplayBinding="{Binding Name}"/>
+        </VerticalStackLayout>
+
         <VerticalStackLayout Margin="0,10">
             <Label>Club:</Label>
             <Picker ItemsSource="{Binding Clubs}" SelectedItem="{Binding Form.SelectedClub}" ItemDisplayBinding="{Binding Name}"/>

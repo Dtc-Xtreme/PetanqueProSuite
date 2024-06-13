@@ -18,7 +18,16 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         LicenseForm form;
 
         [ObservableProperty]
+        private List<Federation>? federations;
+
+        [ObservableProperty]
+        private List<Province>? provinces;
+
+        [ObservableProperty]
         private List<Club>? clubs;
+
+        [ObservableProperty]
+        private Province? selectedProvince;
 
         public CreateLicenseViewModel(INotificationService notificationService, IApiService api)
         {
@@ -29,6 +38,8 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 
         public async Task OnOnAppearing()
         {
+            if(Federations is null)  Federations = await _apiService.GetAllFederation();
+            if(Provinces is null)  Provinces = await _apiService.GetAllProvinces();
             if(Clubs is null)  Clubs = await _apiService.GetAllClubs();
         }
 

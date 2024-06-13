@@ -104,6 +104,30 @@ namespace PetanqueProSuite.AppLogic.Services
                 return null;
             }
         }
+        public async Task<List<Province>?> GetAllProvinces()
+        {
+            try
+            {
+                return await client.GetFromJsonAsync<List<Province>>(url + "/Province");
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<List<Federation>?> GetAllFederation()
+        {
+            try
+            {
+                return await client.GetFromJsonAsync<List<Federation>>(url + "/Federation");
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
 
         public async Task<License?> CreateLicense(string firstName, string lastName, DateTime dateOfBirth, int clubId)
         {

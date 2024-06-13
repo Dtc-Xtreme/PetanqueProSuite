@@ -16,6 +16,7 @@ else
     builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 }
 
+
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
@@ -32,7 +33,6 @@ builder.Services.AddCors(options =>
                           policy.WithOrigins("https://localhost:44345", "http://localhost:5173");
                       });
 });
-
 
 
 // Add services to the container.
@@ -56,21 +56,18 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Seeding
+using (var scope = app.Services.CreateScope())
 {
-    // Seeding
-    using (var scope = app.Services.CreateScope())
-    {
-        var services = scope.ServiceProvider;
-        var seedData = services.GetRequiredService<SeedData>();
+    var services = scope.ServiceProvider;
+    var seedData = services.GetRequiredService<SeedData>();
 
-        seedData.Initialize();
-    }
+    seedData.Initialize();
 }
 
 Log.Information("Application starting up!");
 
+// Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
 
