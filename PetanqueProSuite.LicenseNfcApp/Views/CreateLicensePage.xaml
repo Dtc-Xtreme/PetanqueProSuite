@@ -10,7 +10,6 @@
         <ResourceDictionary>
             <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <Converters:BooleanSwitchConverter x:Key="BooleanSwitchConverter" />
-            <Converters:ClubsFilterConverter x:Key="ClubsFilterConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
