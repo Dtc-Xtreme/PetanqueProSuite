@@ -59,6 +59,9 @@
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
 	  <None Remove="Resources\Images\club.png" />
+	  <None Remove="Resources\Images\Clubs\kelchteren.png" />
+	  <None Remove="Resources\Images\Clubs\sint_truiden.png" />
+	  <None Remove="Resources\Images\Clubs\Sparrendal.png" />
 	  <None Remove="Resources\Images\nfc.png" />
 	  <None Remove="Resources\Images\no_image.png" />
 	  <None Remove="Resources\Images\pfv.png" />
@@ -107,6 +110,12 @@
 	  <MauiXaml Update="Views\WriteLicensePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Clubs\kelchteren.png" />
+	  <MauiImage Include="Resources\Images\Clubs\sint_truiden.png" />
+	  <MauiImage Include="Resources\Images\Clubs\sparrendal.png" />
 	</ItemGroup>
 
 </Project>

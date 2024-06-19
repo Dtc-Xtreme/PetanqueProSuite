@@ -70,7 +70,7 @@
                     </Grid.RowDefinitions>
 
                     <Frame Grid.Column="0" Grid.RowSpan="3" HeightRequest="125" WidthRequest="125" CornerRadius="100" BorderColor="Transparent" Margin="10">
-                        <Image Source="club.png" HeightRequest="125" WidthRequest="125" Aspect="AspectFill"/>
+                        <Image Source="no_image.png" HeightRequest="125" WidthRequest="125" Aspect="AspectFill"/>
                     </Frame>
 
                     <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="5" VerticalOptions="CenterAndExpand" Margin="10">
@@ -81,7 +81,7 @@
 
                         <VerticalStackLayout>
                             <Label Text="LICENSE NUMBER" FontAttributes="Bold" TextColor="Black"/>
-                            <Label Text="{Binding SelectedLicense.Club.Number, FallbackValue='05687'}" FontAttributes="Italic"  TextColor="Black"/>
+                            <Label Text="{Binding SelectedLicense.Number, FallbackValue='05687'}" FontAttributes="Italic"  TextColor="Black"/>
                         </VerticalStackLayout>
 
                         <VerticalStackLayout>
@@ -103,7 +103,7 @@
                     </Grid.RowDefinitions>
 
                     <Frame Grid.Column="0" Grid.RowSpan="3" HeightRequest="125" WidthRequest="125" CornerRadius="100" BorderColor="Transparent" Margin="10">
-                        <Image Source="photo.jpg" HeightRequest="125" WidthRequest="125"/>
+                        <Image Source="{Binding SelectedLicense.Club.Image, FallbackValue='no_image.png'}" HeightRequest="125" WidthRequest="125"/>
                     </Frame>
 
                     <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="5" VerticalOptions="CenterAndExpand" Margin="10">

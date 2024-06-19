@@ -97,8 +97,8 @@ namespace PetanqueProSuite.Infrastructure
 
                 // Limburg
                 Club OLYMPIA = new Club { Name = "PC OLYMPIA", Number = 1, Address = "Veenderweg 48 - 3550 Heusden-Zolder", Phone = "011/45 36 13", ContactPerson = "Ferdy Geraerts, Ubbelstraat 9/1 - 3550 Heusden-Zolder", Province = Limburg };
-                Club SPARRENDAL = new Club { Name = "PC SPARRENDAL", Number = 2, Address = "Roelerdreef 17 - 3620 Lanaken", Phone = "GSM: 0476052765", ContactPerson = "De Haan Irene, GSM: 0477 654 089, Email: schepers.poels@gmail.com", Province = Limburg };
-                Club KELCHTEREN = new Club { Name = "PC KELCHTEREN - HOUTHALEN", Number = 3, Address = "Oudstrijderslaan 44C - 3530 Houthalen", ContactPerson = "Chris Billen Guldensporenlaan 28 3530 Houthalen, Email: pckelchtren.houthalen@hotmail.com", Province = Limburg };
+                Club SPARRENDAL = new Club { Name = "PC SPARRENDAL", Number = 2, Address = "Roelerdreef 17 - 3620 Lanaken", Phone = "GSM: 0476052765", ContactPerson = "De Haan Irene, GSM: 0477 654 089, Email: schepers.poels@gmail.com", Province = Limburg, Image="sparrendal.png" };
+                Club KELCHTEREN = new Club { Name = "PC KELCHTEREN - HOUTHALEN", Number = 3, Address = "Oudstrijderslaan 44C - 3530 Houthalen", ContactPerson = "Chris Billen Guldensporenlaan 28 3530 Houthalen, Email: pckelchtren.houthalen@hotmail.com", Province = Limburg, Image="kelchteren.png" };
                 Club HASSELT = new Club { Name = "PC HASSELT", Number = 4, Address = "Kramerslaan 1A - 3500 Hasselt", Phone = "011/27 30 36", ContactPerson = "Jan Luyten, GSM : 0479/73 75 47, Email : luytenfabbro@gmail.com", Province = Limburg };
                 Club OPEC = new Club { Name = "PC OPEC OPGLABBEEK", Number = 6, Address = "Oude Kerkstraat 24B - 3660 Opglabbeek", ContactPerson = "Raymond Brebels, GSM : 0478/71 22 54, Email : raymond.brebels@telenet.be", Province = Limburg };
                 Club BOEKT = new Club { Name = "PC BOEKT", Number = 7, Address = "Ubbelstraat 97 - 3550 Heusden-Zolder", Phone = "0492/79 15 48", ContactPerson = "Ludo Daniels, GSM : 0492/79 15 48, Email : ludodaniels@skynet.be", Province = Limburg };
@@ -112,7 +112,7 @@ namespace PetanqueProSuite.Infrastructure
                 Club INTERLOMMEL = new Club { Name = "INTERLOMMEL PETANQUE", Number = 20, Address = "Vreyshorring 143 - 3920 Lommel", Phone = "011/54 57 43", ContactPerson = "Annita Serroeyen, GSM: 0475/43 24 65, Email : verboven-serroeyen@hotmail.com", Province = Limburg };
                 Club OETERVALLEI = new Club { Name = "PC OETERVALLEI", Number = 21, Address = "Opitterpoort 104 - 3960 Bree", ContactPerson = "Maurissen Ivo, Voorschoventerweg 96 - 3680 Neeroeteren, GSM: 0477/853173, Email : ivo.maurissen@gmail.com", Province = Limburg };
                 Club MELDERT = new Club { Name = "PC MELDERT", Number = 22, Address = "Zelemsebaan 50 - 3560 Lummen", Phone = "013/33 52 06", ContactPerson = "Cyriel Schepers, Zelemsebaan 50 - 3560 Lummen, Email : schepers.cyriel@telenet.be", Province = Limburg };
-                Club SINT = new Club { Name = "PC SINT-TRUIDEN", Number = 23, Address = "Staeyen Oosttribune, Tiensesteenweg 168 - 3800 Sint-Truiden", ContactPerson = "Tits Danny, Gorsem-Dorp 91 - 3800 Sint-Truiden, Email : pcsttruiden@gmail.com", Province = Limburg };
+                Club SINT = new Club { Name = "PC SINT-TRUIDEN", Number = 23, Address = "Staeyen Oosttribune, Tiensesteenweg 168 - 3800 Sint-Truiden", ContactPerson = "Tits Danny, Gorsem-Dorp 91 - 3800 Sint-Truiden, Email : pcsttruiden@gmail.com", Province = Limburg, Image="sint_truiden.png" };
                 Club MAASEIK = new Club { Name = "PC MAASEIK", Number = 24, Address = "Koningin Astridlaan 91 - 3680 Maaseik", ContactPerson = "Aerts Agnes, Wurfelderweg 79 - 3680 Maaseik, Tel : 089/56 78 73, Email : aertsanjes@skynet.be", Province = Limburg };
                 Club TERBIEST = new Club { Name = "PC TERBIEST", Number = 28, Address = "Hasseltsesteenweg 103 - 3800 Sint-Truiden", ContactPerson = "Jules Bonneux, GSM : 0485/98 40 14, Email: jules.bonneux@hotmail.com", Province = Limburg };
                 Club VENNE = new Club { Name = "PC DE VENNE", Number = 29, Address = "Hurbroekstraat - 3540 Herk-de-Stad", ContactPerson = "Blokken Willy , Dreefstraat 23 - 3540 Herk-de-Stad, GSM: 0478/543603, Email: willy.blokken@telenet.be", Province = Limburg };
@@ -133,12 +133,12 @@ namespace PetanqueProSuite.Infrastructure
                 License p6BoektEre = new License { Club = BOEKT, FirstName = "Eric", LastName = "xop", Number = 27898 };
                 License p7BoektEre = new License { Club = BOEKT, FirstName = "Steven", LastName = "Kazmierczak", Number = 99871 };
                 License p8BoektEre = new License { Club = BOEKT, FirstName = "Tonny", LastName = "lkl", Number = 9814 };
-                License p9BoektEre = new License { Club = BOEKT, FirstName = "Mario", LastName = "vcx", Number = 658 };
-                License p10BoektEre = new License { Club = BOEKT, FirstName = "Lina", LastName = "qqwx", Number = 5475 };
+                License p9KelchterenEre = new License { Club = KELCHTEREN, FirstName = "Mario", LastName = "vcx", Number = 658 };
+                License p10SparrendaltEre = new License { Club = SPARRENDAL, FirstName = "Lina", LastName = "qqwx", Number = 5475 };
 
                 if (!dbContext.Licenses.Any())
                 {
-                    dbContext.Licenses.AddRange(new List<License>() { p1BoektEre, p2BoektEre, p3BoektEre, p4BoektEre, p5BoektEre, p6BoektEre, p7BoektEre, p8BoektEre, p9BoektEre, p10BoektEre });
+                    dbContext.Licenses.AddRange(new List<License>() { p1BoektEre, p2BoektEre, p3BoektEre, p4BoektEre, p5BoektEre, p6BoektEre, p7BoektEre, p8BoektEre, p9KelchterenEre, p10SparrendaltEre });
                 }
 
                 //CompetitionTeam boektA = new CompetitionTeam { Identifyer = 'A', Club = BOEKT, Division = provEreSen };

@@ -32,5 +32,7 @@ namespace PetanqueProSuite.Domain
         [Required]
         public Province Province { get; set; }
         public int ProvinceId { get; set; }
+
+        public string? Image { get; set; }
     }
 }
