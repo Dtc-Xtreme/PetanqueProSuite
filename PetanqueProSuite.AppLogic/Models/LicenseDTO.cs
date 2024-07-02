@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PetanqueProSuite.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace PetanqueProSuite.AppLogic.Models
 {
@@ -14,6 +15,9 @@ namespace PetanqueProSuite.AppLogic.Models
 
         [Required]
         public DateTime DayOfBirth { get; set; }
+
+        [Required]
+        public Sex Sex { get; set; }
 
         [Required]
         public int ClubId { get; set; }

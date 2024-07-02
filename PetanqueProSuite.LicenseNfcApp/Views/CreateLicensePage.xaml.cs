@@ -23,5 +23,4 @@ public partial class CreateLicensePage : ContentPage
     {
         viewModel.OnDisappearing();
     }
-
 }

@@ -8,23 +8,19 @@ using System.Threading.Tasks;
 
 namespace PetanqueProSuite.LicenseNfcApp.Converters
 {
-    public class ClubToIdConverter : IValueConverter
+    public class LicenseNumberConverter : IValueConverter
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is int id && parameter is IList<Club> clubs)
+            if (value is License license)
             {
-                return clubs.FirstOrDefault(c=>c.Id == id);
+                return license.Club.Province.Id.ToString("D2") + "-" + license.Club.Number.ToString("D3") + "-" + license.Number;
             }
             return null;
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if(value is Club club)
-            {
-                return club.Id;
-            }
             return null;
         }
     }

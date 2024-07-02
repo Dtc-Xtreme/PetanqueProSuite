@@ -32,6 +32,38 @@
             </VerticalStackLayout>
 
             <VerticalStackLayout Margin="0,10">
+                <Label>Sex:</Label>
+                <Picker ItemsSource="{Binding Sexs}" SelectedItem="{Binding Form.Sex, Mode=TwoWay}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Margin="0,0,0,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label VerticalOptions="CenterAndExpand" Grid.Column="0">Photo:</Label>
+
+                    <HorizontalStackLayout Grid.Column="1" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand">
+                        <Switch VerticalOptions="Center" IsToggled="{Binding IsCameraVisible}"/>
+                        <Label Text="File / Camera" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Grid>
+
+                <Frame CornerRadius="100" HeightRequest="125" WidthRequest="125" Margin="0,0,0,10" IsVisible="{Binding IsCameraVisible, Converter={StaticResource BooleanSwitchConverter}}">
+                    <Image Source="{Binding Image, Mode=TwoWay}" HeightRequest="125" WidthRequest="125" IsVisible="{Binding IsCameraVisible, Converter={StaticResource BooleanSwitchConverter}}" Aspect="AspectFill"/>
+                </Frame>
+
+                <Frame CornerRadius="100" HeightRequest="125" WidthRequest="125" Margin="0,0,0,10" IsVisible="{Binding IsCameraVisible}">
+                    <toolkit:CameraView x:Name="cameraView" HeightRequest="165" WidthRequest="125" IsVisible="{Binding IsCameraVisible}"/>
+                </Frame>
+
+                <Button Text="Take picture" Command="{Binding TakePictureCommand}" CommandParameter="{x:Reference cameraView}" IsVisible="{Binding IsCameraVisible}"/>
+                <Button Text="Choose file" Command="{Binding OpenFilePickerCommand}" IsVisible="{Binding IsCameraVisible, Converter={StaticResource BooleanSwitchConverter}}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Margin="0,10">
                 <Label>Federation:</Label>
                 <Picker ItemsSource="{Binding Federations}" SelectedItem="{Binding SelectedFederation, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}"/>
             </VerticalStackLayout>

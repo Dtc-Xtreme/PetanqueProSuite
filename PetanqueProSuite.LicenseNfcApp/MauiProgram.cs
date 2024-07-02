@@ -16,6 +16,7 @@ namespace PetanqueProSuite.LicenseNfcApp
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMauiCommunityToolkitCamera()
                 .UseBarcodeReader()
                 .ConfigureFonts(fonts =>
                 {

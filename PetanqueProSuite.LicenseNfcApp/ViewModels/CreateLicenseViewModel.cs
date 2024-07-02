@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.JSInterop;
 using PetanqueProSuite.AppLogic.Services;
 using PetanqueProSuite.Domain;
 using PetanqueProSuite.LicenseNfcApp.Interfaces;
@@ -75,7 +77,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
                 if(SetProperty(ref selectedProvince, value))
                 {
                     OnPropertyChanged("Clubs");
-                    ClubIsEnabled = selectedProvince != null && Clubs?.Count < 0;
+                    ClubIsEnabled = selectedProvince != null && Clubs?.Count > 0;
                 }
             }
         }
@@ -92,11 +94,30 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             }
         }
 
+        private IList<Sex>? sexs;
+        public IList<Sex>? Sexs
+        {
+            get {
+                return sexs;
+            }
+            set
+            {
+                SetProperty(ref sexs, value);
+            }
+        }
+
+        [ObservableProperty]
+        private ImageSource? image = ImageSource.FromFile("no_image.png");
+
+        [ObservableProperty]
+        private bool isCameraVisible = false;
+
         public CreateLicenseViewModel(INotificationService notificationService, IApiService api)
         {
             _notificationService = notificationService;
             _apiService = api;
             Form = new LicenseForm();
+            Form.Sex = Sex.X;
         }
 
         public async Task OnOnAppearing()
@@ -113,6 +134,10 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             {
                 Clubs = await _apiService.GetAllClubs();
             }
+            if (Sexs is null)
+            {
+                Sexs = new List<Sex>(Enum.GetValues(typeof(Sex)).Cast<Sex>());
+            }
         }
 
         public async Task OnDisappearing()
@@ -123,21 +148,62 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [RelayCommand]
         private async Task CreateLicense()
         {
-            License? result = await _apiService.CreateLicense(Form.FirstName, Form.LastName, Form.DayOfBirth, Form.Club.Id);
+            if (!Form.HasErrors)
+            {
+                License? result = await _apiService.CreateLicense(Form.FirstName, Form.LastName, Form.DayOfBirth, Form.Sex, Form.Club.Id);
+
+                if (result != null)
+                {
+                    if(await _notificationService.ShowAlertNoYesAsync("License added.", "Succesfully added! Do you want to write it to a NFC tag?"))
+                    {
+                        await Shell.Current.GoToAsync($"{nameof(WriteLicensePage)}?Number={result.Id}");
+                    }
+                    Form = new LicenseForm();
+                    SelectedFederation = null;
+                    SelectedProvince = null;
+                }
+                else
+                {
+                    await _notificationService.ShowAlertOkAsync("License added.", "License is not added!");
+                }
+            }
+        }
+
+        [RelayCommand]
+        private async Task OpenFilePicker()
+        {
+            FileResult? result = await FilePicker.PickAsync(new PickOptions
+            {
+                PickerTitle = "Pick an image please.",
+                FileTypes = FilePickerFileType.Images
+            });
+
             if (result != null)
             {
-                if(await _notificationService.ShowAlertNoYesAsync("License added.", "Succesfully added! Do you want to write it to a NFC tag?"))
-                {
-                    await Shell.Current.GoToAsync($"{nameof(WriteLicensePage)}?Number={result.Id}");
-                }
-                Form = new LicenseForm();
-                SelectedFederation = null;
-                SelectedProvince = null;
+                var stream = await result.OpenReadAsync();
+                Image = ImageSource.FromStream(() => stream);
             }
-            else
-            {
-                await _notificationService.ShowAlertOkAsync("License added.", "License is not added!");
+            return;
+        }
+
+        [RelayCommand]
+        private async Task TakePicture(CameraView cameraView)
+        {
+            cameraView.MediaCaptured += MediaCapture;
+            await cameraView.CaptureImage(CancellationToken.None);
+        }
+
+        private void MediaCapture(object sender, CommunityToolkit.Maui.Views.MediaCapturedEventArgs e)
+        {
+            CameraView cameraView = (CameraView)sender;
+
+            Image = ImageSource.FromStream(() => e.Media);
+
+            if (Image != null) {
+                IsCameraVisible = false;
             }
+
+            cameraView.MediaCaptured -= MediaCapture;
         }
     }
 }

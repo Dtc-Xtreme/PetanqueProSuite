@@ -30,18 +30,25 @@ namespace PetanqueProSuite.LicenseNfcApp.Models
         [NotifyDataErrorInfo]
         private string lastName;
 
-        [Required(ErrorMessage = "Club is required")]
-        [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(HasErrors))]
-        [NotifyPropertyChangedFor(nameof(GetAllErrors))]
-        [NotifyDataErrorInfo]
-        private Club? club;
-
         [Required(ErrorMessage = "Day of birth is required")]
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(HasErrors))]
         [NotifyPropertyChangedFor(nameof(GetAllErrors))]
         [NotifyDataErrorInfo]
         private DateTime dayOfBirth;
+
+        [Required(ErrorMessage = "Sex is required")]
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(HasErrors))]
+        [NotifyPropertyChangedFor(nameof(GetAllErrors))]
+        [NotifyDataErrorInfo]
+        private Sex sex;
+
+        [Required(ErrorMessage = "Club is required")]
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(HasErrors))]
+        [NotifyPropertyChangedFor(nameof(GetAllErrors))]
+        [NotifyDataErrorInfo]
+        private Club club;
     }
 }

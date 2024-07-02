@@ -77,7 +77,7 @@ namespace PetanqueProSuite.Infrastructure
                     dbContext.Divisions.AddRange(new List<Division>() { nat1st, nat2nd, fed1stSen, fed2ndSen, fed1stWom, provEreSen, prov1stSen, provEreVet, prov1stVet, prov2ndVet });
                 }
 
-                Federation PFV = new Federation { Name = "Petanque Federatie Vlaanderen" };
+                Federation PFV = new Federation { Name = "Petanque Federatie Vlaanderen", Image = "pfv.png" };
 
                 if (!dbContext.Federations.Any())
                 {
@@ -98,7 +98,7 @@ namespace PetanqueProSuite.Infrastructure
                 // Limburg
                 Club OLYMPIA = new Club { Name = "PC OLYMPIA", Number = 1, Address = "Veenderweg 48 - 3550 Heusden-Zolder", Phone = "011/45 36 13", ContactPerson = "Ferdy Geraerts, Ubbelstraat 9/1 - 3550 Heusden-Zolder", Province = Limburg };
                 Club SPARRENDAL = new Club { Name = "PC SPARRENDAL", Number = 2, Address = "Roelerdreef 17 - 3620 Lanaken", Phone = "GSM: 0476052765", ContactPerson = "De Haan Irene, GSM: 0477 654 089, Email: schepers.poels@gmail.com", Province = Limburg, Image="sparrendal.png" };
-                Club KELCHTEREN = new Club { Name = "PC KELCHTEREN - HOUTHALEN", Number = 3, Address = "Oudstrijderslaan 44C - 3530 Houthalen", ContactPerson = "Chris Billen Guldensporenlaan 28 3530 Houthalen, Email: pckelchtren.houthalen@hotmail.com", Province = Limburg, Image="kelchteren.png" };
+                Club KELCHTEREN = new Club { Name = "PC KELCHTEREN", Number = 3, Address = "Oudstrijderslaan 44C - 3530 Houthalen", ContactPerson = "Chris Billen Guldensporenlaan 28 3530 Houthalen, Email: pckelchtren.houthalen@hotmail.com", Province = Limburg, Image="kelchteren.png" };
                 Club HASSELT = new Club { Name = "PC HASSELT", Number = 4, Address = "Kramerslaan 1A - 3500 Hasselt", Phone = "011/27 30 36", ContactPerson = "Jan Luyten, GSM : 0479/73 75 47, Email : luytenfabbro@gmail.com", Province = Limburg };
                 Club OPEC = new Club { Name = "PC OPEC OPGLABBEEK", Number = 6, Address = "Oude Kerkstraat 24B - 3660 Opglabbeek", ContactPerson = "Raymond Brebels, GSM : 0478/71 22 54, Email : raymond.brebels@telenet.be", Province = Limburg };
                 Club BOEKT = new Club { Name = "PC BOEKT", Number = 7, Address = "Ubbelstraat 97 - 3550 Heusden-Zolder", Phone = "0492/79 15 48", ContactPerson = "Ludo Daniels, GSM : 0492/79 15 48, Email : ludodaniels@skynet.be", Province = Limburg };
@@ -106,7 +106,7 @@ namespace PetanqueProSuite.Infrastructure
                 Club BERK = new Club { Name = "PC DE BERK", Number = 9, Address = "Valentinusstraat 50 - 3550 Heusden-Zolder", Phone = "011/81 13 25", ContactPerson = "Eric Mignon Wolfsdal 50 3530 Houthalen-Helchteren, GSM: 0474/27 52 71, Email : pcdeberk@gmail.com", Province = Limburg };
                 Club ZIG = new Club { Name = "PC ZIG ZAG", Number = 11, Address = "Bivakstraat - 3945 Ham", Phone = "GSM: 0499/30 87 91", ContactPerson = "André Reynders, Zillekesstraat 8 - 3980 Tessenderlo, Tel: 013/66 65 53 - GSM: 0496/20 61 68, Email : reynders.andre@hotmail.com", Province = Limburg };
                 Club PELTER = new Club { Name = "PELTER PC", Number = 12, Address = "Sportpark De Roosen 43 - 3910 Neerpelt", Phone = "011/80 22 49", ContactPerson = "Elly Jamers Holwortelstraat 14 3900 Pelt, GSM: 0495/454 777, Email : elly.jamers@skynet.be", Province = Limburg };
-                Club HORIZON = new Club { Name = "PC HORIZON - BREE", Number = 13, Address = "Opitterpoort 104 - 3960 Bree", ContactPerson = "Gos Willy, Pater Lambertusstraat 18 Bus 03 - 3960 Bree, GSM: 0486/965197, Email : gos.vandereecken@telenet.be", Province = Limburg };
+                Club HORIZON = new Club { Name = "PC HORIZON", Number = 13, Address = "Opitterpoort 104 - 3960 Bree", ContactPerson = "Gos Willy, Pater Lambertusstraat 18 Bus 03 - 3960 Bree, GSM: 0486/965197, Email : gos.vandereecken@telenet.be", Province = Limburg };
                 Club GENK = new Club { Name = "PC GENK", Number = 14, Address = "Melbergstraat 1B2 - 3600 Genk", ContactPerson = "Marlene Hendrikx Zandstraat 5 3665 As, GSM: 0474/57 14 29, Emai: meenske053@gmail.com", Province = Limburg };
                 Club TONGEREN = new Club { Name = "PC 13 TONGEREN", Number = 15, Address = "Bilzersteenweg 36a - 3700 Tongeren", ContactPerson = "Josianne Fastre, Email : josyfastre61@gmail.com", Province = Limburg };
                 Club INTERLOMMEL = new Club { Name = "INTERLOMMEL PETANQUE", Number = 20, Address = "Vreyshorring 143 - 3920 Lommel", Phone = "011/54 57 43", ContactPerson = "Annita Serroeyen, GSM: 0475/43 24 65, Email : verboven-serroeyen@hotmail.com", Province = Limburg };
@@ -125,20 +125,20 @@ namespace PetanqueProSuite.Infrastructure
                     dbContext.Clubs.AddRange(new List<Club>() { OLYMPIA, SPARRENDAL, KELCHTEREN, HASSELT, OPEC, BOEKT, GENENBOS, BERK, ZIG, PELTER, HORIZON, GENK, TONGEREN, INTERLOMMEL, OETERVALLEI, MELDERT, SINT, MAASEIK, TERBIEST, VENNE, BOCHOLTER, FENIX, Yachting });
                 }
 
-                License p1BoektEre = new License { Club = BOEKT, FirstName = "Rony", LastName = "Bleux", Number = 10000 };
-                License p2BoektEre = new License { Club = BOEKT, FirstName = "Frans", LastName = "Kazmierczak", Number = 4077 };
-                License p3BoektEre = new License { Club = BOEKT, FirstName = "Jose", LastName = "xqwer", Number = 99990 };
-                License p4BoektEre = new License { Club = BOEKT, FirstName = "Serano", LastName = "xqty", Number = 12345 };
-                License p5BoektEre = new License { Club = BOEKT, FirstName = "Toto", LastName = "dfghx", Number = 65432 };
-                License p6BoektEre = new License { Club = BOEKT, FirstName = "Eric", LastName = "xop", Number = 27898 };
-                License p7BoektEre = new License { Club = BOEKT, FirstName = "Steven", LastName = "Kazmierczak", Number = 99871 };
-                License p8BoektEre = new License { Club = BOEKT, FirstName = "Tonny", LastName = "lkl", Number = 9814 };
-                License p9KelchterenEre = new License { Club = KELCHTEREN, FirstName = "Mario", LastName = "vcx", Number = 658 };
-                License p10SparrendaltEre = new License { Club = SPARRENDAL, FirstName = "Lina", LastName = "qqwx", Number = 5475 };
+                License p1BoektEre = new License { Club = BOEKT, FirstName = "Rony", LastName = "Bleux", Number = 10000, DayOfBirth = DateTime.Parse("12/09/1958"), Sex = Sex.M};
+                License p2BoektEre = new License { Club = BOEKT, FirstName = "Frans", LastName = "Kazmierczak", Number = 4077, DayOfBirth = DateTime.Parse("08/05/1955"), Sex = Sex.M };
+                License p3BoektEre = new License { Club = BOEKT, FirstName = "Jose", LastName = "Vermeiren", Number = 99990, DayOfBirth = DateTime.Parse("30/10/1948"), Sex = Sex.F };
+                License p4BoektEre = new License { Club = BOEKT, FirstName = "Serano", LastName = "Taranto", Number = 12345, DayOfBirth = DateTime.Parse("28/11/1962"), Sex = Sex.M };
+                License p5BoektEre = new License { Club = BOEKT, FirstName = "Toto", LastName = "Papesedero", Number = 65432, DayOfBirth = DateTime.Parse("12/09/1958"), Sex = Sex.M };
+                License p6BoektEre = new License { Club = BOEKT, FirstName = "Eric", LastName = "Evers", Number = 27898, DayOfBirth = DateTime.Parse("12/09/1958"), Sex = Sex.M };
+                License p7BoektEre = new License { Club = BOEKT, FirstName = "Steven", LastName = "Kazmierczak", Number = 99871, DayOfBirth = DateTime.Parse("08/03/1989"), Sex = Sex.M };
+                License p8SintEre = new License { Club = SINT, FirstName = "Tonny", LastName = "Smith", Number = 9814, DayOfBirth = DateTime.Parse("12/09/1958"), Sex = Sex.M };
+                License p9KelchterenEre = new License { Club = KELCHTEREN, FirstName = "Mario", LastName = "Op De Kamp", Number = 658, DayOfBirth = DateTime.Parse("12/09/1958"), Sex = Sex.M };
+                License p10SparrendaltEre = new License { Club = SPARRENDAL, FirstName = "Laura", LastName = "Poelmans", Number = 5475, DayOfBirth = DateTime.Parse("12/09/1958"), Sex = Sex.X };
 
                 if (!dbContext.Licenses.Any())
                 {
-                    dbContext.Licenses.AddRange(new List<License>() { p1BoektEre, p2BoektEre, p3BoektEre, p4BoektEre, p5BoektEre, p6BoektEre, p7BoektEre, p8BoektEre, p9KelchterenEre, p10SparrendaltEre });
+                    dbContext.Licenses.AddRange(new List<License>() { p1BoektEre, p2BoektEre, p3BoektEre, p4BoektEre, p5BoektEre, p6BoektEre, p7BoektEre, p8SintEre, p9KelchterenEre, p10SparrendaltEre });
                 }
 
                 //CompetitionTeam boektA = new CompetitionTeam { Identifyer = 'A', Club = BOEKT, Division = provEreSen };

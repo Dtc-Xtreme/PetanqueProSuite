@@ -1,10 +1,8 @@
 ﻿using PetanqueProSuite.Domain;
-using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 
 namespace PetanqueProSuite.Domain
 {
@@ -28,24 +26,19 @@ namespace PetanqueProSuite.Domain
         [Required]
         public DateTime DayOfBirth { get; set; }
 
-        public string FullName { 
-            get { return FirstName + " " + LastName; } 
-        }
-
         [Required]
         public Club Club { get; set; }
         public int ClubId { get; set; }
 
         [Required]
-        public DateTime ValidDate { get; set; } 
-    }
-}
+        public DateTime ValidDate { get; set; }
 
+        [Required]
+        public Sex Sex { get; set; }
 
-public static class LicenseExtensions
-{
-    public static string ShowCategory(this License license)
-    {
-        return "Vet. H";
+        public string FullName
+        {
+            get { return FirstName + " " + LastName; }
+        }
     }
 }
