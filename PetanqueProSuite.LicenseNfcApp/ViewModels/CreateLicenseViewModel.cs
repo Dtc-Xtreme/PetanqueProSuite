@@ -148,25 +148,25 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [RelayCommand]
         private async Task CreateLicense()
         {
-            if (!Form.HasErrors)
-            {
-                License? result = await _apiService.CreateLicense(Form.FirstName, Form.LastName, Form.DayOfBirth, Form.Sex, Form.Club.Id);
+            //if (!Form.HasErrors)
+            //{
+            //    License? result = await _apiService.CreateLicense(Form.FirstName, Form.LastName, Form.DayOfBirth, Form.Sex, Form.Club.Id);
 
-                if (result != null)
-                {
-                    if(await _notificationService.ShowAlertNoYesAsync("License added.", "Succesfully added! Do you want to write it to a NFC tag?"))
-                    {
-                        await Shell.Current.GoToAsync($"{nameof(WriteLicensePage)}?Number={result.Id}");
-                    }
-                    Form = new LicenseForm();
-                    SelectedFederation = null;
-                    SelectedProvince = null;
-                }
-                else
-                {
-                    await _notificationService.ShowAlertOkAsync("License added.", "License is not added!");
-                }
-            }
+            //    if (result != null)
+            //    {
+            //        if(await _notificationService.ShowAlertNoYesAsync("License added.", "Succesfully added! Do you want to write it to a NFC tag?"))
+            //        {
+            //            await Shell.Current.GoToAsync($"{nameof(WriteLicensePage)}?Number={result.Id}");
+            //        }
+            //        Form = new LicenseForm();
+            //        SelectedFederation = null;
+            //        SelectedProvince = null;
+            //    }
+            //    else
+            //    {
+            //        await _notificationService.ShowAlertOkAsync("License added.", "License is not added!");
+            //    }
+            //}
         }
 
         [RelayCommand]
@@ -192,7 +192,6 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             cameraView.MediaCaptured += MediaCapture;
             await cameraView.CaptureImage(CancellationToken.None);
         }
-
         private void MediaCapture(object sender, CommunityToolkit.Maui.Views.MediaCapturedEventArgs e)
         {
             CameraView cameraView = (CameraView)sender;
