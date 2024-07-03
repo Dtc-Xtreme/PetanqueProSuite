@@ -19,6 +19,8 @@ namespace PetanqueProSuite.AppLogic.Models
         [Required]
         public Sex Sex { get; set; }
 
+        public byte[] Image { get; set; }
+
         [Required]
         public int ClubId { get; set; }
     }

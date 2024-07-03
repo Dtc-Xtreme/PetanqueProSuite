@@ -18,7 +18,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         private readonly IApiService _apiService;
 
         [ObservableProperty]
-        LicenseForm form;
+        private LicenseForm form;
 
         [ObservableProperty]
         private bool provinceIsEnabled = false;
@@ -106,8 +106,6 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             }
         }
 
-        [ObservableProperty]
-        private ImageSource? image = ImageSource.FromFile("no_image.png");
 
         [ObservableProperty]
         private bool isCameraVisible = false;
@@ -117,7 +115,6 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             _notificationService = notificationService;
             _apiService = api;
             Form = new LicenseForm();
-            Form.Sex = Sex.X;
         }
 
         public async Task OnOnAppearing()
@@ -148,25 +145,25 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [RelayCommand]
         private async Task CreateLicense()
         {
-            //if (!Form.HasErrors)
-            //{
-            //    License? result = await _apiService.CreateLicense(Form.FirstName, Form.LastName, Form.DayOfBirth, Form.Sex, Form.Club.Id);
+            if (!Form.HasErrors)
+            {
+                License? result = await _apiService.CreateLicense(Form.FirstName, Form.LastName, (DateTime)Form.DayOfBirth, (Sex)Form.Sex, Form.Image, Form.Club.Id);
 
-            //    if (result != null)
-            //    {
-            //        if(await _notificationService.ShowAlertNoYesAsync("License added.", "Succesfully added! Do you want to write it to a NFC tag?"))
-            //        {
-            //            await Shell.Current.GoToAsync($"{nameof(WriteLicensePage)}?Number={result.Id}");
-            //        }
-            //        Form = new LicenseForm();
-            //        SelectedFederation = null;
-            //        SelectedProvince = null;
-            //    }
-            //    else
-            //    {
-            //        await _notificationService.ShowAlertOkAsync("License added.", "License is not added!");
-            //    }
-            //}
+                if (result != null)
+                {
+                    if (await _notificationService.ShowAlertNoYesAsync("License added.", "Succesfully added! Do you want to write it to a NFC tag?"))
+                    {
+                        await Shell.Current.GoToAsync($"{nameof(WriteLicensePage)}?Number={result.Id}");
+                    }
+                    Form = new LicenseForm();
+                    SelectedFederation = null;
+                    SelectedProvince = null;
+                }
+                else
+                {
+                    await _notificationService.ShowAlertOkAsync("License added.", "License is not added!");
+                }
+            }
         }
 
         [RelayCommand]
@@ -181,9 +178,14 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
             if (result != null)
             {
                 var stream = await result.OpenReadAsync();
-                Image = ImageSource.FromStream(() => stream);
+                // Create a new MemoryStream to ensure the stream is not disposed
+                using (var memoryStream = new MemoryStream())
+                {
+                    await stream.CopyToAsync(memoryStream);
+                    memoryStream.Position = 0;
+                    Form.Image = memoryStream.ToArray();
+                }
             }
-            return;
         }
 
         [RelayCommand]
@@ -196,9 +198,15 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         {
             CameraView cameraView = (CameraView)sender;
 
-            Image = ImageSource.FromStream(() => e.Media);
+            // Use a MemoryStream to ensure the stream is not disposed
+            using (var memoryStream = new MemoryStream())
+            {
+                e.Media.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+                Form.Image = memoryStream.ToArray();
+            }
 
-            if (Image != null) {
+            if (Form.Image != null) {
                 IsCameraVisible = false;
             }
 

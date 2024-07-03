@@ -8,7 +8,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <Converters:NoImageConverter x:Key="NoImageConverter" />
             <Converters:BooleanSwitchConverter x:Key="BooleanSwitchConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -52,7 +52,7 @@
                 </Grid>
 
                 <Frame CornerRadius="100" HeightRequest="125" WidthRequest="125" Margin="0,0,0,10" IsVisible="{Binding IsCameraVisible, Converter={StaticResource BooleanSwitchConverter}}">
-                    <Image Source="{Binding Image, Mode=TwoWay}" HeightRequest="125" WidthRequest="125" IsVisible="{Binding IsCameraVisible, Converter={StaticResource BooleanSwitchConverter}}" Aspect="AspectFill"/>
+                    <Image Source="{Binding Form.Image, Mode=TwoWay, Converter={StaticResource NoImageConverter}}" HeightRequest="125" WidthRequest="125" IsVisible="{Binding IsCameraVisible, Converter={StaticResource BooleanSwitchConverter}}" Aspect="AspectFill"/>
                 </Frame>
 
                 <Frame CornerRadius="100" HeightRequest="125" WidthRequest="125" Margin="0,0,0,10" IsVisible="{Binding IsCameraVisible}">

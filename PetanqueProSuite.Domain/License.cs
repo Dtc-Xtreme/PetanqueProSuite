@@ -36,6 +36,8 @@ namespace PetanqueProSuite.Domain
         [Required]
         public Sex Sex { get; set; }
 
+        public byte[] Image { get; set; }
+
         public string FullName
         {
             get { return FirstName + " " + LastName; }

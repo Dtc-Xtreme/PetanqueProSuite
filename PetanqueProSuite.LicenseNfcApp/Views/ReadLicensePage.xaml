@@ -10,7 +10,6 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <Converters:LicenseNumberConverter x:Key="LicenseNumberConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>

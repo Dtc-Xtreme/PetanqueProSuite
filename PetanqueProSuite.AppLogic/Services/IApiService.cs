@@ -17,7 +17,7 @@ namespace PetanqueProSuite.AppLogic.Services
         public Task<List<Province>?> GetAllProvinces();
         public Task<List<Federation>?> GetAllFederation();
 
-        public Task<License?> CreateLicense(string firstName, string lastName, DateTime dateOfBirth, Sex sex, int clubId);
+        public Task<License?> CreateLicense(string firstName, string lastName, DateTime dateOfBirth, Sex sex, byte[]? image, int clubId);
 
     }
 }

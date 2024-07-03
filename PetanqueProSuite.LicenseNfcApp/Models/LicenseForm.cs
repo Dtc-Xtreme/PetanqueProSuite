@@ -44,6 +44,9 @@ namespace PetanqueProSuite.LicenseNfcApp.Models
         [NotifyDataErrorInfo]
         private Sex? sex;
 
+        [ObservableProperty]
+        private byte[] image;
+        
         [Required(ErrorMessage = "Club is required")]
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(HasErrors))]

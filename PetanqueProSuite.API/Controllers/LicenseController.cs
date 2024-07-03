@@ -57,7 +57,9 @@ namespace PetanqueProSuite.API.Controllers
                         ClubId = licenseDTO.ClubId,
                         FirstName = licenseDTO.FirstName,
                         LastName = licenseDTO.LastName,
-                        DayOfBirth = licenseDTO.DayOfBirth
+                        DayOfBirth = licenseDTO.DayOfBirth,
+                        Sex = licenseDTO.Sex,
+                        Image = licenseDTO.Image                 
                     };
 
                     return Ok(await licenseRepository.CreateAsync(newLicense) == false ? BadRequest() : newLicense);
