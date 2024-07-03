@@ -10,6 +10,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <Converters:ByteArrayConverter x:Key="ByteArrayConverter" />
             <Converters:LicenseNumberConverter x:Key="LicenseNumberConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -98,7 +99,7 @@
                     </Grid.RowDefinitions>
 
                     <Frame Grid.Column="0" Grid.RowSpan="3" HeightRequest="125" WidthRequest="125" CornerRadius="100" BorderColor="Transparent" Margin="10">
-                        <Image Source="{Binding SelectedLicense.Image, FallbackValue='no_image.png'}" HeightRequest="125" WidthRequest="125"/>
+                        <Image Source="{Binding SelectedLicense.Image, Mode=TwoWay,Converter={StaticResource ByteArrayConverter}}" HeightRequest="125" WidthRequest="125"/>
                     </Frame>
 
                     <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="5" VerticalOptions="CenterAndExpand" Margin="10">

@@ -1,10 +1,13 @@
-﻿namespace PetanqueProSuite.Infrastructure.Repositories
+﻿using Microsoft.Extensions.Logging;
+
+namespace PetanqueProSuite.Infrastructure.Repositories
 {
     public abstract class GenericRepository
     {
         protected readonly PetanqueProSuiteDbContext context;
+        private ILogger<GenericRepository> logger;
 
-        public GenericRepository(PetanqueProSuiteDbContext ctx)
+        public GenericRepository(PetanqueProSuiteDbContext ctx, ILogger<GenericRepository> logger)
         {
             this.context = ctx;
         }
@@ -18,7 +21,7 @@
             }
             catch (Exception ex)
             {
-
+                logger.LogWarning(ex.Message);
             }
             return false;
 
@@ -33,7 +36,7 @@
             }
             catch (Exception ex)
             {
-
+                logger.LogWarning(ex.Message);
             }
             return false;
         }
@@ -46,7 +49,7 @@
             }
             catch (Exception ex)
             {
-
+                logger.LogWarning(ex.Message);
             }
             return false;
         }

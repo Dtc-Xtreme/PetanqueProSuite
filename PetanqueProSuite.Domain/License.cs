@@ -11,9 +11,9 @@ namespace PetanqueProSuite.Domain
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [Range(1,99999)]
-        public int Number { get; set; }
+        //[Required]
+        //[Range(1,99999)]
+        //public int Number { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -36,7 +36,7 @@ namespace PetanqueProSuite.Domain
         [Required]
         public Sex Sex { get; set; }
 
-        public byte[] Image { get; set; }
+        public byte[]? Image { get; set; }
 
         public string FullName
         {

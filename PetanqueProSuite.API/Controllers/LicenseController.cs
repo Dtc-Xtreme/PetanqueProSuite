@@ -2,7 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using PetanqueProSuite.AppLogic.Models;
 using PetanqueProSuite.Domain;
+using PetanqueProSuite.Infrastructure;
 using PetanqueProSuite.Infrastructure.Interfaces;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PetanqueProSuite.API.Controllers
 {
@@ -11,8 +13,9 @@ namespace PetanqueProSuite.API.Controllers
     public class LicenseController : Controller
     {
         private readonly ILicenseRepository licenseRepository;
+        private ILogger<LicenseController> logger;
 
-        public LicenseController(ILicenseRepository licenseRepository)
+        public LicenseController(ILicenseRepository licenseRepository, ILogger<LicenseController> logger)
         {
             this.licenseRepository = licenseRepository;
         }
@@ -59,7 +62,7 @@ namespace PetanqueProSuite.API.Controllers
                         LastName = licenseDTO.LastName,
                         DayOfBirth = licenseDTO.DayOfBirth,
                         Sex = licenseDTO.Sex,
-                        Image = licenseDTO.Image                 
+                        Image = licenseDTO.Image
                     };
 
                     return Ok(await licenseRepository.CreateAsync(newLicense) == false ? BadRequest() : newLicense);
@@ -68,6 +71,7 @@ namespace PetanqueProSuite.API.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
             }
         }

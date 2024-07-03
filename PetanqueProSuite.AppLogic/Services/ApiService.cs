@@ -129,7 +129,7 @@ namespace PetanqueProSuite.AppLogic.Services
             }
         }
 
-        public async Task<License?> CreateLicense(string firstName, string lastName, DateTime dateOfBirth, Sex sex, byte[] image, int clubId)
+        public async Task<License?> CreateLicense(string firstName, string lastName, DateTime dateOfBirth, Sex sex, byte[]? image, int clubId)
         {
             try
             {
@@ -139,6 +139,7 @@ namespace PetanqueProSuite.AppLogic.Services
                     LastName = lastName,
                     DayOfBirth = dateOfBirth,
                     Sex = sex,
+                    Image = image,
                     ClubId = clubId
                 };
 

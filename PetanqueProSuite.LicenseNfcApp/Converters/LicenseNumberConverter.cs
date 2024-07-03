@@ -14,7 +14,7 @@ namespace PetanqueProSuite.LicenseNfcApp.Converters
         {
             if (value is License license)
             {
-                return license.Club.Province.Id.ToString("D2") + "-" + license.Club.Number.ToString("D3") + "-" + license.Number;
+                return license.Club.Province.Id.ToString("D2") + "-" + license.Club.Number.ToString("D3") + "-" + license.Id;
             }
             return null;
         }

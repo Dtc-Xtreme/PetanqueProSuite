@@ -34,7 +34,7 @@ namespace PetanqueProSuite.Infrastructure
             //modelBuilder.Entity<License>().Property(c=>c.Id).HasDefaultValueSql("NEXT VALUE FOR OPNR2023");
             modelBuilder.Entity<Club>().HasIndex(p => new { p.ProvinceId, p.Number }).IsUnique();
             modelBuilder.Entity<Club>().HasIndex(p => p.Name).IsUnique();
-            modelBuilder.Entity<License>().HasIndex(p => p.Number).IsUnique();
+            //modelBuilder.Entity<License>().HasIndex(p => p.Number).IsUnique();
 
         }
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PetanqueProSuite.Domain.Competition;
 using PetanqueProSuite.Infrastructure.Interfaces;
 using System;
@@ -13,6 +14,6 @@ namespace PetanqueProSuite.Infrastructure.Repositories
     {
         public IQueryable<Category> Categories => context.Categories.OrderBy(c => c.Name);
 
-        public CategoryRepository(PetanqueProSuiteDbContext ctx) : base(ctx){}
+        public CategoryRepository(PetanqueProSuiteDbContext ctx, ILogger<GenericRepository> logger) : base(ctx, logger){}
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PetanqueProSuite.LicenseNfcApp.Converters
 {
-    public class NoImageConverter : IValueConverter
+    public class ByteArrayConverter : IValueConverter
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using PetanqueProSuite.Domain;
 using PetanqueProSuite.Domain.Competition;
 using PetanqueProSuite.Infrastructure.Interfaces;
@@ -14,6 +15,6 @@ namespace PetanqueProSuite.Infrastructure.Repositories
     {
         public IQueryable<CompetitionTeam> CompetitionTeams => context.CompetitionTeams.Include(c=>c.Club);
 
-        public CompetitionTeamRepository(PetanqueProSuiteDbContext ctx) : base(ctx){}
+        public CompetitionTeamRepository(PetanqueProSuiteDbContext ctx, ILogger<GenericRepository> logger) : base(ctx, logger) { }
     }
 }
