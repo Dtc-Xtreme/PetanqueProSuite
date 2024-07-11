@@ -17,7 +17,6 @@ namespace PetanqueProSuite.AppLogic.Services
 
         public ApiService()
         {
-            
         }
 
         public async Task<List<Category>?> GetAllCategories()
@@ -85,12 +84,12 @@ namespace PetanqueProSuite.AppLogic.Services
             try
             {
                 return await client.GetFromJsonAsync<License>(url + "/License/" + id);
-
             }
             catch (Exception ex)
             {
-                return null;
             }
+
+            return null;
         }
         public async Task<List<License>?> GetAllLicenses()
         {

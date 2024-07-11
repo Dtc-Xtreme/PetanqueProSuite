@@ -16,7 +16,7 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
     {
         private readonly INotificationService _notificationService;
         private readonly IApiService _apiService;
-
+        private JsonSerializerOptions jsonOptions;
         private int number;
         public int Number
         {
@@ -36,20 +36,8 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         [ObservableProperty]
         private bool isVisible = false;
 
-        //[ObservableProperty]
-        //private string firstName;
-
-        //[ObservableProperty]
-        //private string lastName;
-
-        //[ObservableProperty]
-        //private DateTime dayOfBirth;
-
-        //[ObservableProperty]
-        //private string clubName;
-
-        //[ObservableProperty]
-        //private DateTime validDate;
+        [ObservableProperty]
+        private bool isLoading = false;
 
         [ObservableProperty]
         private License? selectedLicense;
@@ -58,6 +46,11 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         {
             _notificationService = notificationService;
             _apiService = api;
+
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
 
             MainThread.BeginInvokeOnMainThread(async () =>
             {
@@ -78,19 +71,29 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         private async Task FindByLicenseNumber()
         {
             int result = await _notificationService.DisplayPromptNumericAsync("Search license.", "Please input the license number?", 5);
+            StartSearchingUI();
+ 
             SelectedLicense = await _apiService.GetLicenseWithId(result);
-            IsVisible = true;
+            if (SelectedLicense != null && selectedLicense.Id != 0) {
+                ItemLoadedUI();
+            }
+            else
+            {
+                await ItemNotFound();
+            }
         }
 
         [RelayCommand]
         private async Task FindByNfc()
         {
+            ClearingItem();
             await Shell.Current.GoToAsync(nameof(ScanNfcPage));
         }
 
         [RelayCommand]
         private async Task FindByQr()
         {
+            ClearingItem();
             await Shell.Current.GoToAsync(nameof(ScanQrPage));
         }
 
@@ -106,18 +109,56 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
                 // An unexpected error occurred. No browser may be installed on the device.
             }
         }
-        private void ReceiveNfcTag(NfcTagReadMessage m)
+        private async Task ReceiveNfcTag(NfcTagReadMessage m)
         {
+
             try
             {
+                StartSearchingUI();
                 // Check if internet then api call otherwhise use serialization.
-                SelectedLicense = JsonSerializer.Deserialize<License>(m.Value.Message);
-                IsVisible = true;
+                try
+                {
+                    SelectedLicense = JsonSerializer.Deserialize<License>(m.Value.Message, jsonOptions);
+
+                }
+                catch (Exception ex) {
+                }
+                if (SelectedLicense != null && selectedLicense.Id != 0 )
+                {
+                    ItemLoadedUI();
+                }
+                else
+                {
+                    await ItemNotFound();
+                }
             }
             catch (Exception ex)
             {
                 // An unexpected error occurred. No browser may be installed on the device.
             }
         }
+
+
+        private void ClearingItem()
+        {
+            SelectedLicense = null;
+            IsVisible = false;
+        }
+        private void StartSearchingUI()
+        {
+            ClearingItem();
+            IsLoading = true;
+        }
+        private void ItemLoadedUI()
+        {
+            IsVisible = true;
+            IsLoading = false;
+        }
+        private async Task ItemNotFound()
+        {
+            IsLoading = false;
+            await _notificationService.ShowAlertOkAsync("Error", "No license was found!");
+        }
+
     }
 }

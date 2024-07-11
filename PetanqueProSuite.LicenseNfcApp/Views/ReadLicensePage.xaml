@@ -41,115 +41,120 @@
     </ContentPage.ToolbarItems>
 
     <ScrollView>
-        <VerticalStackLayout Spacing="20" Margin="20" IsVisible="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+        <VerticalStackLayout VerticalOptions="StartAndExpand">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" VerticalOptions="Center"/>
+            
+            <VerticalStackLayout Spacing="20" Margin="20" IsVisible="{Binding IsVisible}">
+                <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                    <Frame Grid.Column="0" HeightRequest="50" WidthRequest="50" CornerRadius="10" BorderColor="Transparent" Margin="10">
-                        <Image Source="{Binding SelectedLicense.Club.Province.Federation.Image, FallbackValue='no_image.png'}" HeightRequest="50" WidthRequest="50"/>
-                    </Frame>
+                        <Frame Grid.Column="0" HeightRequest="50" WidthRequest="50" CornerRadius="10" BorderColor="Transparent" Margin="10">
+                            <Image Source="{Binding SelectedLicense.Club.Province.Federation.Image, FallbackValue='no_image.png'}" HeightRequest="50" WidthRequest="50"/>
+                        </Frame>
 
-                    <Label Grid.Column="1" Text="Petanque Federatie Vlaanderen" FontAttributes="Italic" VerticalOptions="CenterAndExpand" TextColor="Black"/>
-                </Grid>
-            </Frame>
+                        <Label Grid.Column="1" Text="Petanque Federatie Vlaanderen" FontAttributes="Italic" VerticalOptions="CenterAndExpand" TextColor="Black"/>
+                    </Grid>
+                </Frame>
 
-            <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
-                <Grid VerticalOptions="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+                <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
+                    <Grid VerticalOptions="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                    <Frame Grid.Column="0" Grid.RowSpan="3" HeightRequest="125" WidthRequest="125" CornerRadius="100" BorderColor="Transparent" Margin="10">
-                        <Image Source="{Binding SelectedLicense.Club.Image, FallbackValue='no_image.png'}" HeightRequest="125" WidthRequest="125" Aspect="AspectFill"/>
-                    </Frame>
+                        <Frame Grid.Column="0" Grid.RowSpan="3" HeightRequest="125" WidthRequest="125" CornerRadius="100" BorderColor="Transparent" Margin="10">
+                            <Image Source="{Binding SelectedLicense.Club.Image, FallbackValue='no_image.png'}" HeightRequest="125" WidthRequest="125" Aspect="AspectFill"/>
+                        </Frame>
 
-                    <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="5" VerticalOptions="CenterAndExpand" Margin="10">
-                        <VerticalStackLayout>
-                            <Label Text="CLUB" FontAttributes="Bold" TextColor="Black"/>
-                            <Label Text="{Binding SelectedLicense.Club.Name}" FontAttributes="Italic" TextColor="Black"/>
+                        <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="5" VerticalOptions="CenterAndExpand" Margin="10">
+                            <VerticalStackLayout>
+                                <Label Text="CLUB" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding SelectedLicense.Club.Name}" FontAttributes="Italic" TextColor="Black"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout>
+                                <Label Text="PROVINCE" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding SelectedLicense.Club.Province.Name, FallbackValue='COMPITITIE / RECREANT'}" FontAttributes="Italic"  TextColor="Black"/>
+                            </VerticalStackLayout>
                         </VerticalStackLayout>
+                    </Grid>
+                </Frame>
 
-                        <VerticalStackLayout>
-                            <Label Text="PROVINCE" FontAttributes="Bold" TextColor="Black"/>
-                            <Label Text="{Binding SelectedLicense.Club.Province.Name, FallbackValue='COMPITITIE / RECREANT'}" FontAttributes="Italic"  TextColor="Black"/>
+                <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
+                    <Grid VerticalOptions="CenterAndExpand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Frame Grid.Column="0" Grid.RowSpan="3" HeightRequest="125" WidthRequest="125" CornerRadius="100" BorderColor="Transparent" Margin="10">
+                            <Image Source="{Binding SelectedLicense.Image, Mode=TwoWay,Converter={StaticResource ByteArrayConverter}}" HeightRequest="125" WidthRequest="125"/>
+                        </Frame>
+
+                        <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="5" VerticalOptions="CenterAndExpand" Margin="10">
+                            <VerticalStackLayout>
+                                <Label Text="NAME" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding SelectedLicense.FullName}" FontAttributes="Italic" TextColor="Black"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout>
+                                <Label Text="DAY OF BIRTH" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding SelectedLicense.DayOfBirth, StringFormat='{0:dd/MM/yyyy}', FallbackValue=''}" FontAttributes="Italic"  TextColor="Black"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout>
+                                <Label Text="CATEGORY" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="Sen H." FontAttributes="Italic" TextColor="Black"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout>
+                                <Label Text="LICENSE NUMBER" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Text="{Binding SelectedLicense.Number}" FontAttributes="Italic"  TextColor="Black"/>
+                            </VerticalStackLayout>
                         </VerticalStackLayout>
-                    </VerticalStackLayout>
-                </Grid>
-            </Frame>
+                    </Grid>
+                </Frame>
 
-            <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
-                <Grid VerticalOptions="CenterAndExpand">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+                <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                    <Frame Grid.Column="0" Grid.RowSpan="3" HeightRequest="125" WidthRequest="125" CornerRadius="100" BorderColor="Transparent" Margin="10">
-                        <Image Source="{Binding SelectedLicense.Image, Mode=TwoWay,Converter={StaticResource ByteArrayConverter}}" HeightRequest="125" WidthRequest="125"/>
-                    </Frame>
+                        <Frame Grid.Column="0" HeightRequest="50" WidthRequest="50" CornerRadius="10" BorderColor="Transparent" Margin="10">
+                            <Image HeightRequest="50" WidthRequest="50">
+                                <Image.Source>
+                                    <FontImageSource FontFamily="GoogleMaterialFont"
+                         Glyph="{x:Static icon:IconFont.Check_circle}"
+                         Color="Green"/>
+                                </Image.Source>
+                            </Image>
+                        </Frame>
 
-                    <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="5" VerticalOptions="CenterAndExpand" Margin="10">
-                        <VerticalStackLayout>
-                            <Label Text="NAME" FontAttributes="Bold" TextColor="Black"/>
-                            <Label Text="{Binding SelectedLicense.FullName}" FontAttributes="Italic" TextColor="Black"/>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout>
-                            <Label Text="DAY OF BIRTH" FontAttributes="Bold" TextColor="Black"/>
-                            <Label Text="{Binding SelectedLicense.DayOfBirth, StringFormat='{0:dd/MM/yyyy}', FallbackValue=''}" FontAttributes="Italic"  TextColor="Black"/>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout>
-                            <Label Text="CATEGORY" FontAttributes="Bold" TextColor="Black"/>
-                            <Label Text="Sen H." FontAttributes="Italic" TextColor="Black"/>
-                        </VerticalStackLayout>
-
-                        <VerticalStackLayout>
-                            <Label Text="LICENSE NUMBER" FontAttributes="Bold" TextColor="Black"/>
-                            <Label Text="{Binding SelectedLicense.Number}" FontAttributes="Italic"  TextColor="Black"/>
-                        </VerticalStackLayout>
-                    </VerticalStackLayout>
-                </Grid>
-            </Frame>
-
-            <Frame Background="White" CornerRadius="10" HorizontalOptions="FillAndExpand" BackgroundColor="WhiteSmoke" BorderColor="WhiteSmoke" Padding="0">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Frame Grid.Column="0" HeightRequest="50" WidthRequest="50" CornerRadius="10" BorderColor="Transparent" Margin="10">
-                        <Image HeightRequest="50" WidthRequest="50">
-                            <Image.Source>
-                                <FontImageSource FontFamily="GoogleMaterialFont"
-                                 Glyph="{x:Static icon:IconFont.Check_circle}"
-                                 Color="Green"/>
-                            </Image.Source>
-                        </Image>
-                    </Frame>
-
-                    <Label Grid.Column="1" Grid.Row="0" Text="License is valid" FontAttributes="Italic" VerticalOptions="CenterAndExpand" TextColor="Black"/>
-                </Grid>
-            </Frame>
+                        <Label Grid.Column="1" Grid.Row="0" Text="License is valid" FontAttributes="Italic" VerticalOptions="CenterAndExpand" TextColor="Black"/>
+                    </Grid>
+                </Frame>
+            </VerticalStackLayout>
         </VerticalStackLayout>
+        
     </ScrollView>
 </ContentPage>

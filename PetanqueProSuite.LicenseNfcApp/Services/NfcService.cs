@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using PetanqueProSuite.Domain;
 using PetanqueProSuite.LicenseNfcApp.Messages;
 using Plugin.NFC;
 using System.Text;
