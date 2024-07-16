@@ -197,7 +197,6 @@ namespace PetanqueProSuite.LicenseNfcApp.ViewModels
         private void MediaCapture(object sender, CommunityToolkit.Maui.Views.MediaCapturedEventArgs e)
         {
             CameraView cameraView = (CameraView)sender;
-
             // Use a MemoryStream to ensure the stream is not disposed
             using (var memoryStream = new MemoryStream())
             {

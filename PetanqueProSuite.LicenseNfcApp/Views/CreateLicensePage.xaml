@@ -56,7 +56,7 @@
                 </Frame>
 
                 <Frame CornerRadius="100" HeightRequest="125" WidthRequest="125" Margin="0,0,0,10" IsVisible="{Binding IsCameraVisible}">
-                    <toolkit:CameraView x:Name="cameraView" HeightRequest="165" WidthRequest="125" IsVisible="{Binding IsCameraVisible}"/>
+                    <toolkit:CameraView x:Name="cameraView" HeightRequest="170" WidthRequest="170" IsVisible="{Binding IsCameraVisible}"/>
                 </Frame>
 
                 <Button Text="Take picture" Command="{Binding TakePictureCommand}" CommandParameter="{x:Reference cameraView}" IsVisible="{Binding IsCameraVisible}"/>
