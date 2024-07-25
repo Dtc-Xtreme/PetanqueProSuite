@@ -1,14 +1,12 @@
 ﻿using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.JSInterop;
 using PetanqueProSuite.AppLogic.Services;
 using PetanqueProSuite.Domain;
 using PetanqueProSuite.LicenseNfcApp.Interfaces;
 using PetanqueProSuite.LicenseNfcApp.Models;
 using PetanqueProSuite.LicenseNfcApp.Services;
 using PetanqueProSuite.LicenseNfcApp.Views;
-using System.Collections.ObjectModel;
 
 namespace PetanqueProSuite.LicenseNfcApp.ViewModels
 {

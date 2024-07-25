@@ -75,10 +75,10 @@
 
             <VerticalStackLayout Margin="0,10">
                 <Label>Club:</Label>
-                <Picker ItemsSource="{Binding Clubs}" SelectedItem="{Binding Form.Club}" ItemDisplayBinding="{Binding Name}" IsEnabled="{Binding ClubIsEnabled, Mode=TwoWay}"/>
+                <Picker ItemsSource="{Binding Clubs}" SelectedItem="{Binding Form.Club, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" IsEnabled="{Binding ClubIsEnabled, Mode=TwoWay}"/>
             </VerticalStackLayout>
 
-            <VerticalStackLayout Margin="0,10" IsVisible="{Binding Form.HasErrors, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <VerticalStackLayout Margin="0,10" IsVisible="{Binding Form.HasErrors, Converter={StaticResource BooleanSwitchConverter}}">
                 <Label Text="{Binding Form.GetAllErrors}" TextColor="Red"/>
             </VerticalStackLayout>
 

@@ -12,7 +12,7 @@ public partial class CreateLicensePage : ContentPage
         viewModel = vm;
         BindingContext = vm;
         InitializeComponent();
-        cameraView.ImageCaptureResolution = new Size(170, 170);
+        //cameraView.ImageCaptureResolution = new Size(170, 170);
 
     }
 
